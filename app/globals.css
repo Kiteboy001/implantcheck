@@ -1,26 +1,32 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* Brand colours — ImplantCheck */
+  --color-navy: #001B3D;
+  --color-navy-light: #0A2F5A;
+  --color-navy-lighter: #14365C;
+  --color-gold: #A6893B;
+  --color-gold-light: #C4A44A;
+  --color-gold-lighter: #D4B860;
+  --color-warm-bg: #F7F5F0;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Text */
+  --color-body: #334155;
+  --color-muted: #64748B;
+
+  /* Fonts (set via CSS variables in layout.tsx) */
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-garamond);
+
+  /* Background/foreground */
+  --color-background: #FFFFFF;
+  --color-foreground: #334155;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
