@@ -363,53 +363,93 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="max-w-md mx-auto">
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-lg p-8 text-center relative overflow-hidden">
-              <div className="absolute top-0 right-0 bg-gold text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
-                MOST POPULAR
-              </div>
-
-              <p className="text-muted text-sm mb-4">Single Case Review</p>
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {/* Basic Check */}
+            <div className="bg-white rounded-2xl border border-gray-100 shadow p-8 text-center">
+              <p className="text-muted text-sm mb-2">Basic Check</p>
+              <p className="text-xs text-gold font-semibold uppercase tracking-wider mb-4">Single implant</p>
               <div className="mb-6">
                 <span className="text-5xl font-bold text-navy font-[(family-name:var(--font-garamond))]">
                   £95
                 </span>
                 <span className="text-muted text-lg"> /case</span>
               </div>
-
               <ul className="space-y-3 mb-8 text-left">
                 {[
                   "Full STL and CBCT review",
-                  "Detailed written feedback",
+                  "Written feedback report",
                   "Implant position & angulation analysis",
                   "Revision review included",
                   "Typical turnaround: 48 hours",
-                ].map((feature, i) => (
+                ].map((f, i) => (
                   <li key={i} className="flex items-start gap-3 text-sm text-body">
-                    <svg
-                      className="w-5 h-5 text-gold flex-shrink-0 mt-0.5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="m4.5 12.75 6 6 9-13.5"
-                      />
+                    <svg className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                     </svg>
-                    {feature}
+                    {f}
                   </li>
                 ))}
               </ul>
+              <Link href="/auth/signup" className="block w-full px-6 py-3 border-2 border-navy text-navy rounded font-semibold hover:bg-navy hover:text-white transition-colors text-center">Get Started</Link>
+            </div>
 
-              <Link
-                href="/auth/signup"
-                className="block w-full px-6 py-3 bg-navy text-white rounded font-semibold hover:bg-navy-light transition-colors text-center"
-              >
-                Get Started
-              </Link>
+            {/* Standard */}
+            <div className="bg-white rounded-2xl border-2 border-gold shadow-xl p-8 text-center relative overflow-hidden">
+              <div className="absolute top-0 right-0 bg-gold text-white text-xs font-bold px-3 py-1 rounded-bl-lg">MOST POPULAR</div>
+              <p className="text-muted text-sm mb-2">Standard</p>
+              <p className="text-xs text-gold font-semibold uppercase tracking-wider mb-4">2–4 implants with plan</p>
+              <div className="mb-6">
+                <span className="text-5xl font-bold text-navy font-[(family-name:var(--font-garamond))]">
+                  £199
+                </span>
+                <span className="text-muted text-lg"> /case</span>
+              </div>
+              <ul className="space-y-3 mb-8 text-left">
+                {[
+                  "Everything in Basic Check",
+                  "Comprehensive treatment plan review",
+                  "Prosthetic considerations analysis",
+                  "Detailed plan feedback",
+                  "Priority turnaround: 36 hours",
+                ].map((f, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm text-body">
+                    <svg className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                    </svg>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <Link href="/auth/signup" className="block w-full px-6 py-3 bg-navy text-white rounded font-semibold hover:bg-navy-light transition-colors text-center">Get Started</Link>
+            </div>
+
+            {/* Complex */}
+            <div className="bg-white rounded-2xl border border-gray-100 shadow p-8 text-center">
+              <p className="text-muted text-sm mb-2">Complex</p>
+              <p className="text-xs text-gold font-semibold uppercase tracking-wider mb-4">4+ implants with Zoom call</p>
+              <div className="mb-6">
+                <span className="text-5xl font-bold text-navy font-[(family-name:var(--font-garamond))]">
+                  £295
+                </span>
+                <span className="text-muted text-lg"> /case</span>
+              </div>
+              <ul className="space-y-3 mb-8 text-left">
+                {[
+                  "Everything in Standard",
+                  "High-complexity case analysis",
+                  "Full treatment plan evaluation",
+                  "1-on-1 Zoom consultation",
+                  "Expedited turnaround: 24 hours",
+                ].map((f, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm text-body">
+                    <svg className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                    </svg>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <Link href="/auth/signup" className="block w-full px-6 py-3 border-2 border-navy text-navy rounded font-semibold hover:bg-navy hover:text-white transition-colors text-center">Get Started</Link>
             </div>
           </div>
         </div>

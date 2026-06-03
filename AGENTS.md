@@ -57,10 +57,10 @@ app/
 ## Data Model
 
 - **User** — id, name, email, password_hash, gdc_number (optional), role (SUBMITTER/REVIEWER/ADMIN)
-- **Case** — id, submitter_id, status (PENDING→UNDER_REVIEW→APPROVED/NEEDS_REVISION), patient_context, treatment_notes, software_used
+- **Case** — id, submitter_id, tier (BASIC/STANDARD/COMPLEX), status (PENDING→UNDER_REVIEW→APPROVED/NEEDS_REVISION), patient_context, treatment_notes, software_used
 - **CaseFile** — id, case_id, file_url (UploadThing), file_name, file_type (STL/CBCT/SCREENSHOT), file_size
 - **Review** — id, case_id, reviewer_id, decision, implant_position, angulation, risk_flags, overall_feedback
-- **Pricing:** £95/case, hardcoded (Stripe in v2)
+- **Pricing:** Basic Check £95 (single implant), Standard £199 (2–4 implants with plan), Complex £295 (4+ implants + Zoom call). Hardcoded v1, Stripe in v2.
 
 ## Design Brief
 
