@@ -34,7 +34,7 @@ app/
 │   └── signup/page.tsx           # Register (GDC number field)
 ├── actions/auth.ts               # Server actions: signup, login, logout
 │
-├── (submitter)/                  # Route group — implantologist views
+├── (submitter)/                  # Route group — implant dentist views
 │   ├── layout.tsx                # Submitter nav (grey bar)
 │   ├── dashboard/page.tsx        # My cases list + "New Case" button
 │   ├── cases/

@@ -3,7 +3,7 @@
 > **For Hermes:** Use `subagent-driven-development` skill to implement this plan task-by-task.
 > **Sister project:** Implant Diploma Platform (`~/implant-diploma-platform`) — same stack, same conventions.
 
-**Goal:** A web platform where implantologists submit treatment plans (STL files, CBCT scans, planning screenshots) for expert review by Dr. Avik Dandapat, and receive structured feedback on implant positioning, angulation, and overall treatment plan quality.
+**Goal:** A web platform where implant dentists submit treatment plans (STL files, CBCT scans, planning screenshots) for expert review by Dr. Avik Dandapat, and receive structured feedback on implant positioning, angulation, and overall treatment plan quality.
 
 **Owned by:** ADIMPLANT.COM LTD (Company No. 06431009)  
 **Trademark:** UK00004379448 (filed 27/04/2026)  
@@ -177,7 +177,7 @@ app/
 │   └── signup/page.tsx           # Register (GDC number field)
 ├── actions/auth.ts               # Server actions: signup, login, logout
 │
-├── (submitter)/                  # Route group — implantologist views
+├── (submitter)/                  # Route group — implant dentist views
 │   ├── layout.tsx                # Submitter nav (grey bar)
 │   ├── dashboard/page.tsx        # My cases list + "New Case" button
 │   ├── cases/
@@ -210,7 +210,7 @@ app/
 4. **Dr. Dandapat downloads** the STL files and opens them in **Blue Sky Bio on his own computer** to review the implant positions in 3D
 5. While reviewing in Blue Sky Bio, he **dictates** his findings section-by-section into the ImplantCheck review page open alongside
 
-**For the £295 Complex tier Zoom call:** Dr. Dandapat can **screen share Blue Sky Bio** during the Zoom call, walking the implantologist through his analysis live.
+**For the £295 Complex tier Zoom call:** Dr. Dandapat can **screen share Blue Sky Bio** during the Zoom call, walking the implant dentist through his analysis live.
 
 **Future enhancement (v2):** A web-based STL viewer (Three.js) could display exported STL files in-browser for quick reference, but it won't replace Blue Sky Bio's full planning toolkit.
 
@@ -410,7 +410,7 @@ Replace text-based "IMPLANT CHECK" logo with the actual SVG logo from the tradem
 | UploadThing for file storage | Free tier sufficient, simpler than AWS S3 |
 | No in-browser STL viewer in v1 | Keeps scope manageable; Dr. Dandapat uses Blue Sky Bio for 3D review |
 | Single reviewer (Dr. Dandapat) | No multi-reviewer assignment system needed |
-| No patient PII | Regulatory simplification — implantologists keep patient data |
+| No patient PII | Regulatory simplification — implant dentists keep patient data |
 | Same stack as Implant Diploma Platform | Shared conventions, reusable patterns |
 | Grey nav bar | User preference for logo contrast |
 
