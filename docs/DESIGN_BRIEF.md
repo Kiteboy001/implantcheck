@@ -118,19 +118,39 @@ Submitter receives "Needs Revision" feedback
 | file_size | Int | Bytes |
 | uploaded_at | DateTime | |
 
-### Review
+### Review (Human-written, voice-dictated)
 | Field | Type | Notes |
 |-------|------|-------|
 | id | String (UUID) | PK |
 | case_id | String | FK → Case |
-| reviewer_id | String | FK → User |
+| reviewer_id | String | FK → User (Dr. Dandapat) |
 | decision | ReviewDecision | APPROVED, NEEDS_REVISION, REJECTED |
-| implant_position | Text? | Comments on implant positioning |
-| angulation | Text? | Comments on angulation |
-| risk_flags | Text? | Anatomical or prosthetic risks identified |
-| overall_feedback | Text | Summary and recommendations |
+| implant_position | Text? | Dictated assessment of implant positioning |
+| angulation | Text? | Dictated assessment of angulation |
+| risk_flags | Text? | Anatomical or prosthetic risks identified via dictation |
+| overall_feedback | Text | Summary and recommendations — dictated |
 | created_at | DateTime | |
 | updated_at | DateTime | |
+
+**IMPORTANT:** All review content is human-created. No AI generates the report. The platform provides a **structured template** that Dr. Dandapat fills by dictating each section using a microphone, Plaud AI Pin, or the app's built-in voice input. Speech-to-text (Whisper API / Web Speech API) transcribes the dictation into each template field.
+
+### ReportTemplate
+| Field | Type | Notes |
+|-------|------|-------|
+| id | String (UUID) | PK |
+| name | String | e.g. "Standard Implant Review", "Complex Case Review" |
+| sections | JSON | Ordered array of {title, placeholder, required} — defines the template structure |
+| is_default | Boolean | Default template for new reviews |
+
+**Default template sections:**
+1. **Case Summary** — Brief overview of the submitted plan
+2. **Implant Positioning** — Assessment of each implant's position
+3. **Angulation Analysis** — Comments on implant angulation
+4. **Anatomical Considerations** — Nerve proximity, sinus, bone quality
+5. **Prosthetic Considerations** — Emergence profile, restorative space
+6. **Risk Assessment** — Any flags or concerns
+7. **Recommendations** — Suggested adjustments (if any)
+8. **Overall Verdict** — Approved / Needs Revision / Rejected
 
 ### Pricing
 
@@ -175,7 +195,24 @@ app/
 │
 └── api/
     └── upload/route.ts           # UploadThing file handler
+    └── transcribe/route.ts       # Whisper speech-to-text endpoint
 ```
+
+## Blue Sky Bio — Workflow
+
+**Reality check:** Blue Sky Bio is desktop software (Windows/Mac) with **no web API, no embeddable viewer, and no cloud gateway**. You cannot "view Blue Sky Bio" inside the web app.
+
+**Practical workflow:**
+
+1. **Implantologist** plans the case in Blue Sky Bio on their desktop
+2. They **export the STL files and planning screenshots** from Blue Sky Bio (File → Export)
+3. They **upload** those files to ImplantCheck as part of their case submission
+4. **Dr. Dandapat downloads** the STL files and opens them in **Blue Sky Bio on his own computer** to review the implant positions in 3D
+5. While reviewing in Blue Sky Bio, he **dictates** his findings section-by-section into the ImplantCheck review page open alongside
+
+**For the £295 Complex tier Zoom call:** Dr. Dandapat can **screen share Blue Sky Bio** during the Zoom call, walking the implantologist through his analysis live.
+
+**Future enhancement (v2):** A web-based STL viewer (Three.js) could display exported STL files in-browser for quick reference, but it won't replace Blue Sky Bio's full planning toolkit.
 
 ---
 
@@ -291,16 +328,34 @@ Table of all cases with columns: submitter name, date, status, files count. Filt
 
 **Verification:** Queue shows all cases, filters work, links to review page.
 
-#### Task 2.3: Build review form
-**Files:** `app/(reviewer)/admin/cases/[id]/page.tsx`, `app/components/ReviewForm.tsx`
+#### Task 2.3: Build dictation review page
+**Files:** `app/(reviewer)/admin/cases/[id]/page.tsx`, `app/components/DictationReview.tsx`, `app/api/transcribe/route.ts`
 
-Two-panel layout:
-- **Left:** Case files (download links), treatment notes, patient context
-- **Right:** Review form with fields for implant position, angulation, risk flags, overall feedback, and decision radio (Approved / Needs Revision / Rejected)
+The heart of the review workflow. Split-screen layout:
 
-Server action to create/update Review record and update Case status.
+- **Left panel (70%)** — The review template with 8 sections displayed as cards. Each section has:
+  - Section title (e.g. "Implant Positioning")
+  - A **🎤 Dictate** button that starts recording from the browser microphone
+  - A text area that fills with the transcribed text in real-time (Web Speech API for live, or Whisper API for batch)
+  - Edit capability after dictation
+- **Bottom:** "Download Case Files" button → Dr. Dandapat opens STLs in Blue Sky Bio locally
+- **Right panel (30%)** — Case context: submitter info, treatment notes, file list, tier
 
-**Verification:** Review form submits, case status updates, submitter sees new review on their case detail.
+**Voice-to-text approach (two options):**
+
+1. **Web Speech API** — Free, built into Chrome/Safari. Real-time transcription. Good enough quality for dictation. No API costs.
+2. **OpenAI Whisper API** ($0.006/min) — Higher accuracy, especially for medical terminology. Batch mode: record → upload → transcribe.
+
+Recommended: Web Speech API for real-time feedback + Whisper as fallback/refinement.
+
+**Decision panel:** After all sections are dictated, radio buttons for final verdict: Approved / Needs Revision / Rejected. "Submit Review" button saves everything.
+
+```bash
+# Only if using Whisper API
+npm install openai
+```
+
+**Verification:** Record button activates mic, words appear in text area, all 8 sections save to Review record.
 
 ### Phase 3: Polish & Deploy
 
@@ -333,12 +388,13 @@ Replace text-based "IMPLANT CHECK" logo with the actual SVG logo from the tradem
 
 ## Future Phases (v2+)
 
-- **3D STL viewer** — Three.js-based in-browser preview of implant positions
-- **Stripe payments** — Pay-per-case before submission
+- **3D STL viewer** — Three.js-based in-browser preview of exported STL files for quick reference alongside Blue Sky Bio
+- **Whisper API refinement** — Higher-accuracy medical terminology transcription for dictated reports
+- **Zoom integration** — Calendar scheduling + meeting links for Complex tier consultations
+- **Stripe payments** — Pay-per-case at time of submission
 - **Bulk pricing** — Discounts for clinics submitting multiple cases
 - **Revision history** — Track iterations of a case through multiple reviews
 - **Analytics** — Reviewer dashboard with throughput metrics
-- **Hermes AI agent** — Coach bot for implantologists (similar to Implant Diploma)
 
 ---
 
@@ -346,9 +402,13 @@ Replace text-based "IMPLANT CHECK" logo with the actual SVG logo from the tradem
 
 | Decision | Rationale |
 |----------|-----------|
+| Reports are 100% human-written | Dr. Dandapat reviews each case personally; AI only assists with dictation/transcription |
+| Voice dictation via Web Speech API | Free, real-time, browser-native — no extra hardware required (supports Plaud AI Pin as alternative input) |
+| 8-section report template | Structured, consistent reports every time; sections mirror Blue Sky Bio's analysis workflow |
+| Blue Sky Bio is external | No web API or embeddable viewer exists — workflow is export → upload → download → review locally |
 | Pay-per-case, no subscription | Client preference — low barrier to entry |
 | UploadThing for file storage | Free tier sufficient, simpler than AWS S3 |
-| No in-browser STL viewer in v1 | Keeps scope manageable; files are download-only |
+| No in-browser STL viewer in v1 | Keeps scope manageable; Dr. Dandapat uses Blue Sky Bio for 3D review |
 | Single reviewer (Dr. Dandapat) | No multi-reviewer assignment system needed |
 | No patient PII | Regulatory simplification — implantologists keep patient data |
 | Same stack as Implant Diploma Platform | Shared conventions, reusable patterns |
