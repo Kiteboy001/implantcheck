@@ -82,9 +82,10 @@ enum Role {
 }
 
 enum CaseTier {
-  BASIC    // £95  — single implant
-  STANDARD // £199 — 2–4 implants with plan
-  COMPLEX  // £295 — 4+ implants + Zoom call
+  BASIC        // £95  — single implant
+  STANDARD     // £199 — 2–4 implants with plan
+  COMPLEX      // £295 — 4+ implants + Zoom call
+  PILOT_GUIDE  // £399 — collaborative surgical pilot guide
 }
 
 enum CaseStatus {

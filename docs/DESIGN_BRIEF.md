@@ -99,7 +99,7 @@ Submitter receives "Needs Revision" feedback
 |-------|------|-------|
 | id | String (UUID) | PK |
 | submitter_id | String | FK → User |
-| tier | CaseTier | BASIC (£95), STANDARD (£199), COMPLEX (£295) |
+| tier | CaseTier | BASIC (£95), STANDARD (£199), COMPLEX (£295), PILOT_GUIDE (£399) |
 | status | CaseStatus | PENDING, UNDER_REVIEW, APPROVED, NEEDS_REVISION, REVISED |
 | patient_context | Text? | Anonymised — age range, edentulous site, medical notes (NO PII) |
 | treatment_notes | Text | Implant dentist's plan description |
@@ -159,6 +159,7 @@ Submitter receives "Needs Revision" feedback
 | **Basic Check** | £95 | Single implant case — full STL/CBCT review with written feedback |
 | **Standard** | £199 | 2–4 implant case — comprehensive review with detailed treatment plan feedback |
 | **Complex** | £295 | 4+ implants, high complexity — full review, detailed plan, and a Zoom consultation call with Dr. Dandapat |
+| **Pilot Guide** | £399 | Everything in Complex + co-designed surgical pilot guide, collaborative planning session, 3D-printed guide delivered |
 
 Pricing is hardcoded for v1 and displayed statically on the landing page and case submission form. The submitter selects their tier during case submission. Payment integration (Stripe) is a future phase — v1 operates on invoice/trust basis.
 

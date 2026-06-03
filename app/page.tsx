@@ -363,7 +363,7 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
             {/* Basic Check */}
             <div className="bg-white rounded-2xl border border-gray-100 shadow p-8 text-center">
               <p className="text-muted text-sm mb-2">Basic Check</p>
@@ -440,6 +440,36 @@ export default function LandingPage() {
                   "Full treatment plan evaluation",
                   "1-on-1 Zoom consultation",
                   "Expedited turnaround: 24 hours",
+                ].map((f, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm text-body">
+                    <svg className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                    </svg>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <Link href="/auth/signup" className="block w-full px-6 py-3 border-2 border-navy text-navy rounded font-semibold hover:bg-navy hover:text-white transition-colors text-center">Get Started</Link>
+            </div>
+
+            {/* Pilot Guide */}
+            <div className="bg-white rounded-2xl border border-gray-100 shadow p-8 text-center">
+              <p className="text-muted text-sm mb-2">Pilot Guide</p>
+              <p className="text-xs text-gold font-semibold uppercase tracking-wider mb-4">Collaborative surgical guide</p>
+              <div className="mb-6">
+                <span className="text-5xl font-bold text-navy font-[(family-name:var(--font-garamond))]">
+                  £399
+                </span>
+                <span className="text-muted text-lg"> /case</span>
+              </div>
+              <ul className="space-y-3 mb-8 text-left">
+                {[
+                  "Everything in Complex",
+                  "Co-designed surgical pilot guide",
+                  "Collaborative planning session",
+                  "3D-printed guide delivered",
+                  "In-depth case discussion included",
+                  "Turnaround: 5–7 working days",
                 ].map((f, i) => (
                   <li key={i} className="flex items-start gap-3 text-sm text-body">
                     <svg className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
