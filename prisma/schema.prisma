@@ -1,0 +1,175 @@
+// Prisma 7 schema — datasource URL in prisma.config.ts
+
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+// ── NextAuth.js v5 models ─────────────────────────────────────
+
+model User {
+  id            String         @id @default(uuid())
+  name          String?
+  email         String         @unique
+  emailVerified DateTime?
+  image         String?
+  passwordHash  String?
+  gdcNumber     String?        @map("gdc_number") // 5-8 digit GDC registration number
+  role          Role           @default(SUBMITTER)
+
+  // Relations
+  accounts      Account[]
+  sessions      Session[]
+  submittedCases Case[]        @relation("Submitter")
+  reviews       Review[]       @relation("Reviewer")
+
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(uuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// ── Domain models ──────────────────────────────────────────────
+
+enum Role {
+  SUBMITTER
+  REVIEWER
+  ADMIN
+}
+
+enum CaseTier {
+  BASIC    // £95  — single implant
+  STANDARD // £199 — 2–4 implants with plan
+  COMPLEX  // £295 — 4+ implants + Zoom call
+}
+
+enum CaseStatus {
+  PENDING
+  UNDER_REVIEW
+  APPROVED
+  NEEDS_REVISION
+  REVISED
+  REJECTED
+}
+
+enum FileType {
+  STL
+  CBCT
+  SCREENSHOT
+  OTHER
+}
+
+enum ReviewDecision {
+  APPROVED
+  NEEDS_REVISION
+  REJECTED
+}
+
+model Case {
+  id             String     @id @default(uuid())
+  submitterId    String     @map("submitter_id")
+  tier           CaseTier   @default(BASIC)
+  status         CaseStatus @default(PENDING)
+  patientContext String?    @map("patient_context") // anonymised — no PII
+  treatmentNotes String     @map("treatment_notes")
+  softwareUsed   String?    @map("software_used") // e.g. "Blue Sky Bio"
+
+  submitter User       @relation("Submitter", fields: [submitterId], references: [id])
+  files     CaseFile[]
+  reviews   Review[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("cases")
+}
+
+model CaseFile {
+  id        String   @id @default(uuid())
+  caseId    String   @map("case_id")
+  fileUrl   String   @map("file_url")
+  fileName  String   @map("file_name")
+  fileType  FileType @map("file_type")
+  fileSize  Int      @map("file_size")
+
+  case Case @relation(fields: [caseId], references: [id], onDelete: Cascade)
+
+  uploadedAt DateTime @default(now()) @map("uploaded_at")
+
+  @@map("case_files")
+}
+
+model Review {
+  id               String         @id @default(uuid())
+  caseId           String         @map("case_id")
+  reviewerId       String         @map("reviewer_id")
+  decision         ReviewDecision
+  implantPosition  String?        @map("implant_position")
+  angulation       String?
+  riskFlags        String?        @map("risk_flags")
+  overallFeedback  String         @map("overall_feedback")
+
+  case     Case @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  reviewer User @relation("Reviewer", fields: [reviewerId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("reviews")
+}
+
+model ReportTemplate {
+  id        String  @id @default(uuid())
+  name      String  // e.g. "Standard Implant Review"
+  sections  Json    // ordered array of {title, placeholder, required}
+  isDefault Boolean @default(false) @map("is_default")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("report_templates")
+}
