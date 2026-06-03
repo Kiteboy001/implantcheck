@@ -467,7 +467,7 @@ export default function LandingPage() {
                   "Everything in Complex",
                   "Co-designed surgical pilot guide",
                   "Collaborative planning session",
-                  "3D-printed guide delivered",
+                  "Downloadable STL for guide ready to print",
                   "In-depth case discussion included",
                   "Turnaround: 5–7 working days",
                 ].map((f, i) => (
