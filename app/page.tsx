@@ -467,7 +467,7 @@ export default function LandingPage() {
                 Dr. Avik Dandapat
               </h2>
               <p className="text-body text-lg mb-6 leading-relaxed">
-                Implantologist and clinical educator. Dr. Dandapat has placed
+                Experienced implant dentist and clinical educator. Dr. Dandapat has placed
                 thousands of dental implants and trained clinicians across the UK
                 through The Implant Diploma programme.
               </p>
@@ -498,7 +498,7 @@ export default function LandingPage() {
                     AD
                   </div>
                   <p className="text-navy font-semibold">Dr. Avik Dandapat</p>
-                  <p className="text-muted text-sm mt-1">Implantologist &amp; Educator</p>
+                  <p className="text-muted text-sm mt-1">Implant Dentist &amp; Educator</p>
                   <p className="text-muted text-xs mt-4">
                     ADIMPLANT.COM LTD
                     <br />

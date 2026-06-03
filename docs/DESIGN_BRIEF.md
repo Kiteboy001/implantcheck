@@ -32,7 +32,7 @@
 
 ## User Roles
 
-### 1. Implantologist (Submitter)
+### 1. Implant Dentist (Submitter)
 - Creates account with GDC number
 - Submits treatment plans: uploads STL files, CBCT scans, planning screenshots, and treatment notes
 - Views review status and feedback on their cases
@@ -52,7 +52,7 @@
 
 ## User Flows
 
-### Flow A: Implantologist Submits a Case
+### Flow A: Implant Dentist Submits a Case
 ```
 Landing → Sign Up (GDC number) → Dashboard → "New Case"
 → Upload STL + CBCT + Screenshots + Treatment Notes
@@ -102,7 +102,7 @@ Submitter receives "Needs Revision" feedback
 | tier | CaseTier | BASIC (£95), STANDARD (£199), COMPLEX (£295) |
 | status | CaseStatus | PENDING, UNDER_REVIEW, APPROVED, NEEDS_REVISION, REVISED |
 | patient_context | Text? | Anonymised — age range, edentulous site, medical notes (NO PII) |
-| treatment_notes | Text | Implantologist's plan description |
+| treatment_notes | Text | Implant dentist's plan description |
 | software_used | String? | e.g. "Blue Sky Bio", "coDiagnostiX" |
 | created_at | DateTime | |
 | updated_at | DateTime | |
@@ -204,7 +204,7 @@ app/
 
 **Practical workflow:**
 
-1. **Implantologist** plans the case in Blue Sky Bio on their desktop
+1. **Implant dentist** plans the case in Blue Sky Bio on their desktop
 2. They **export the STL files and planning screenshots** from Blue Sky Bio (File → Export)
 3. They **upload** those files to ImplantCheck as part of their case submission
 4. **Dr. Dandapat downloads** the STL files and opens them in **Blue Sky Bio on his own computer** to review the implant positions in 3D
