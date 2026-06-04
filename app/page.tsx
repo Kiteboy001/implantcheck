@@ -516,9 +516,7 @@ export default function LandingPage() {
             </div>
 
             <div className="flex-1 order-1 lg:order-2 w-full max-w-sm">
-              <div className="bg-white rounded-2xl aspect-square flex items-center justify-center p-4">
-                <img src="/logo-square.jpg" alt="ImplantCheck — By BCDIS, British College of Dental Implant Surgery" className="w-full h-auto object-contain" />
-              </div>
+              <img src="/logo-square.jpg" alt="ImplantCheck — By BCDIS, British College of Dental Implant Surgery" className="w-full h-auto" />
             </div>
           </div>
         </div>
