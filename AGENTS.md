@@ -18,7 +18,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 ## Project Conventions
 
 - **UI changes:** Use `patch()` for targeted edits, NOT `write_file` for whole-page rewrites
-- **Nav bar:** Grey background (`bg-gray-400`) for logo contrast — user preference
+- **Nav bar:** White background — logo images blend naturally
 - **Logo:** Actual logo images — `public/logo-horizontal.jpg` (nav/footer) and `public/logo-square.jpg` (brand lockup with BCDIS)
 
 ## Architecture
