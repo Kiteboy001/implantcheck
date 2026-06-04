@@ -80,6 +80,16 @@ export async function login(_prev: any, formData: FormData) {
     throw err
   }
 
+  // Redirect based on role
+  const user = await prisma.user.findUnique({
+    where: { email: parsed.data.email },
+    select: { role: true },
+  })
+
+  if (user?.role === "ADMIN" || user?.role === "REVIEWER") {
+    redirect("/admin")
+  }
+
   redirect("/dashboard")
 }
 
