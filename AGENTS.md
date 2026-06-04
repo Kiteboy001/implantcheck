@@ -19,7 +19,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 - **UI changes:** Use `patch()` for targeted edits, NOT `write_file` for whole-page rewrites
 - **Nav bar:** Grey background (`bg-gray-400`) for logo contrast — user preference
-- **Logo:** Text-based "IMPLANT" (navy) + "CHECK" (gold) in EB Garamond until SVG logo is provided
+- **Logo:** Actual logo images — `public/logo-horizontal.jpg` (nav/footer) and `public/logo-square.jpg` (brand lockup with BCDIS)
 
 ## Architecture
 

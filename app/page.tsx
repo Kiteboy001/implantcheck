@@ -7,14 +7,8 @@ export default function LandingPage() {
       <nav className="sticky top-0 z-50 bg-gray-400 backdrop-blur border-b border-gray-200">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <Link href="/" className="flex items-center gap-1">
-              <span className="font-[(family-name:var(--font-garamond))] text-xl font-bold text-navy">
-                IMPLANT
-              </span>
-              <span className="font-[(family-name:var(--font-garamond))] text-xl font-bold text-gold">
-                CHECK
-              </span>
-              <span className="text-xs text-navy/60 ml-0.5 -mt-1">®</span>
+            <Link href="/" className="flex items-center">
+              <img src="/logo-horizontal.jpg" alt="ImplantCheck" className="h-10 w-auto" />
             </Link>
             <div className="flex items-center gap-3">
               <Link
@@ -522,19 +516,8 @@ export default function LandingPage() {
             </div>
 
             <div className="flex-1 order-1 lg:order-2 w-full max-w-sm">
-              <div className="bg-warm-bg rounded-2xl aspect-square flex items-center justify-center border border-navy/5">
-                <div className="text-center p-8">
-                  <div className="w-20 h-20 rounded-full bg-navy flex items-center justify-center text-gold text-2xl font-bold mx-auto mb-4 font-[(family-name:var(--font-garamond))]">
-                    AD
-                  </div>
-                  <p className="text-navy font-semibold">Dr. Avik Dandapat</p>
-                  <p className="text-muted text-sm mt-1">Implant Dentist &amp; Educator</p>
-                  <p className="text-muted text-xs mt-4">
-                    ADIMPLANT.COM LTD
-                    <br />
-                    Company No. 06431009
-                  </p>
-                </div>
+              <div className="bg-white rounded-2xl aspect-square flex items-center justify-center p-4">
+                <img src="/logo-square.jpg" alt="ImplantCheck — By BCDIS, British College of Dental Implant Surgery" className="w-full h-auto object-contain" />
               </div>
             </div>
           </div>
@@ -573,14 +556,8 @@ export default function LandingPage() {
       <footer className="bg-navy-lighter text-white/50 py-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="flex items-center gap-1">
-              <span className="font-[(family-name:var(--font-garamond))] text-lg font-bold text-white/80">
-                IMPLANT
-              </span>
-              <span className="font-[(family-name:var(--font-garamond))] text-lg font-bold text-gold">
-                CHECK
-              </span>
-              <span className="text-xs text-white/30 ml-0.5 -mt-1">®</span>
+            <div className="flex items-center">
+              <img src="/logo-horizontal.jpg" alt="ImplantCheck" className="h-10 w-auto" />
             </div>
 
             <div className="flex gap-8 text-sm">
@@ -613,7 +590,7 @@ export default function LandingPage() {
               reserved. Company No. 06431009.
             </p>
             <p className="mt-1">
-              IMPLANTCHECK is a registered trademark (UK00004379448).
+              IMPLANTCHECK is a trademark (UK00004379448).
             </p>
           </div>
         </div>
