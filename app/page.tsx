@@ -551,7 +551,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── FOOTER ────────────────────────────────────────────── */}
-      <footer className="bg-navy-lighter text-white/50 py-12">
+      <footer className="bg-white text-muted py-12 border-t border-gray-200">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center">
@@ -561,13 +561,13 @@ export default function LandingPage() {
             <div className="flex gap-8 text-sm">
               <Link
                 href="/auth/login"
-                className="hover:text-white/80 transition-colors"
+                className="hover:text-navy transition-colors"
               >
                 Sign in
               </Link>
               <Link
                 href="mailto:hello@implantcheck.co.uk"
-                className="hover:text-white/80 transition-colors"
+                className="hover:text-navy transition-colors"
               >
                 Contact
               </Link>
@@ -575,14 +575,14 @@ export default function LandingPage() {
                 href="https://theimplantdiploma.co.uk"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-white/80 transition-colors"
+                className="hover:text-navy transition-colors"
               >
                 The Implant Diploma
               </a>
             </div>
           </div>
 
-          <div className="mt-8 pt-8 border-t border-white/10 text-center text-xs text-white/30">
+          <div className="mt-8 pt-8 border-t border-gray-200 text-center text-xs text-muted/60">
             <p>
               &copy; {new Date().getFullYear()} ADIMPLANT.COM LTD. All rights
               reserved. Company No. 06431009.
