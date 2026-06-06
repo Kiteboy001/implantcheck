@@ -223,7 +223,7 @@ export default function NewCasePage() {
 
           {uploadedFiles.length === 0 && (
             <p className="mt-3 text-xs text-muted">
-              Supported: STL (up to 256MB), DICOM/CBCT (up to 512MB), PNG/JPEG screenshots (up to 16MB)
+              Supported: STL, OBJ, PLY (up to 256MB) · DICOM/CBCT (up to 512MB) · PNG, JPEG (up to 16MB)
             </p>
           )}
         </div>

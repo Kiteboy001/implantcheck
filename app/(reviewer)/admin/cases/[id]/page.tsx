@@ -45,6 +45,13 @@ export default async function CaseDetailPage({
 
   if (!caseData) notFound()
 
+  // Fetch available reviewers for assignment dropdown
+  const reviewers = await prisma.user.findMany({
+    where: { role: { in: ['REVIEWER', 'ADMIN'] } },
+    select: { id: true, name: true, email: true, role: true },
+    orderBy: { name: 'asc' },
+  })
+
   const tierPricing: Record<string, string> = {
     BASIC: "£95",
     STANDARD: "£199",
@@ -292,7 +299,7 @@ export default async function CaseDetailPage({
           </div>
 
           {/* Reviewer assignment */}
-          <ReviewerAssign caseId={caseData.id} currentReviewerId={caseData.reviewerId} currentStatus={caseData.status} reviewerName={caseData.reviewer?.name || null} />
+          <ReviewerAssign caseId={caseData.id} currentReviewerId={caseData.reviewerId} currentStatus={caseData.status} reviewerName={caseData.reviewer?.name || null} reviewers={reviewers} />
 
           {/* Case details */}
           <div className="bg-white rounded-xl border border-gray-100 p-5">
