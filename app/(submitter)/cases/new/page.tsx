@@ -1,8 +1,8 @@
 "use client"
 
-import { useActionState, useState } from "react"
+import { useActionState, useState, useRef } from "react"
 import { useRouter } from "next/navigation"
-import { UploadButton } from "@uploadthing/react"
+import { generateReactHelpers } from "@uploadthing/react"
 import type { OurFileRouter } from "@/lib/uploadthing"
 import { submitCase, type SubmitCaseState } from "@/app/actions/cases"
 
@@ -17,12 +17,55 @@ const tiers = [
 
 type UploadedFile = { url: string; name: string; size: number; type: string }
 
+const { useUploadThing } = generateReactHelpers<OurFileRouter>()
+
 export default function NewCasePage() {
   const router = useRouter()
   const [state, formAction, isPending] = useActionState(submitCase, initialState)
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([])
   const [uploadError, setUploadError] = useState("")
   const [selectedTier, setSelectedTier] = useState("")
+  const [isUploading, setIsUploading] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const { startUpload } = useUploadThing("caseFile", {
+    onClientUploadComplete: (res) => {
+      const newFiles: UploadedFile[] = res.map((r) => ({
+        url: r.ufsUrl,
+        name: r.name,
+        size: r.size,
+        type: r.type || "application/octet-stream",
+      }))
+      setUploadedFiles((prev) => [...prev, ...newFiles])
+      setUploadError("")
+      setIsUploading(false)
+    },
+    onUploadError: (error) => {
+      setUploadError(error.message || "Upload failed")
+      setIsUploading(false)
+    },
+    onUploadBegin: () => {
+      setIsUploading(true)
+      setUploadError("")
+    },
+  })
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (!files || files.length === 0) return
+    await startUpload(Array.from(files))
+    // Reset input so the same file can be re-selected if needed
+    if (fileInputRef.current) fileInputRef.current.value = ""
+  }
+
+  const handleDrop = async (e: React.DragEvent) => {
+    e.preventDefault()
+    const files = e.dataTransfer.files
+    if (!files || files.length === 0) return
+    await startUpload(Array.from(files))
+  }
+
+  const acceptFormats = ".stl,.obj,.ply,.dcm,.dicom,.png,.jpg,.jpeg,.webp"
 
   if (state.success) {
     return (
@@ -159,20 +202,42 @@ export default function NewCasePage() {
           </p>
 
           {/* Drop zone */}
-          <div className="border-2 border-dashed border-gray-200 rounded-xl p-8 text-center hover:border-gold/30 hover:bg-gold/[0.02] transition-all mb-4">
+          <div
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={handleDrop}
+            onClick={() => fileInputRef.current?.click()}
+            className="border-2 border-dashed border-gray-200 rounded-xl p-8 text-center hover:border-gold/30 hover:bg-gold/[0.02] transition-all mb-4 cursor-pointer"
+          >
             <div className="w-12 h-12 rounded-full bg-navy/5 flex items-center justify-center mx-auto mb-3">
               <svg className="w-6 h-6 text-navy/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
               </svg>
             </div>
-            <p className="text-sm text-muted mb-1">
-              Drag and drop your files here, or click to browse
-            </p>
-            <p className="text-xs text-muted/60">
-              STL, PLY, OBJ (up to 256MB) · DICOM (up to 512MB) · PNG, JPEG (up to 16MB)
-            </p>
+            {isUploading ? (
+              <p className="text-sm text-gold font-medium">Uploading...</p>
+            ) : (
+              <>
+                <p className="text-sm text-muted mb-1">
+                  Drag and drop your files here, or click to browse
+                </p>
+                <p className="text-xs text-muted/60">
+                  STL, PLY, OBJ (up to 256MB) · DICOM (up to 512MB) · PNG, JPEG (up to 16MB)
+                </p>
+              </>
+            )}
           </div>
 
+          {/* Hidden file input */}
+          <input
+            ref={fileInputRef}
+            type="file"
+            multiple
+            accept={acceptFormats}
+            onChange={handleFileChange}
+            className="hidden"
+          />
+
+          {/* Uploaded files list */}
           {uploadedFiles.length > 0 && (
             <div className="mb-4 space-y-2">
               {uploadedFiles.map((file, i) => (
@@ -197,34 +262,22 @@ export default function NewCasePage() {
             </div>
           )}
 
-          <input type="hidden" name="files" value={JSON.stringify(uploadedFiles)} />
+          {/* Add more files button */}
+          {uploadedFiles.length > 0 && (
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={isUploading}
+              className="px-4 py-2 bg-navy text-white rounded-lg text-sm font-semibold hover:bg-navy-light transition-colors disabled:opacity-50"
+            >
+              {isUploading ? "Uploading..." : "+ Add More Files"}
+            </button>
+          )}
 
-          <UploadButton<OurFileRouter, "caseFile">
-            endpoint="caseFile"
-            onClientUploadComplete={(res) => {
-              const newFiles: UploadedFile[] = res.map((r) => ({
-                url: r.ufsUrl,
-                name: r.name,
-                size: r.size,
-                type: r.type,
-              }))
-              setUploadedFiles((prev) => [...prev, ...newFiles])
-              setUploadError("")
-            }}
-            onUploadError={(error) => {
-              setUploadError(error.message)
-            }}
-            className="ut-button:bg-navy ut-button:text-white ut-button:rounded-lg ut-button:px-5 ut-button:py-2.5 ut-button:text-sm ut-button:font-semibold ut-button:hover:bg-navy-light ut-button:transition-colors ut-allowed-content:text-muted ut-allowed-content:text-xs"
-          />
+          <input type="hidden" name="files" value={JSON.stringify(uploadedFiles)} />
 
           {uploadError && (
             <p className="mt-2 text-sm text-red-600">{uploadError}</p>
-          )}
-
-          {uploadedFiles.length === 0 && (
-            <p className="mt-3 text-xs text-muted">
-              Supported: STL, OBJ, PLY (up to 256MB) · DICOM/CBCT (up to 512MB) · PNG, JPEG (up to 16MB)
-            </p>
           )}
         </div>
 
@@ -238,7 +291,7 @@ export default function NewCasePage() {
         {/* Submit */}
         <button
           type="submit"
-          disabled={isPending}
+          disabled={isPending || isUploading}
           className="w-full px-6 py-4 bg-navy text-white rounded-xl font-semibold text-base hover:bg-navy-light transition-colors disabled:opacity-50"
         >
           {isPending ? "Submitting..." : "Submit Case for Review"}
