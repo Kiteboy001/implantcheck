@@ -174,7 +174,7 @@ export default async function CaseDetailPage({
                       </div>
                     </div>
                     <a
-                      href={file.fileUrl}
+                      href={`/api/download?url=${encodeURIComponent(file.fileUrl)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-sm text-gold hover:text-gold-light font-medium transition-colors"
@@ -349,7 +349,7 @@ export default async function CaseDetailPage({
               {caseData.files.length > 0 && (
                 <button
                   onClick={() => {
-                    caseData.files.forEach((f) => window.open(f.fileUrl, "_blank"))
+                    caseData.files.forEach((f) => window.open(`/api/download?url=${encodeURIComponent(f.fileUrl)}`, "_blank"))
                   }}
                   className="block w-full text-center px-4 py-2.5 bg-navy text-white rounded-lg text-sm font-medium hover:bg-navy-light transition-colors"
                 >

@@ -151,7 +151,7 @@ export default async function SubmitterCasePage({
                       </div>
                     </div>
                     <a
-                      href={file.fileUrl}
+                      href={`/api/download?url=${encodeURIComponent(file.fileUrl)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-sm text-gold hover:text-gold-light font-medium transition-colors"
