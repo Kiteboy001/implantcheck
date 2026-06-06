@@ -17,7 +17,12 @@ export async function submitCase(
   const tier = formData.get("tier") as string
   const treatmentNotes = formData.get("treatmentNotes") as string
   const patientContext = formData.get("patientContext") as string
-  const softwareUsed = formData.get("softwareUsed") as string
+  let softwareUsed = (formData.get("softwareUsed") as string) || null
+  // If "Other (specify)" selected, use the custom value instead
+  if (softwareUsed === "_other") {
+    const custom = (formData.get("softwareUsedCustom") as string) || null
+    softwareUsed = custom || "Other (unspecified)"
+  }
 
   // Parse uploaded file data (JSON string from UploadThing)
   const filesJson = formData.get("files") as string

@@ -144,7 +144,37 @@ export default function NewCasePage() {
             </div>
             <div>
               <label className="block text-sm font-medium text-navy mb-1.5">Planning Software</label>
-              <input type="text" name="softwareUsed" className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-body focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-colors" placeholder="e.g. Blue Sky Bio, coDiagnostiX" />
+              <select
+                name="softwareUsed"
+                defaultValue=""
+                onChange={(e) => {
+                  const customInput = document.getElementById('custom-software') as HTMLInputElement
+                  if (customInput) customInput.style.display = e.target.value === '_other' ? 'block' : 'none'
+                }}
+                className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-body focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-colors bg-white"
+              >
+                <option value="">Select your planning software…</option>
+                <option value="Blue Sky Bio">Blue Sky Bio</option>
+                <option value="coDiagnostiX">coDiagnostiX (Dental Wings)</option>
+                <option value="NobelClinician">NobelClinician</option>
+                <option value="DTX Studio Implant">DTX Studio Implant (Nobel Biocare)</option>
+                <option value="SimPlant">SimPlant (Dentsply Sirona)</option>
+                <option value="RealGUIDE">RealGUIDE (3DIEMME)</option>
+                <option value="exoplan">exoplan (exocad)</option>
+                <option value="Implant Studio">Implant Studio (3Shape)</option>
+                <option value="SMOP">SMOP (Swissmeda)</option>
+                <option value="360dps">360dps</option>
+                <option value="Galileos">Galileos Implant (Sirona)</option>
+                <option value="GuideMia">GuideMia</option>
+                <option value="_other">Other (specify)</option>
+              </select>
+              <input
+                id="custom-software"
+                type="text"
+                name="softwareUsedCustom"
+                placeholder="Please specify your software…"
+                className="hidden mt-2 w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-body focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-colors"
+              />
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma"
 import { notFound } from "next/navigation"
 import Link from "next/link"
+import { DownloadAllButton } from "./DownloadAllButton"
 
 const statusLabels: Record<string, string> = {
   PENDING: "Pending",
@@ -362,14 +363,7 @@ export default async function CaseDetailPage({
                 ← Back to Cases
               </Link>
               {caseData.files.length > 0 && (
-                <button
-                  onClick={() => {
-                    caseData.files.forEach((f) => window.open(`/api/download?url=${encodeURIComponent(f.fileUrl)}`, "_blank"))
-                  }}
-                  className="block w-full text-center px-4 py-2.5 bg-navy text-white rounded-lg text-sm font-medium hover:bg-navy-light transition-colors"
-                >
-                  Download All Files
-                </button>
+                <DownloadAllButton files={caseData.files} />
               )}
             </div>
           </div>
