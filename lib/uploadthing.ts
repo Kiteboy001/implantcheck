@@ -5,11 +5,8 @@ const f = createUploadthing()
 
 export const ourFileRouter = {
   caseFile: f({
-    "application/octet-stream": { maxFileSize: "256MB", maxFileCount: 10 },
-    "application/dicom": { maxFileSize: "512MB", maxFileCount: 5 },
-    "image/png": { maxFileSize: "16MB", maxFileCount: 10 },
-    "image/jpeg": { maxFileSize: "16MB", maxFileCount: 10 },
-    "image/webp": { maxFileSize: "16MB", maxFileCount: 10 },
+    blob: { maxFileSize: "512MB", maxFileCount: 10 },
+    image: { maxFileSize: "16MB", maxFileCount: 10 },
   })
     .middleware(async () => {
       const session = await auth()
@@ -17,7 +14,7 @@ export const ourFileRouter = {
       return { userId: (session.user as any).id as string }
     })
     .onUploadComplete(async ({ metadata, file }) => {
-      // Detect file type from extension or MIME
+      // Detect file type from extension
       const ext = file.name.split(".").pop()?.toLowerCase() || ""
       const typeMap: Record<string, string> = {
         stl: "STL", obj: "OBJ", ply: "PLY",
