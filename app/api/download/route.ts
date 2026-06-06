@@ -15,8 +15,11 @@ export async function GET(request: Request) {
     const blob = await head(url)
     if (!blob) return NextResponse.json({ error: "File not found" }, { status: 404 })
 
-    // Fetch the blob content
-    const response = await fetch(blob.url)
+    // Fetch the blob content with authorization for private blobs
+    const token = process.env.BLOB_READ_WRITE_TOKEN
+    const response = await fetch(blob.url, {
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    })
     if (!response.ok) return NextResponse.json({ error: "Failed to fetch blob" }, { status: 500 })
 
     const headers = new Headers()
