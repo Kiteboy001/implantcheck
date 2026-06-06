@@ -32,7 +32,6 @@ export default async function CaseDetailPage({
     where: { id },
     include: {
       submitter: { select: { name: true, email: true, gdcNumber: true } },
-      reviewer: { select: { id: true, name: true, email: true } },
       files: true,
       reviews: {
         include: {
@@ -44,6 +43,15 @@ export default async function CaseDetailPage({
   })
 
   if (!caseData) notFound()
+
+  // Fetch assigned reviewer if there is one
+  let assignedReviewer = null
+  if (caseData.reviewerId) {
+    assignedReviewer = await prisma.user.findUnique({
+      where: { id: caseData.reviewerId },
+      select: { id: true, name: true, email: true },
+    })
+  }
 
   // Fetch available reviewers for assignment dropdown
   const reviewers = await prisma.user.findMany({
@@ -299,7 +307,7 @@ export default async function CaseDetailPage({
           </div>
 
           {/* Reviewer assignment */}
-          <ReviewerAssign caseId={caseData.id} currentReviewerId={caseData.reviewerId} currentStatus={caseData.status} reviewerName={caseData.reviewer?.name || null} reviewers={reviewers} />
+          <ReviewerAssign caseId={caseData.id} currentReviewerId={caseData.reviewerId} currentStatus={caseData.status} reviewerName={assignedReviewer?.name || null} reviewers={reviewers} />
 
           {/* Case details */}
           <div className="bg-white rounded-xl border border-gray-100 p-5">
