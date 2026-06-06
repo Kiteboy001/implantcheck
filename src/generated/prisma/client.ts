@@ -81,3 +81,8 @@ export type Review = Prisma.ReviewModel
  * 
  */
 export type ReportTemplate = Prisma.ReportTemplateModel
+/**
+ * Model Token
+ * 
+ */
+export type Token = Prisma.TokenModel

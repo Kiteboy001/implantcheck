@@ -347,6 +347,22 @@ export default async function CaseDetailPage({
                   {statusLabels[caseData.status]}
                 </span>
               </div>
+              <div className="flex justify-between">
+                <span className="text-muted">Payment</span>
+                <span className={`font-medium text-sm ${
+                  caseData.paymentStatus === "PAID"
+                    ? "text-green-600"
+                    : caseData.paymentStatus === "TOKEN_REDEEMED"
+                    ? "text-purple-600"
+                    : "text-red-600"
+                }`}>
+                  {caseData.paymentStatus === "PAID"
+                    ? "Paid"
+                    : caseData.paymentStatus === "TOKEN_REDEEMED"
+                    ? "Token"
+                    : "Unpaid"}
+                </span>
+              </div>
             </div>
           </div>
 

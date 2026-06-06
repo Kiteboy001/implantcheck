@@ -137,6 +137,16 @@ export default async function DashboardPage() {
                         >
                           {statusLabels[c.status]}
                         </span>
+                        {(c as any).paymentStatus === "UNPAID" && (
+                          <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-red-100 text-red-800">
+                            ⚠ Unpaid
+                          </span>
+                        )}
+                        {(c as any).paymentStatus === "TOKEN_REDEEMED" && (
+                          <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-purple-100 text-purple-800">
+                            🎟 Token
+                          </span>
+                        )}
                       </div>
                       <p className="text-xs text-muted">
                         {c.files.length} file{c.files.length !== 1 ? "s" : ""}

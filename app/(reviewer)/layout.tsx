@@ -44,6 +44,12 @@ export default async function ReviewerLayout({
                 >
                   Users
                 </Link>
+                <Link
+                  href="/admin/tokens"
+                  className="text-sm text-body hover:text-navy transition-colors"
+                >
+                  Tokens
+                </Link>
               </div>
             </div>
             <div className="flex items-center gap-4">

@@ -85,19 +85,14 @@ export default function NewCasePage() {
             </svg>
           </div>
           <h2 className="font-[(family-name:var(--font-garamond))] text-2xl text-navy font-bold mb-2">
-            Case Submitted!
+            Case Created!
           </h2>
           <p className="text-muted mb-6">
-            Your treatment plan has been submitted for review. Dr. Dandapat will review it shortly.
+            Your case has been saved. Please complete the payment to submit it for review.
           </p>
-          <div className="flex gap-3 justify-center">
-            <button onClick={() => router.push("/dashboard")} className="px-6 py-2.5 bg-navy text-white rounded-lg font-semibold hover:bg-navy-light transition-colors">
-              View My Cases
-            </button>
-            <button onClick={() => router.push(`/cases/${state.success}`)} className="px-6 py-2.5 border border-navy text-navy rounded-lg font-semibold hover:bg-navy hover:text-white transition-colors">
-              View Case
-            </button>
-          </div>
+          <button onClick={() => router.push(`/cases/${state.success}/checkout`)} className="px-6 py-2.5 bg-navy text-white rounded-lg font-semibold hover:bg-navy-light transition-colors">
+            Proceed to Checkout →
+          </button>
         </div>
       </div>
     )

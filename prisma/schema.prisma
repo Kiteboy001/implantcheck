@@ -27,6 +27,8 @@ model User {
   submittedCases Case[]        @relation("Submitter")
   assignedCases  Case[]        @relation("ReviewerAssignment")
   reviews       Review[]       @relation("Reviewer")
+  createdTokens Token[]        @relation("TokenCreator")
+  usedTokens    Token[]        @relation("TokenUser")
 
   createdAt     DateTime       @default(now()) @map("created_at")
   updatedAt     DateTime       @updatedAt @map("updated_at")
@@ -98,6 +100,12 @@ enum CaseStatus {
   REJECTED
 }
 
+enum PaymentStatus {
+  UNPAID
+  PAID
+  TOKEN_REDEEMED
+}
+
 enum FileType {
   STL
   CBCT
@@ -114,12 +122,13 @@ enum ReviewDecision {
 }
 
 model Case {
-  id             String     @id @default(uuid())
-  submitterId    String     @map("submitter_id")
-  reviewerId     String?    @map("reviewer_id")
-  tier           CaseTier   @default(BASIC)
-  status         CaseStatus @default(PENDING)
-  patientContext String?    @map("patient_context") // anonymised — no PII
+  id             String        @id @default(uuid())
+  submitterId    String        @map("submitter_id")
+  reviewerId     String?       @map("reviewer_id")
+  tier           CaseTier      @default(BASIC)
+  status         CaseStatus    @default(PENDING)
+  paymentStatus  PaymentStatus @default(UNPAID) @map("payment_status")
+  patientContext String?       @map("patient_context") // anonymised — no PII
   treatmentNotes String     @map("treatment_notes")
   softwareUsed   String?    @map("software_used") // e.g. "Blue Sky Bio"
 
@@ -127,6 +136,7 @@ model Case {
   reviewer  User?      @relation("ReviewerAssignment", fields: [reviewerId], references: [id])
   files     CaseFile[]
   reviews   Review[]
+  token     Token?     @relation("TokenCase")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -178,4 +188,24 @@ model ReportTemplate {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("report_templates")
+}
+
+model Token {
+  id         String       @id @default(uuid())
+  code       String       @unique // e.g. "IC-A7B3-X9K2"
+  tier       CaseTier     // which tier this token covers
+  isUsed     Boolean      @default(false) @map("is_used")
+  usedById   String?      @map("used_by_id")
+  usedCaseId String?      @unique @map("used_case_id")
+  usedAt     DateTime?    @map("used_at")
+  createdById String      @map("created_by_id")
+  notes      String?      // admin notes (e.g. "Cohort 3 student token")
+
+  usedBy    User?  @relation("TokenUser", fields: [usedById], references: [id])
+  usedCase  Case?  @relation("TokenCase", fields: [usedCaseId], references: [id])
+  createdBy User   @relation("TokenCreator", fields: [createdById], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("tokens")
 }

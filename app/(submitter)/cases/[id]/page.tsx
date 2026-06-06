@@ -57,6 +57,42 @@ export default async function SubmitterCasePage({
         <span className="text-navy font-medium">Case Details</span>
       </div>
 
+      {/* Payment banner — only for unpaid cases */}
+      {caseData.paymentStatus === "UNPAID" && (
+        <div className="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-xl flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">⚠️</span>
+            <div>
+              <p className="text-sm font-semibold text-amber-800">Payment Required</p>
+              <p className="text-xs text-amber-700">
+                Complete your payment to submit this case for expert review.
+              </p>
+            </div>
+          </div>
+          <Link
+            href={`/cases/${caseData.id}/checkout`}
+            className="px-5 py-2 bg-navy text-white rounded-lg text-sm font-semibold hover:bg-navy-light transition-colors shrink-0"
+          >
+            Complete Payment →
+          </Link>
+        </div>
+      )}
+
+      {/* Payment success banner (when returning from Stripe) */}
+      {caseData.paymentStatus === "PAID" && caseData.status === "PENDING" && (
+        <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-xl">
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">🔄</span>
+            <div>
+              <p className="text-sm font-semibold text-blue-800">Payment received — entering review queue</p>
+              <p className="text-xs text-blue-700">
+                Your case will be assigned to a reviewer shortly. Refresh the page if the status hasn't updated yet.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Main */}
         <div className="lg:col-span-2 space-y-6">

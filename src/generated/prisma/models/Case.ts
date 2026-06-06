@@ -30,6 +30,7 @@ export type CaseMinAggregateOutputType = {
   reviewerId: string | null
   tier: $Enums.CaseTier | null
   status: $Enums.CaseStatus | null
+  paymentStatus: $Enums.PaymentStatus | null
   patientContext: string | null
   treatmentNotes: string | null
   softwareUsed: string | null
@@ -43,6 +44,7 @@ export type CaseMaxAggregateOutputType = {
   reviewerId: string | null
   tier: $Enums.CaseTier | null
   status: $Enums.CaseStatus | null
+  paymentStatus: $Enums.PaymentStatus | null
   patientContext: string | null
   treatmentNotes: string | null
   softwareUsed: string | null
@@ -56,6 +58,7 @@ export type CaseCountAggregateOutputType = {
   reviewerId: number
   tier: number
   status: number
+  paymentStatus: number
   patientContext: number
   treatmentNotes: number
   softwareUsed: number
@@ -71,6 +74,7 @@ export type CaseMinAggregateInputType = {
   reviewerId?: true
   tier?: true
   status?: true
+  paymentStatus?: true
   patientContext?: true
   treatmentNotes?: true
   softwareUsed?: true
@@ -84,6 +88,7 @@ export type CaseMaxAggregateInputType = {
   reviewerId?: true
   tier?: true
   status?: true
+  paymentStatus?: true
   patientContext?: true
   treatmentNotes?: true
   softwareUsed?: true
@@ -97,6 +102,7 @@ export type CaseCountAggregateInputType = {
   reviewerId?: true
   tier?: true
   status?: true
+  paymentStatus?: true
   patientContext?: true
   treatmentNotes?: true
   softwareUsed?: true
@@ -183,6 +189,7 @@ export type CaseGroupByOutputType = {
   reviewerId: string | null
   tier: $Enums.CaseTier
   status: $Enums.CaseStatus
+  paymentStatus: $Enums.PaymentStatus
   patientContext: string | null
   treatmentNotes: string
   softwareUsed: string | null
@@ -217,6 +224,7 @@ export type CaseWhereInput = {
   reviewerId?: Prisma.StringNullableFilter<"Case"> | string | null
   tier?: Prisma.EnumCaseTierFilter<"Case"> | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusFilter<"Case"> | $Enums.CaseStatus
+  paymentStatus?: Prisma.EnumPaymentStatusFilter<"Case"> | $Enums.PaymentStatus
   patientContext?: Prisma.StringNullableFilter<"Case"> | string | null
   treatmentNotes?: Prisma.StringFilter<"Case"> | string
   softwareUsed?: Prisma.StringNullableFilter<"Case"> | string | null
@@ -226,6 +234,7 @@ export type CaseWhereInput = {
   reviewer?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   files?: Prisma.CaseFileListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
+  token?: Prisma.XOR<Prisma.TokenNullableScalarRelationFilter, Prisma.TokenWhereInput> | null
 }
 
 export type CaseOrderByWithRelationInput = {
@@ -234,6 +243,7 @@ export type CaseOrderByWithRelationInput = {
   reviewerId?: Prisma.SortOrderInput | Prisma.SortOrder
   tier?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  paymentStatus?: Prisma.SortOrder
   patientContext?: Prisma.SortOrderInput | Prisma.SortOrder
   treatmentNotes?: Prisma.SortOrder
   softwareUsed?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -243,6 +253,7 @@ export type CaseOrderByWithRelationInput = {
   reviewer?: Prisma.UserOrderByWithRelationInput
   files?: Prisma.CaseFileOrderByRelationAggregateInput
   reviews?: Prisma.ReviewOrderByRelationAggregateInput
+  token?: Prisma.TokenOrderByWithRelationInput
 }
 
 export type CaseWhereUniqueInput = Prisma.AtLeast<{
@@ -254,6 +265,7 @@ export type CaseWhereUniqueInput = Prisma.AtLeast<{
   reviewerId?: Prisma.StringNullableFilter<"Case"> | string | null
   tier?: Prisma.EnumCaseTierFilter<"Case"> | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusFilter<"Case"> | $Enums.CaseStatus
+  paymentStatus?: Prisma.EnumPaymentStatusFilter<"Case"> | $Enums.PaymentStatus
   patientContext?: Prisma.StringNullableFilter<"Case"> | string | null
   treatmentNotes?: Prisma.StringFilter<"Case"> | string
   softwareUsed?: Prisma.StringNullableFilter<"Case"> | string | null
@@ -263,6 +275,7 @@ export type CaseWhereUniqueInput = Prisma.AtLeast<{
   reviewer?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   files?: Prisma.CaseFileListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
+  token?: Prisma.XOR<Prisma.TokenNullableScalarRelationFilter, Prisma.TokenWhereInput> | null
 }, "id">
 
 export type CaseOrderByWithAggregationInput = {
@@ -271,6 +284,7 @@ export type CaseOrderByWithAggregationInput = {
   reviewerId?: Prisma.SortOrderInput | Prisma.SortOrder
   tier?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  paymentStatus?: Prisma.SortOrder
   patientContext?: Prisma.SortOrderInput | Prisma.SortOrder
   treatmentNotes?: Prisma.SortOrder
   softwareUsed?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -290,6 +304,7 @@ export type CaseScalarWhereWithAggregatesInput = {
   reviewerId?: Prisma.StringNullableWithAggregatesFilter<"Case"> | string | null
   tier?: Prisma.EnumCaseTierWithAggregatesFilter<"Case"> | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusWithAggregatesFilter<"Case"> | $Enums.CaseStatus
+  paymentStatus?: Prisma.EnumPaymentStatusWithAggregatesFilter<"Case"> | $Enums.PaymentStatus
   patientContext?: Prisma.StringNullableWithAggregatesFilter<"Case"> | string | null
   treatmentNotes?: Prisma.StringWithAggregatesFilter<"Case"> | string
   softwareUsed?: Prisma.StringNullableWithAggregatesFilter<"Case"> | string | null
@@ -301,6 +316,7 @@ export type CaseCreateInput = {
   id?: string
   tier?: $Enums.CaseTier
   status?: $Enums.CaseStatus
+  paymentStatus?: $Enums.PaymentStatus
   patientContext?: string | null
   treatmentNotes: string
   softwareUsed?: string | null
@@ -310,6 +326,7 @@ export type CaseCreateInput = {
   reviewer?: Prisma.UserCreateNestedOneWithoutAssignedCasesInput
   files?: Prisma.CaseFileCreateNestedManyWithoutCaseInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutCaseInput
+  token?: Prisma.TokenCreateNestedOneWithoutUsedCaseInput
 }
 
 export type CaseUncheckedCreateInput = {
@@ -318,6 +335,7 @@ export type CaseUncheckedCreateInput = {
   reviewerId?: string | null
   tier?: $Enums.CaseTier
   status?: $Enums.CaseStatus
+  paymentStatus?: $Enums.PaymentStatus
   patientContext?: string | null
   treatmentNotes: string
   softwareUsed?: string | null
@@ -325,12 +343,14 @@ export type CaseUncheckedCreateInput = {
   updatedAt?: Date | string
   files?: Prisma.CaseFileUncheckedCreateNestedManyWithoutCaseInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutCaseInput
+  token?: Prisma.TokenUncheckedCreateNestedOneWithoutUsedCaseInput
 }
 
 export type CaseUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   treatmentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   softwareUsed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -340,6 +360,7 @@ export type CaseUpdateInput = {
   reviewer?: Prisma.UserUpdateOneWithoutAssignedCasesNestedInput
   files?: Prisma.CaseFileUpdateManyWithoutCaseNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutCaseNestedInput
+  token?: Prisma.TokenUpdateOneWithoutUsedCaseNestedInput
 }
 
 export type CaseUncheckedUpdateInput = {
@@ -348,6 +369,7 @@ export type CaseUncheckedUpdateInput = {
   reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   treatmentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   softwareUsed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -355,6 +377,7 @@ export type CaseUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   files?: Prisma.CaseFileUncheckedUpdateManyWithoutCaseNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutCaseNestedInput
+  token?: Prisma.TokenUncheckedUpdateOneWithoutUsedCaseNestedInput
 }
 
 export type CaseCreateManyInput = {
@@ -363,6 +386,7 @@ export type CaseCreateManyInput = {
   reviewerId?: string | null
   tier?: $Enums.CaseTier
   status?: $Enums.CaseStatus
+  paymentStatus?: $Enums.PaymentStatus
   patientContext?: string | null
   treatmentNotes: string
   softwareUsed?: string | null
@@ -374,6 +398,7 @@ export type CaseUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   treatmentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   softwareUsed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -387,6 +412,7 @@ export type CaseUncheckedUpdateManyInput = {
   reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   treatmentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   softwareUsed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -410,6 +436,7 @@ export type CaseCountOrderByAggregateInput = {
   reviewerId?: Prisma.SortOrder
   tier?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  paymentStatus?: Prisma.SortOrder
   patientContext?: Prisma.SortOrder
   treatmentNotes?: Prisma.SortOrder
   softwareUsed?: Prisma.SortOrder
@@ -423,6 +450,7 @@ export type CaseMaxOrderByAggregateInput = {
   reviewerId?: Prisma.SortOrder
   tier?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  paymentStatus?: Prisma.SortOrder
   patientContext?: Prisma.SortOrder
   treatmentNotes?: Prisma.SortOrder
   softwareUsed?: Prisma.SortOrder
@@ -436,6 +464,7 @@ export type CaseMinOrderByAggregateInput = {
   reviewerId?: Prisma.SortOrder
   tier?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  paymentStatus?: Prisma.SortOrder
   patientContext?: Prisma.SortOrder
   treatmentNotes?: Prisma.SortOrder
   softwareUsed?: Prisma.SortOrder
@@ -446,6 +475,11 @@ export type CaseMinOrderByAggregateInput = {
 export type CaseScalarRelationFilter = {
   is?: Prisma.CaseWhereInput
   isNot?: Prisma.CaseWhereInput
+}
+
+export type CaseNullableScalarRelationFilter = {
+  is?: Prisma.CaseWhereInput | null
+  isNot?: Prisma.CaseWhereInput | null
 }
 
 export type CaseCreateNestedManyWithoutSubmitterInput = {
@@ -540,6 +574,10 @@ export type EnumCaseStatusFieldUpdateOperationsInput = {
   set?: $Enums.CaseStatus
 }
 
+export type EnumPaymentStatusFieldUpdateOperationsInput = {
+  set?: $Enums.PaymentStatus
+}
+
 export type CaseCreateNestedOneWithoutFilesInput = {
   create?: Prisma.XOR<Prisma.CaseCreateWithoutFilesInput, Prisma.CaseUncheckedCreateWithoutFilesInput>
   connectOrCreate?: Prisma.CaseCreateOrConnectWithoutFilesInput
@@ -568,10 +606,27 @@ export type CaseUpdateOneRequiredWithoutReviewsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CaseUpdateToOneWithWhereWithoutReviewsInput, Prisma.CaseUpdateWithoutReviewsInput>, Prisma.CaseUncheckedUpdateWithoutReviewsInput>
 }
 
+export type CaseCreateNestedOneWithoutTokenInput = {
+  create?: Prisma.XOR<Prisma.CaseCreateWithoutTokenInput, Prisma.CaseUncheckedCreateWithoutTokenInput>
+  connectOrCreate?: Prisma.CaseCreateOrConnectWithoutTokenInput
+  connect?: Prisma.CaseWhereUniqueInput
+}
+
+export type CaseUpdateOneWithoutTokenNestedInput = {
+  create?: Prisma.XOR<Prisma.CaseCreateWithoutTokenInput, Prisma.CaseUncheckedCreateWithoutTokenInput>
+  connectOrCreate?: Prisma.CaseCreateOrConnectWithoutTokenInput
+  upsert?: Prisma.CaseUpsertWithoutTokenInput
+  disconnect?: Prisma.CaseWhereInput | boolean
+  delete?: Prisma.CaseWhereInput | boolean
+  connect?: Prisma.CaseWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CaseUpdateToOneWithWhereWithoutTokenInput, Prisma.CaseUpdateWithoutTokenInput>, Prisma.CaseUncheckedUpdateWithoutTokenInput>
+}
+
 export type CaseCreateWithoutSubmitterInput = {
   id?: string
   tier?: $Enums.CaseTier
   status?: $Enums.CaseStatus
+  paymentStatus?: $Enums.PaymentStatus
   patientContext?: string | null
   treatmentNotes: string
   softwareUsed?: string | null
@@ -580,6 +635,7 @@ export type CaseCreateWithoutSubmitterInput = {
   reviewer?: Prisma.UserCreateNestedOneWithoutAssignedCasesInput
   files?: Prisma.CaseFileCreateNestedManyWithoutCaseInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutCaseInput
+  token?: Prisma.TokenCreateNestedOneWithoutUsedCaseInput
 }
 
 export type CaseUncheckedCreateWithoutSubmitterInput = {
@@ -587,6 +643,7 @@ export type CaseUncheckedCreateWithoutSubmitterInput = {
   reviewerId?: string | null
   tier?: $Enums.CaseTier
   status?: $Enums.CaseStatus
+  paymentStatus?: $Enums.PaymentStatus
   patientContext?: string | null
   treatmentNotes: string
   softwareUsed?: string | null
@@ -594,6 +651,7 @@ export type CaseUncheckedCreateWithoutSubmitterInput = {
   updatedAt?: Date | string
   files?: Prisma.CaseFileUncheckedCreateNestedManyWithoutCaseInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutCaseInput
+  token?: Prisma.TokenUncheckedCreateNestedOneWithoutUsedCaseInput
 }
 
 export type CaseCreateOrConnectWithoutSubmitterInput = {
@@ -610,6 +668,7 @@ export type CaseCreateWithoutReviewerInput = {
   id?: string
   tier?: $Enums.CaseTier
   status?: $Enums.CaseStatus
+  paymentStatus?: $Enums.PaymentStatus
   patientContext?: string | null
   treatmentNotes: string
   softwareUsed?: string | null
@@ -618,6 +677,7 @@ export type CaseCreateWithoutReviewerInput = {
   submitter: Prisma.UserCreateNestedOneWithoutSubmittedCasesInput
   files?: Prisma.CaseFileCreateNestedManyWithoutCaseInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutCaseInput
+  token?: Prisma.TokenCreateNestedOneWithoutUsedCaseInput
 }
 
 export type CaseUncheckedCreateWithoutReviewerInput = {
@@ -625,6 +685,7 @@ export type CaseUncheckedCreateWithoutReviewerInput = {
   submitterId: string
   tier?: $Enums.CaseTier
   status?: $Enums.CaseStatus
+  paymentStatus?: $Enums.PaymentStatus
   patientContext?: string | null
   treatmentNotes: string
   softwareUsed?: string | null
@@ -632,6 +693,7 @@ export type CaseUncheckedCreateWithoutReviewerInput = {
   updatedAt?: Date | string
   files?: Prisma.CaseFileUncheckedCreateNestedManyWithoutCaseInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutCaseInput
+  token?: Prisma.TokenUncheckedCreateNestedOneWithoutUsedCaseInput
 }
 
 export type CaseCreateOrConnectWithoutReviewerInput = {
@@ -669,6 +731,7 @@ export type CaseScalarWhereInput = {
   reviewerId?: Prisma.StringNullableFilter<"Case"> | string | null
   tier?: Prisma.EnumCaseTierFilter<"Case"> | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusFilter<"Case"> | $Enums.CaseStatus
+  paymentStatus?: Prisma.EnumPaymentStatusFilter<"Case"> | $Enums.PaymentStatus
   patientContext?: Prisma.StringNullableFilter<"Case"> | string | null
   treatmentNotes?: Prisma.StringFilter<"Case"> | string
   softwareUsed?: Prisma.StringNullableFilter<"Case"> | string | null
@@ -696,6 +759,7 @@ export type CaseCreateWithoutFilesInput = {
   id?: string
   tier?: $Enums.CaseTier
   status?: $Enums.CaseStatus
+  paymentStatus?: $Enums.PaymentStatus
   patientContext?: string | null
   treatmentNotes: string
   softwareUsed?: string | null
@@ -704,6 +768,7 @@ export type CaseCreateWithoutFilesInput = {
   submitter: Prisma.UserCreateNestedOneWithoutSubmittedCasesInput
   reviewer?: Prisma.UserCreateNestedOneWithoutAssignedCasesInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutCaseInput
+  token?: Prisma.TokenCreateNestedOneWithoutUsedCaseInput
 }
 
 export type CaseUncheckedCreateWithoutFilesInput = {
@@ -712,12 +777,14 @@ export type CaseUncheckedCreateWithoutFilesInput = {
   reviewerId?: string | null
   tier?: $Enums.CaseTier
   status?: $Enums.CaseStatus
+  paymentStatus?: $Enums.PaymentStatus
   patientContext?: string | null
   treatmentNotes: string
   softwareUsed?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutCaseInput
+  token?: Prisma.TokenUncheckedCreateNestedOneWithoutUsedCaseInput
 }
 
 export type CaseCreateOrConnectWithoutFilesInput = {
@@ -740,6 +807,7 @@ export type CaseUpdateWithoutFilesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   treatmentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   softwareUsed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -748,6 +816,7 @@ export type CaseUpdateWithoutFilesInput = {
   submitter?: Prisma.UserUpdateOneRequiredWithoutSubmittedCasesNestedInput
   reviewer?: Prisma.UserUpdateOneWithoutAssignedCasesNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutCaseNestedInput
+  token?: Prisma.TokenUpdateOneWithoutUsedCaseNestedInput
 }
 
 export type CaseUncheckedUpdateWithoutFilesInput = {
@@ -756,18 +825,21 @@ export type CaseUncheckedUpdateWithoutFilesInput = {
   reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   treatmentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   softwareUsed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutCaseNestedInput
+  token?: Prisma.TokenUncheckedUpdateOneWithoutUsedCaseNestedInput
 }
 
 export type CaseCreateWithoutReviewsInput = {
   id?: string
   tier?: $Enums.CaseTier
   status?: $Enums.CaseStatus
+  paymentStatus?: $Enums.PaymentStatus
   patientContext?: string | null
   treatmentNotes: string
   softwareUsed?: string | null
@@ -776,6 +848,7 @@ export type CaseCreateWithoutReviewsInput = {
   submitter: Prisma.UserCreateNestedOneWithoutSubmittedCasesInput
   reviewer?: Prisma.UserCreateNestedOneWithoutAssignedCasesInput
   files?: Prisma.CaseFileCreateNestedManyWithoutCaseInput
+  token?: Prisma.TokenCreateNestedOneWithoutUsedCaseInput
 }
 
 export type CaseUncheckedCreateWithoutReviewsInput = {
@@ -784,12 +857,14 @@ export type CaseUncheckedCreateWithoutReviewsInput = {
   reviewerId?: string | null
   tier?: $Enums.CaseTier
   status?: $Enums.CaseStatus
+  paymentStatus?: $Enums.PaymentStatus
   patientContext?: string | null
   treatmentNotes: string
   softwareUsed?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   files?: Prisma.CaseFileUncheckedCreateNestedManyWithoutCaseInput
+  token?: Prisma.TokenUncheckedCreateNestedOneWithoutUsedCaseInput
 }
 
 export type CaseCreateOrConnectWithoutReviewsInput = {
@@ -812,6 +887,7 @@ export type CaseUpdateWithoutReviewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   treatmentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   softwareUsed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -820,6 +896,7 @@ export type CaseUpdateWithoutReviewsInput = {
   submitter?: Prisma.UserUpdateOneRequiredWithoutSubmittedCasesNestedInput
   reviewer?: Prisma.UserUpdateOneWithoutAssignedCasesNestedInput
   files?: Prisma.CaseFileUpdateManyWithoutCaseNestedInput
+  token?: Prisma.TokenUpdateOneWithoutUsedCaseNestedInput
 }
 
 export type CaseUncheckedUpdateWithoutReviewsInput = {
@@ -828,12 +905,94 @@ export type CaseUncheckedUpdateWithoutReviewsInput = {
   reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   treatmentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   softwareUsed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   files?: Prisma.CaseFileUncheckedUpdateManyWithoutCaseNestedInput
+  token?: Prisma.TokenUncheckedUpdateOneWithoutUsedCaseNestedInput
+}
+
+export type CaseCreateWithoutTokenInput = {
+  id?: string
+  tier?: $Enums.CaseTier
+  status?: $Enums.CaseStatus
+  paymentStatus?: $Enums.PaymentStatus
+  patientContext?: string | null
+  treatmentNotes: string
+  softwareUsed?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  submitter: Prisma.UserCreateNestedOneWithoutSubmittedCasesInput
+  reviewer?: Prisma.UserCreateNestedOneWithoutAssignedCasesInput
+  files?: Prisma.CaseFileCreateNestedManyWithoutCaseInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutCaseInput
+}
+
+export type CaseUncheckedCreateWithoutTokenInput = {
+  id?: string
+  submitterId: string
+  reviewerId?: string | null
+  tier?: $Enums.CaseTier
+  status?: $Enums.CaseStatus
+  paymentStatus?: $Enums.PaymentStatus
+  patientContext?: string | null
+  treatmentNotes: string
+  softwareUsed?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  files?: Prisma.CaseFileUncheckedCreateNestedManyWithoutCaseInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutCaseInput
+}
+
+export type CaseCreateOrConnectWithoutTokenInput = {
+  where: Prisma.CaseWhereUniqueInput
+  create: Prisma.XOR<Prisma.CaseCreateWithoutTokenInput, Prisma.CaseUncheckedCreateWithoutTokenInput>
+}
+
+export type CaseUpsertWithoutTokenInput = {
+  update: Prisma.XOR<Prisma.CaseUpdateWithoutTokenInput, Prisma.CaseUncheckedUpdateWithoutTokenInput>
+  create: Prisma.XOR<Prisma.CaseCreateWithoutTokenInput, Prisma.CaseUncheckedCreateWithoutTokenInput>
+  where?: Prisma.CaseWhereInput
+}
+
+export type CaseUpdateToOneWithWhereWithoutTokenInput = {
+  where?: Prisma.CaseWhereInput
+  data: Prisma.XOR<Prisma.CaseUpdateWithoutTokenInput, Prisma.CaseUncheckedUpdateWithoutTokenInput>
+}
+
+export type CaseUpdateWithoutTokenInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
+  status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  treatmentNotes?: Prisma.StringFieldUpdateOperationsInput | string
+  softwareUsed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  submitter?: Prisma.UserUpdateOneRequiredWithoutSubmittedCasesNestedInput
+  reviewer?: Prisma.UserUpdateOneWithoutAssignedCasesNestedInput
+  files?: Prisma.CaseFileUpdateManyWithoutCaseNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutCaseNestedInput
+}
+
+export type CaseUncheckedUpdateWithoutTokenInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  submitterId?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
+  status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  treatmentNotes?: Prisma.StringFieldUpdateOperationsInput | string
+  softwareUsed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  files?: Prisma.CaseFileUncheckedUpdateManyWithoutCaseNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutCaseNestedInput
 }
 
 export type CaseCreateManySubmitterInput = {
@@ -841,6 +1000,7 @@ export type CaseCreateManySubmitterInput = {
   reviewerId?: string | null
   tier?: $Enums.CaseTier
   status?: $Enums.CaseStatus
+  paymentStatus?: $Enums.PaymentStatus
   patientContext?: string | null
   treatmentNotes: string
   softwareUsed?: string | null
@@ -853,6 +1013,7 @@ export type CaseCreateManyReviewerInput = {
   submitterId: string
   tier?: $Enums.CaseTier
   status?: $Enums.CaseStatus
+  paymentStatus?: $Enums.PaymentStatus
   patientContext?: string | null
   treatmentNotes: string
   softwareUsed?: string | null
@@ -864,6 +1025,7 @@ export type CaseUpdateWithoutSubmitterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   treatmentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   softwareUsed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -872,6 +1034,7 @@ export type CaseUpdateWithoutSubmitterInput = {
   reviewer?: Prisma.UserUpdateOneWithoutAssignedCasesNestedInput
   files?: Prisma.CaseFileUpdateManyWithoutCaseNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutCaseNestedInput
+  token?: Prisma.TokenUpdateOneWithoutUsedCaseNestedInput
 }
 
 export type CaseUncheckedUpdateWithoutSubmitterInput = {
@@ -879,6 +1042,7 @@ export type CaseUncheckedUpdateWithoutSubmitterInput = {
   reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   treatmentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   softwareUsed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -886,6 +1050,7 @@ export type CaseUncheckedUpdateWithoutSubmitterInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   files?: Prisma.CaseFileUncheckedUpdateManyWithoutCaseNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutCaseNestedInput
+  token?: Prisma.TokenUncheckedUpdateOneWithoutUsedCaseNestedInput
 }
 
 export type CaseUncheckedUpdateManyWithoutSubmitterInput = {
@@ -893,6 +1058,7 @@ export type CaseUncheckedUpdateManyWithoutSubmitterInput = {
   reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   treatmentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   softwareUsed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -904,6 +1070,7 @@ export type CaseUpdateWithoutReviewerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   treatmentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   softwareUsed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -912,6 +1079,7 @@ export type CaseUpdateWithoutReviewerInput = {
   submitter?: Prisma.UserUpdateOneRequiredWithoutSubmittedCasesNestedInput
   files?: Prisma.CaseFileUpdateManyWithoutCaseNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutCaseNestedInput
+  token?: Prisma.TokenUpdateOneWithoutUsedCaseNestedInput
 }
 
 export type CaseUncheckedUpdateWithoutReviewerInput = {
@@ -919,6 +1087,7 @@ export type CaseUncheckedUpdateWithoutReviewerInput = {
   submitterId?: Prisma.StringFieldUpdateOperationsInput | string
   tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   treatmentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   softwareUsed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -926,6 +1095,7 @@ export type CaseUncheckedUpdateWithoutReviewerInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   files?: Prisma.CaseFileUncheckedUpdateManyWithoutCaseNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutCaseNestedInput
+  token?: Prisma.TokenUncheckedUpdateOneWithoutUsedCaseNestedInput
 }
 
 export type CaseUncheckedUpdateManyWithoutReviewerInput = {
@@ -933,6 +1103,7 @@ export type CaseUncheckedUpdateManyWithoutReviewerInput = {
   submitterId?: Prisma.StringFieldUpdateOperationsInput | string
   tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   treatmentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   softwareUsed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -986,6 +1157,7 @@ export type CaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   reviewerId?: boolean
   tier?: boolean
   status?: boolean
+  paymentStatus?: boolean
   patientContext?: boolean
   treatmentNotes?: boolean
   softwareUsed?: boolean
@@ -995,6 +1167,7 @@ export type CaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   reviewer?: boolean | Prisma.Case$reviewerArgs<ExtArgs>
   files?: boolean | Prisma.Case$filesArgs<ExtArgs>
   reviews?: boolean | Prisma.Case$reviewsArgs<ExtArgs>
+  token?: boolean | Prisma.Case$tokenArgs<ExtArgs>
   _count?: boolean | Prisma.CaseCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["case"]>
 
@@ -1004,6 +1177,7 @@ export type CaseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   reviewerId?: boolean
   tier?: boolean
   status?: boolean
+  paymentStatus?: boolean
   patientContext?: boolean
   treatmentNotes?: boolean
   softwareUsed?: boolean
@@ -1019,6 +1193,7 @@ export type CaseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   reviewerId?: boolean
   tier?: boolean
   status?: boolean
+  paymentStatus?: boolean
   patientContext?: boolean
   treatmentNotes?: boolean
   softwareUsed?: boolean
@@ -1034,6 +1209,7 @@ export type CaseSelectScalar = {
   reviewerId?: boolean
   tier?: boolean
   status?: boolean
+  paymentStatus?: boolean
   patientContext?: boolean
   treatmentNotes?: boolean
   softwareUsed?: boolean
@@ -1041,12 +1217,13 @@ export type CaseSelectScalar = {
   updatedAt?: boolean
 }
 
-export type CaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "submitterId" | "reviewerId" | "tier" | "status" | "patientContext" | "treatmentNotes" | "softwareUsed" | "createdAt" | "updatedAt", ExtArgs["result"]["case"]>
+export type CaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "submitterId" | "reviewerId" | "tier" | "status" | "paymentStatus" | "patientContext" | "treatmentNotes" | "softwareUsed" | "createdAt" | "updatedAt", ExtArgs["result"]["case"]>
 export type CaseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   submitter?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   reviewer?: boolean | Prisma.Case$reviewerArgs<ExtArgs>
   files?: boolean | Prisma.Case$filesArgs<ExtArgs>
   reviews?: boolean | Prisma.Case$reviewsArgs<ExtArgs>
+  token?: boolean | Prisma.Case$tokenArgs<ExtArgs>
   _count?: boolean | Prisma.CaseCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CaseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1065,6 +1242,7 @@ export type $CasePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     reviewer: Prisma.$UserPayload<ExtArgs> | null
     files: Prisma.$CaseFilePayload<ExtArgs>[]
     reviews: Prisma.$ReviewPayload<ExtArgs>[]
+    token: Prisma.$TokenPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1072,6 +1250,7 @@ export type $CasePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     reviewerId: string | null
     tier: $Enums.CaseTier
     status: $Enums.CaseStatus
+    paymentStatus: $Enums.PaymentStatus
     patientContext: string | null
     treatmentNotes: string
     softwareUsed: string | null
@@ -1475,6 +1654,7 @@ export interface Prisma__CaseClient<T, Null = never, ExtArgs extends runtime.Typ
   reviewer<T extends Prisma.Case$reviewerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Case$reviewerArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   files<T extends Prisma.Case$filesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Case$filesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CaseFilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reviews<T extends Prisma.Case$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Case$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  token<T extends Prisma.Case$tokenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Case$tokenArgs<ExtArgs>>): Prisma.Prisma__TokenClient<runtime.Types.Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1509,6 +1689,7 @@ export interface CaseFieldRefs {
   readonly reviewerId: Prisma.FieldRef<"Case", 'String'>
   readonly tier: Prisma.FieldRef<"Case", 'CaseTier'>
   readonly status: Prisma.FieldRef<"Case", 'CaseStatus'>
+  readonly paymentStatus: Prisma.FieldRef<"Case", 'PaymentStatus'>
   readonly patientContext: Prisma.FieldRef<"Case", 'String'>
   readonly treatmentNotes: Prisma.FieldRef<"Case", 'String'>
   readonly softwareUsed: Prisma.FieldRef<"Case", 'String'>
@@ -1979,6 +2160,25 @@ export type Case$reviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   distinct?: Prisma.ReviewScalarFieldEnum | Prisma.ReviewScalarFieldEnum[]
+}
+
+/**
+ * Case.token
+ */
+export type Case$tokenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Token
+   */
+  select?: Prisma.TokenSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Token
+   */
+  omit?: Prisma.TokenOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TokenInclude<ExtArgs> | null
+  where?: Prisma.TokenWhereInput
 }
 
 /**

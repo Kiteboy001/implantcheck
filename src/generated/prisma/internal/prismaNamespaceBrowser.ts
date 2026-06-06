@@ -58,7 +58,8 @@ export const ModelName = {
   Case: 'Case',
   CaseFile: 'CaseFile',
   Review: 'Review',
-  ReportTemplate: 'ReportTemplate'
+  ReportTemplate: 'ReportTemplate',
+  Token: 'Token'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -136,6 +137,7 @@ export const CaseScalarFieldEnum = {
   reviewerId: 'reviewerId',
   tier: 'tier',
   status: 'status',
+  paymentStatus: 'paymentStatus',
   patientContext: 'patientContext',
   treatmentNotes: 'treatmentNotes',
   softwareUsed: 'softwareUsed',
@@ -185,6 +187,22 @@ export const ReportTemplateScalarFieldEnum = {
 } as const
 
 export type ReportTemplateScalarFieldEnum = (typeof ReportTemplateScalarFieldEnum)[keyof typeof ReportTemplateScalarFieldEnum]
+
+
+export const TokenScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  tier: 'tier',
+  isUsed: 'isUsed',
+  usedById: 'usedById',
+  usedCaseId: 'usedCaseId',
+  usedAt: 'usedAt',
+  createdById: 'createdById',
+  notes: 'notes',
+  createdAt: 'createdAt'
+} as const
+
+export type TokenScalarFieldEnum = (typeof TokenScalarFieldEnum)[keyof typeof TokenScalarFieldEnum]
 
 
 export const SortOrder = {

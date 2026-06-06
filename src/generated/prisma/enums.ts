@@ -40,6 +40,15 @@ export const CaseStatus = {
 export type CaseStatus = (typeof CaseStatus)[keyof typeof CaseStatus]
 
 
+export const PaymentStatus = {
+  UNPAID: 'UNPAID',
+  PAID: 'PAID',
+  TOKEN_REDEEMED: 'TOKEN_REDEEMED'
+} as const
+
+export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
+
+
 export const FileType = {
   STL: 'STL',
   CBCT: 'CBCT',
