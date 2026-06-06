@@ -12,14 +12,10 @@ export async function GET(request: Request) {
   if (!blobUrl) return NextResponse.json({ error: "Missing url parameter" }, { status: 400 })
 
   try {
-    // For private blobs, head() uses BLOB_READ_WRITE_TOKEN internally.
-    // The blob.url returned by head() for private stores IS the authenticated download URL.
     const blob = await head(blobUrl)
     if (!blob) return NextResponse.json({ error: "File not found" }, { status: 404 })
 
-    // Use the blob's authenticated download URL from head() response
-    const downloadUrl = (blob as any).downloadUrl || blob.url
-    const response = await fetch(downloadUrl)
+    const response = await fetch(blob.url)
     if (!response.ok) return NextResponse.json({ error: "Failed to fetch blob" }, { status: 500 })
 
     const headers = new Headers()
