@@ -2,9 +2,8 @@
 
 import { useActionState, useState, useRef } from "react"
 import { useRouter } from "next/navigation"
-import { generateReactHelpers } from "@uploadthing/react"
-import type { OurFileRouter } from "@/lib/uploadthing"
 import { submitCase, type SubmitCaseState } from "@/app/actions/cases"
+import { uploadFile } from "@/app/actions/upload"
 
 const initialState: SubmitCaseState = {}
 
@@ -17,8 +16,6 @@ const tiers = [
 
 type UploadedFile = { url: string; name: string; size: number; type: string }
 
-const { useUploadThing } = generateReactHelpers<OurFileRouter>()
-
 export default function NewCasePage() {
   const router = useRouter()
   const [state, formAction, isPending] = useActionState(submitCase, initialState)
@@ -28,41 +25,52 @@ export default function NewCasePage() {
   const [isUploading, setIsUploading] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  const { startUpload } = useUploadThing("caseFile", {
-    onClientUploadComplete: (res) => {
-      const newFiles: UploadedFile[] = res.map((r) => ({
-        url: r.ufsUrl,
-        name: r.name,
-        size: r.size,
-        type: r.type || "application/octet-stream",
-      }))
-      setUploadedFiles((prev) => [...prev, ...newFiles])
-      setUploadError("")
-      setIsUploading(false)
-    },
-    onUploadError: (error) => {
-      setUploadError(error.message || "Upload failed")
-      setIsUploading(false)
-    },
-    onUploadBegin: () => {
-      setIsUploading(true)
-      setUploadError("")
-    },
-  })
+  async function handleFiles(files: FileList | File[]) {
+    setIsUploading(true)
+    setUploadError("")
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files
-    if (!files || files.length === 0) return
-    await startUpload(Array.from(files))
-    // Reset input so the same file can be re-selected if needed
+    const fileArray = Array.from(files)
+    const newFiles: UploadedFile[] = []
+
+    for (const file of fileArray) {
+      const formData = new FormData()
+      formData.append("file", file)
+
+      try {
+        const result = await uploadFile(formData)
+        if ("error" in result && result.error) {
+          setUploadError(result.error)
+          break
+        }
+        if ("success" in result && result.file) {
+          newFiles.push(result.file)
+        }
+      } catch (e: any) {
+        setUploadError(e.message || "Upload failed")
+        break
+      }
+    }
+
+    if (newFiles.length > 0) {
+      setUploadedFiles((prev) => [...prev, ...newFiles])
+    }
+    setIsUploading(false)
+
+    // Reset input
     if (fileInputRef.current) fileInputRef.current.value = ""
   }
 
-  const handleDrop = async (e: React.DragEvent) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      handleFiles(e.target.files)
+    }
+  }
+
+  const handleDrop = (e: React.DragEvent) => {
     e.preventDefault()
-    const files = e.dataTransfer.files
-    if (!files || files.length === 0) return
-    await startUpload(Array.from(files))
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      handleFiles(e.dataTransfer.files)
+    }
   }
 
   const acceptFormats = ".stl,.obj,.ply,.dcm,.dicom,.png,.jpg,.jpeg,.webp"
@@ -83,16 +91,10 @@ export default function NewCasePage() {
             Your treatment plan has been submitted for review. Dr. Dandapat will review it shortly.
           </p>
           <div className="flex gap-3 justify-center">
-            <button
-              onClick={() => router.push("/dashboard")}
-              className="px-6 py-2.5 bg-navy text-white rounded-lg font-semibold hover:bg-navy-light transition-colors"
-            >
+            <button onClick={() => router.push("/dashboard")} className="px-6 py-2.5 bg-navy text-white rounded-lg font-semibold hover:bg-navy-light transition-colors">
               View My Cases
             </button>
-            <button
-              onClick={() => router.push(`/cases/${state.success}`)}
-              className="px-6 py-2.5 border border-navy text-navy rounded-lg font-semibold hover:bg-navy hover:text-white transition-colors"
-            >
+            <button onClick={() => router.push(`/cases/${state.success}`)} className="px-6 py-2.5 border border-navy text-navy rounded-lg font-semibold hover:bg-navy hover:text-white transition-colors">
               View Case
             </button>
           </div>
@@ -103,40 +105,19 @@ export default function NewCasePage() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      {/* Header */}
       <div className="mb-8">
-        <h1 className="font-[(family-name:var(--font-garamond))] text-3xl text-navy font-bold mb-2">
-          Submit a Case
-        </h1>
-        <p className="text-muted">
-          Upload your STL files, CBCT scans, and treatment notes for expert review.
-        </p>
+        <h1 className="font-[(family-name:var(--font-garamond))] text-3xl text-navy font-bold mb-2">Submit a Case</h1>
+        <p className="text-muted">Upload your STL files, CBCT scans, and treatment notes for expert review.</p>
       </div>
 
       <form action={formAction} className="space-y-8">
         {/* Tier selection */}
         <div className="bg-white rounded-xl border border-gray-100 p-6">
-          <h2 className="font-[(family-name:var(--font-garamond))] text-lg text-navy font-bold mb-4">
-            Select Tier
-          </h2>
+          <h2 className="font-[(family-name:var(--font-garamond))] text-lg text-navy font-bold mb-4">Select Tier</h2>
           <div className="grid gap-3">
             {tiers.map((tier) => (
-              <label
-                key={tier.value}
-                className={`flex items-center gap-4 p-4 rounded-lg border-2 cursor-pointer transition-all ${
-                  selectedTier === tier.value
-                    ? "border-gold bg-gold/5"
-                    : "border-gray-100 hover:border-gray-200"
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="tier"
-                  value={tier.value}
-                  required
-                  className="accent-gold"
-                  onChange={(e) => setSelectedTier(e.target.value)}
-                />
+              <label key={tier.value} className={`flex items-center gap-4 p-4 rounded-lg border-2 cursor-pointer transition-all ${selectedTier === tier.value ? "border-gold bg-gold/5" : "border-gray-100 hover:border-gray-200"}`}>
+                <input type="radio" name="tier" value={tier.value} required className="accent-gold" onChange={(e) => setSelectedTier(e.target.value)} />
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-semibold text-navy">{tier.label}</span>
@@ -151,148 +132,79 @@ export default function NewCasePage() {
 
         {/* Treatment notes */}
         <div className="bg-white rounded-xl border border-gray-100 p-6">
-          <h2 className="font-[(family-name:var(--font-garamond))] text-lg text-navy font-bold mb-4">
-            Treatment Details
-          </h2>
+          <h2 className="font-[(family-name:var(--font-garamond))] text-lg text-navy font-bold mb-4">Treatment Details</h2>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-navy mb-1.5">
-                Treatment Notes <span className="text-red-500">*</span>
-              </label>
-              <textarea
-                name="treatmentNotes"
-                rows={4}
-                required
-                className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-body focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-colors resize-none"
-                placeholder="Describe your treatment plan: implant positions, bone quality, surgical approach, prosthetic considerations..."
-              />
+              <label className="block text-sm font-medium text-navy mb-1.5">Treatment Notes <span className="text-red-500">*</span></label>
+              <textarea name="treatmentNotes" rows={4} required className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-body focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-colors resize-none" placeholder="Describe your treatment plan: implant positions, bone quality, surgical approach, prosthetic considerations..." />
             </div>
             <div>
-              <label className="block text-sm font-medium text-navy mb-1.5">
-                Patient Context <span className="text-muted font-normal">(anonymised — no PII)</span>
-              </label>
-              <textarea
-                name="patientContext"
-                rows={2}
-                className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-body focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-colors resize-none"
-                placeholder="Age range, edentulous site, relevant medical history..."
-              />
+              <label className="block text-sm font-medium text-navy mb-1.5">Patient Context <span className="text-muted font-normal">(anonymised — no PII)</span></label>
+              <textarea name="patientContext" rows={2} className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-body focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-colors resize-none" placeholder="Age range, edentulous site, relevant medical history..." />
             </div>
             <div>
-              <label className="block text-sm font-medium text-navy mb-1.5">
-                Planning Software
-              </label>
-              <input
-                type="text"
-                name="softwareUsed"
-                className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-body focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-colors"
-                placeholder="e.g. Blue Sky Bio, coDiagnostiX"
-              />
+              <label className="block text-sm font-medium text-navy mb-1.5">Planning Software</label>
+              <input type="text" name="softwareUsed" className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-body focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-colors" placeholder="e.g. Blue Sky Bio, coDiagnostiX" />
             </div>
           </div>
         </div>
 
         {/* File uploads */}
         <div className="bg-white rounded-xl border border-gray-100 p-6">
-          <h2 className="font-[(family-name:var(--font-garamond))] text-lg text-navy font-bold mb-4">
-            Upload Files
-          </h2>
-          <p className="text-sm text-muted mb-4">
-            Upload STL, PLY, OBJ, DICOM/CBCT scans, and planning screenshots from Blue Sky Bio, coDiagnostiX, or any planning software.
-          </p>
+          <h2 className="font-[(family-name:var(--font-garamond))] text-lg text-navy font-bold mb-4">Upload Files</h2>
+          <p className="text-sm text-muted mb-4">Upload STL, PLY, OBJ, DICOM/CBCT scans, and planning screenshots from Blue Sky Bio, coDiagnostiX, or any planning software.</p>
 
-          {/* Drop zone - wrapped in label for reliable click-to-browse */}
-          <label
-            htmlFor="file-upload"
-            onDragOver={(e) => { e.preventDefault(); e.dataTransfer.dropEffect = "copy"; }}
-            onDrop={handleDrop}
-            className="block border-2 border-dashed border-gray-200 rounded-xl p-8 text-center hover:border-gold/30 hover:bg-gold/[0.02] transition-all mb-4 cursor-pointer"
-          >
+          {/* Drop zone */}
+          <label htmlFor="file-upload" onDragOver={(e) => { e.preventDefault(); e.dataTransfer.dropEffect = "copy" }} onDrop={handleDrop} className="block border-2 border-dashed border-gray-200 rounded-xl p-8 text-center hover:border-gold/30 hover:bg-gold/[0.02] transition-all mb-4 cursor-pointer">
             <div className="w-12 h-12 rounded-full bg-navy/5 flex items-center justify-center mx-auto mb-3">
               <svg className="w-6 h-6 text-navy/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
               </svg>
             </div>
             {isUploading ? (
-              <p className="text-sm text-gold font-medium">Uploading...</p>
+              <p className="text-sm text-gold font-medium animate-pulse">Uploading...</p>
             ) : (
               <>
-                <p className="text-sm text-muted mb-1">
-                  Drag and drop your files here, or click to browse
-                </p>
-                <p className="text-xs text-muted/60">
-                  STL, PLY, OBJ (up to 256MB) · DICOM (up to 512MB) · PNG, JPEG (up to 16MB)
-                </p>
+                <p className="text-sm text-muted mb-1">Drag and drop your files here, or click to browse</p>
+                <p className="text-xs text-muted/60">STL, PLY, OBJ (up to 512MB) · DICOM (up to 512MB) · PNG, JPEG (up to 16MB)</p>
               </>
             )}
           </label>
 
-          {/* Hidden file input - triggered by label click */}
-          <input
-            id="file-upload"
-            ref={fileInputRef}
-            type="file"
-            multiple
-            accept={acceptFormats}
-            onChange={handleFileChange}
-            className="hidden"
-          />
+          <input id="file-upload" ref={fileInputRef} type="file" multiple accept={acceptFormats} onChange={handleFileChange} className="hidden" />
 
           {/* Uploaded files list */}
           {uploadedFiles.length > 0 && (
             <div className="mb-4 space-y-2">
               {uploadedFiles.map((file, i) => (
                 <div key={i} className="flex items-center justify-between p-3 bg-warm-bg rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <span className="text-xs text-muted font-mono">
-                      {(file.size / (1024 * 1024)).toFixed(1)} MB
-                    </span>
-                    <span className="text-sm text-navy truncate max-w-[300px]">
-                      {file.name}
-                    </span>
+                  <div className="flex items-center gap-3 min-w-0">
+                    <span className="text-xs font-mono text-muted shrink-0">{(file.size / (1024 * 1024)).toFixed(1)} MB</span>
+                    <span className="text-sm text-navy truncate">{file.name}</span>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => setUploadedFiles(files => files.filter((_, j) => j !== i))}
-                    className="text-red-500 text-sm hover:text-red-700"
-                  >
-                    Remove
-                  </button>
+                  <button type="button" onClick={() => setUploadedFiles(files => files.filter((_, j) => j !== i))} className="text-red-500 text-sm hover:text-red-700 shrink-0 ml-3">Remove</button>
                 </div>
               ))}
             </div>
           )}
 
-          {/* Add more files button */}
           {uploadedFiles.length > 0 && (
-            <label
-              htmlFor="file-upload"
-              className={`px-4 py-2 bg-navy text-white rounded-lg text-sm font-semibold hover:bg-navy-light transition-colors cursor-pointer ${isUploading ? "opacity-50 pointer-events-none" : ""}`}
-            >
+            <label htmlFor="file-upload" className={`inline-block px-4 py-2 bg-navy text-white rounded-lg text-sm font-semibold hover:bg-navy-light transition-colors cursor-pointer ${isUploading ? "opacity-50 pointer-events-none" : ""}`}>
               {isUploading ? "Uploading..." : "+ Add More Files"}
             </label>
           )}
 
           <input type="hidden" name="files" value={JSON.stringify(uploadedFiles)} />
-
-          {uploadError && (
-            <p className="mt-2 text-sm text-red-600">{uploadError}</p>
-          )}
+          {uploadError && <p className="mt-2 text-sm text-red-600">{uploadError}</p>}
         </div>
 
-        {/* Error */}
         {state.error && (
           <div className="p-4 bg-red-50 border border-red-200 rounded-xl">
             <p className="text-sm text-red-700">{state.error}</p>
           </div>
         )}
 
-        {/* Submit */}
-        <button
-          type="submit"
-          disabled={isPending || isUploading}
-          className="w-full px-6 py-4 bg-navy text-white rounded-xl font-semibold text-base hover:bg-navy-light transition-colors disabled:opacity-50"
-        >
+        <button type="submit" disabled={isPending || isUploading} className="w-full px-6 py-4 bg-navy text-white rounded-xl font-semibold text-base hover:bg-navy-light transition-colors disabled:opacity-50">
           {isPending ? "Submitting..." : "Submit Case for Review"}
         </button>
       </form>
