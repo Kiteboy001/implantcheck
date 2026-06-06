@@ -7,19 +7,19 @@ export async function GET(request: Request) {
   if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 
   const { searchParams } = new URL(request.url)
-  const url = searchParams.get("url")
+  const blobUrl = searchParams.get("url")
 
-  if (!url) return NextResponse.json({ error: "Missing url parameter" }, { status: 400 })
+  if (!blobUrl) return NextResponse.json({ error: "Missing url parameter" }, { status: 400 })
 
   try {
-    const blob = await head(url)
+    // For private blobs, head() uses BLOB_READ_WRITE_TOKEN internally.
+    // The blob.url returned by head() for private stores IS the authenticated download URL.
+    const blob = await head(blobUrl)
     if (!blob) return NextResponse.json({ error: "File not found" }, { status: 404 })
 
-    // Fetch the blob content with authorization for private blobs
-    const token = process.env.BLOB_READ_WRITE_TOKEN
-    const response = await fetch(blob.url, {
-      headers: token ? { Authorization: `Bearer ${token}` } : {},
-    })
+    // Use the blob's authenticated download URL from head() response
+    const downloadUrl = (blob as any).downloadUrl || blob.url
+    const response = await fetch(downloadUrl)
     if (!response.ok) return NextResponse.json({ error: "Failed to fetch blob" }, { status: 500 })
 
     const headers = new Headers()
@@ -28,7 +28,7 @@ export async function GET(request: Request) {
     headers.set("Content-Length", String(blob.size))
 
     return new NextResponse(response.body, { headers })
-  } catch {
-    return NextResponse.json({ error: "Download failed" }, { status: 500 })
+  } catch (e: any) {
+    return NextResponse.json({ error: e.message || "Download failed" }, { status: 500 })
   }
 }
