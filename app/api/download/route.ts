@@ -15,11 +15,15 @@ export async function GET(request: Request) {
     const blob = await head(blobUrl)
     if (!blob) return NextResponse.json({ error: "File not found" }, { status: 404 })
 
-    // Private blob stores require Authorization header with the read/write token
+    // For private stores, the CDN URL doesn't accept Bearer tokens.
+    // Use the Vercel Blob API directly: https://blob.vercel-storage.com/<path>?token=<token>
     const token = process.env.BLOB_READ_WRITE_TOKEN
-    const response = await fetch(blob.url, {
-      headers: token ? { Authorization: `Bearer ${token}` } : {},
-    })
+    if (!token) return NextResponse.json({ error: "BLOB_READ_WRITE_TOKEN not configured" }, { status: 500 })
+
+    const apiUrl = new URL(blob.pathname, "https://blob.vercel-storage.com")
+    apiUrl.searchParams.set("token", token)
+
+    const response = await fetch(apiUrl.toString())
 
     if (!response.ok) {
       return NextResponse.json(
