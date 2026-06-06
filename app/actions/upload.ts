@@ -26,8 +26,9 @@ export async function uploadFile(formData: FormData) {
 
   try {
     const blob = await put(`cases/${Date.now()}-${file.name}`, file, {
-      access: "private",
+      access: "public",
       addRandomSuffix: false,
+      storeId: process.env.BLOB2_STORE_ID,
     })
 
     const typeMap: Record<string, string> = {
