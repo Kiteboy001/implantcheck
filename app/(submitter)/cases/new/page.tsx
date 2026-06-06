@@ -201,12 +201,12 @@ export default function NewCasePage() {
             Upload STL, PLY, OBJ, DICOM/CBCT scans, and planning screenshots from Blue Sky Bio, coDiagnostiX, or any planning software.
           </p>
 
-          {/* Drop zone */}
-          <div
-            onDragOver={(e) => e.preventDefault()}
+          {/* Drop zone - wrapped in label for reliable click-to-browse */}
+          <label
+            htmlFor="file-upload"
+            onDragOver={(e) => { e.preventDefault(); e.dataTransfer.dropEffect = "copy"; }}
             onDrop={handleDrop}
-            onClick={() => fileInputRef.current?.click()}
-            className="border-2 border-dashed border-gray-200 rounded-xl p-8 text-center hover:border-gold/30 hover:bg-gold/[0.02] transition-all mb-4 cursor-pointer"
+            className="block border-2 border-dashed border-gray-200 rounded-xl p-8 text-center hover:border-gold/30 hover:bg-gold/[0.02] transition-all mb-4 cursor-pointer"
           >
             <div className="w-12 h-12 rounded-full bg-navy/5 flex items-center justify-center mx-auto mb-3">
               <svg className="w-6 h-6 text-navy/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -225,10 +225,11 @@ export default function NewCasePage() {
                 </p>
               </>
             )}
-          </div>
+          </label>
 
-          {/* Hidden file input */}
+          {/* Hidden file input - triggered by label click */}
           <input
+            id="file-upload"
             ref={fileInputRef}
             type="file"
             multiple
@@ -264,14 +265,12 @@ export default function NewCasePage() {
 
           {/* Add more files button */}
           {uploadedFiles.length > 0 && (
-            <button
-              type="button"
-              onClick={() => fileInputRef.current?.click()}
-              disabled={isUploading}
-              className="px-4 py-2 bg-navy text-white rounded-lg text-sm font-semibold hover:bg-navy-light transition-colors disabled:opacity-50"
+            <label
+              htmlFor="file-upload"
+              className={`px-4 py-2 bg-navy text-white rounded-lg text-sm font-semibold hover:bg-navy-light transition-colors cursor-pointer ${isUploading ? "opacity-50 pointer-events-none" : ""}`}
             >
               {isUploading ? "Uploading..." : "+ Add More Files"}
-            </button>
+            </label>
           )}
 
           <input type="hidden" name="files" value={JSON.stringify(uploadedFiles)} />
