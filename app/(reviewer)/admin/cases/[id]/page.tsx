@@ -2,6 +2,8 @@ import { prisma } from "@/lib/prisma"
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { ReviewForm } from "./ReviewForm"
+import { ReviewerAssign } from "./ReviewerAssign"
+import { EmailReportButton } from "./EmailReportButton"
 
 const statusLabels: Record<string, string> = {
   PENDING: "Pending",
@@ -30,6 +32,7 @@ export default async function CaseDetailPage({
     where: { id },
     include: {
       submitter: { select: { name: true, email: true, gdcNumber: true } },
+      reviewer: { select: { id: true, name: true, email: true } },
       files: true,
       reviews: {
         include: {
@@ -255,6 +258,9 @@ export default async function CaseDetailPage({
                         {review.overallFeedback}
                       </p>
                     </div>
+                    <div className="mt-4 pt-3 border-t border-gray-100">
+                      <EmailReportButton reviewId={review.id} />
+                    </div>
                   </div>
                 ))}
               </div>
@@ -284,6 +290,9 @@ export default async function CaseDetailPage({
               </p>
             )}
           </div>
+
+          {/* Reviewer assignment */}
+          <ReviewerAssign caseId={caseData.id} currentReviewerId={caseData.reviewerId} currentStatus={caseData.status} reviewerName={caseData.reviewer?.name || null} />
 
           {/* Case details */}
           <div className="bg-white rounded-xl border border-gray-100 p-5">

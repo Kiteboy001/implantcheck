@@ -21,7 +21,8 @@ export type Role = (typeof Role)[keyof typeof Role]
 export const CaseTier = {
   BASIC: 'BASIC',
   STANDARD: 'STANDARD',
-  COMPLEX: 'COMPLEX'
+  COMPLEX: 'COMPLEX',
+  PILOT_GUIDE: 'PILOT_GUIDE'
 } as const
 
 export type CaseTier = (typeof CaseTier)[keyof typeof CaseTier]
@@ -43,6 +44,8 @@ export const FileType = {
   STL: 'STL',
   CBCT: 'CBCT',
   SCREENSHOT: 'SCREENSHOT',
+  PLY: 'PLY',
+  OBJ: 'OBJ',
   OTHER: 'OTHER'
 } as const
 

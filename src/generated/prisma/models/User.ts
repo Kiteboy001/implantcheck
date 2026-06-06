@@ -225,6 +225,7 @@ export type UserWhereInput = {
   accounts?: Prisma.AccountListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
   submittedCases?: Prisma.CaseListRelationFilter
+  assignedCases?: Prisma.CaseListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
 }
 
@@ -242,6 +243,7 @@ export type UserOrderByWithRelationInput = {
   accounts?: Prisma.AccountOrderByRelationAggregateInput
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   submittedCases?: Prisma.CaseOrderByRelationAggregateInput
+  assignedCases?: Prisma.CaseOrderByRelationAggregateInput
   reviews?: Prisma.ReviewOrderByRelationAggregateInput
 }
 
@@ -262,6 +264,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   accounts?: Prisma.AccountListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
   submittedCases?: Prisma.CaseListRelationFilter
+  assignedCases?: Prisma.CaseListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
 }, "id" | "email">
 
@@ -311,6 +314,7 @@ export type UserCreateInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   submittedCases?: Prisma.CaseCreateNestedManyWithoutSubmitterInput
+  assignedCases?: Prisma.CaseCreateNestedManyWithoutReviewerInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutReviewerInput
 }
 
@@ -328,6 +332,7 @@ export type UserUncheckedCreateInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   submittedCases?: Prisma.CaseUncheckedCreateNestedManyWithoutSubmitterInput
+  assignedCases?: Prisma.CaseUncheckedCreateNestedManyWithoutReviewerInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutReviewerInput
 }
 
@@ -345,6 +350,7 @@ export type UserUpdateInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   submittedCases?: Prisma.CaseUpdateManyWithoutSubmitterNestedInput
+  assignedCases?: Prisma.CaseUpdateManyWithoutReviewerNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutReviewerNestedInput
 }
 
@@ -362,6 +368,7 @@ export type UserUncheckedUpdateInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   submittedCases?: Prisma.CaseUncheckedUpdateManyWithoutSubmitterNestedInput
+  assignedCases?: Prisma.CaseUncheckedUpdateManyWithoutReviewerNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutReviewerNestedInput
 }
 
@@ -448,6 +455,11 @@ export type UserScalarRelationFilter = {
   isNot?: Prisma.UserWhereInput
 }
 
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
+}
+
 export type StringFieldUpdateOperationsInput = {
   set?: string
 }
@@ -502,12 +514,28 @@ export type UserCreateNestedOneWithoutSubmittedCasesInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
+export type UserCreateNestedOneWithoutAssignedCasesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAssignedCasesInput, Prisma.UserUncheckedCreateWithoutAssignedCasesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssignedCasesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
 export type UserUpdateOneRequiredWithoutSubmittedCasesNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutSubmittedCasesInput, Prisma.UserUncheckedCreateWithoutSubmittedCasesInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutSubmittedCasesInput
   upsert?: Prisma.UserUpsertWithoutSubmittedCasesInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSubmittedCasesInput, Prisma.UserUpdateWithoutSubmittedCasesInput>, Prisma.UserUncheckedUpdateWithoutSubmittedCasesInput>
+}
+
+export type UserUpdateOneWithoutAssignedCasesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAssignedCasesInput, Prisma.UserUncheckedCreateWithoutAssignedCasesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssignedCasesInput
+  upsert?: Prisma.UserUpsertWithoutAssignedCasesInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAssignedCasesInput, Prisma.UserUpdateWithoutAssignedCasesInput>, Prisma.UserUncheckedUpdateWithoutAssignedCasesInput>
 }
 
 export type UserCreateNestedOneWithoutReviewsInput = {
@@ -537,6 +565,7 @@ export type UserCreateWithoutAccountsInput = {
   updatedAt?: Date | string
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   submittedCases?: Prisma.CaseCreateNestedManyWithoutSubmitterInput
+  assignedCases?: Prisma.CaseCreateNestedManyWithoutReviewerInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutReviewerInput
 }
 
@@ -553,6 +582,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   updatedAt?: Date | string
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   submittedCases?: Prisma.CaseUncheckedCreateNestedManyWithoutSubmitterInput
+  assignedCases?: Prisma.CaseUncheckedCreateNestedManyWithoutReviewerInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutReviewerInput
 }
 
@@ -585,6 +615,7 @@ export type UserUpdateWithoutAccountsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   submittedCases?: Prisma.CaseUpdateManyWithoutSubmitterNestedInput
+  assignedCases?: Prisma.CaseUpdateManyWithoutReviewerNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutReviewerNestedInput
 }
 
@@ -601,6 +632,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   submittedCases?: Prisma.CaseUncheckedUpdateManyWithoutSubmitterNestedInput
+  assignedCases?: Prisma.CaseUncheckedUpdateManyWithoutReviewerNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutReviewerNestedInput
 }
 
@@ -617,6 +649,7 @@ export type UserCreateWithoutSessionsInput = {
   updatedAt?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   submittedCases?: Prisma.CaseCreateNestedManyWithoutSubmitterInput
+  assignedCases?: Prisma.CaseCreateNestedManyWithoutReviewerInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutReviewerInput
 }
 
@@ -633,6 +666,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   submittedCases?: Prisma.CaseUncheckedCreateNestedManyWithoutSubmitterInput
+  assignedCases?: Prisma.CaseUncheckedCreateNestedManyWithoutReviewerInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutReviewerInput
 }
 
@@ -665,6 +699,7 @@ export type UserUpdateWithoutSessionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   submittedCases?: Prisma.CaseUpdateManyWithoutSubmitterNestedInput
+  assignedCases?: Prisma.CaseUpdateManyWithoutReviewerNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutReviewerNestedInput
 }
 
@@ -681,6 +716,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   submittedCases?: Prisma.CaseUncheckedUpdateManyWithoutSubmitterNestedInput
+  assignedCases?: Prisma.CaseUncheckedUpdateManyWithoutReviewerNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutReviewerNestedInput
 }
 
@@ -697,6 +733,7 @@ export type UserCreateWithoutSubmittedCasesInput = {
   updatedAt?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  assignedCases?: Prisma.CaseCreateNestedManyWithoutReviewerInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutReviewerInput
 }
 
@@ -713,12 +750,52 @@ export type UserUncheckedCreateWithoutSubmittedCasesInput = {
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  assignedCases?: Prisma.CaseUncheckedCreateNestedManyWithoutReviewerInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutReviewerInput
 }
 
 export type UserCreateOrConnectWithoutSubmittedCasesInput = {
   where: Prisma.UserWhereUniqueInput
   create: Prisma.XOR<Prisma.UserCreateWithoutSubmittedCasesInput, Prisma.UserUncheckedCreateWithoutSubmittedCasesInput>
+}
+
+export type UserCreateWithoutAssignedCasesInput = {
+  id?: string
+  name?: string | null
+  email: string
+  emailVerified?: Date | string | null
+  image?: string | null
+  passwordHash?: string | null
+  gdcNumber?: string | null
+  role?: $Enums.Role
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  submittedCases?: Prisma.CaseCreateNestedManyWithoutSubmitterInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutReviewerInput
+}
+
+export type UserUncheckedCreateWithoutAssignedCasesInput = {
+  id?: string
+  name?: string | null
+  email: string
+  emailVerified?: Date | string | null
+  image?: string | null
+  passwordHash?: string | null
+  gdcNumber?: string | null
+  role?: $Enums.Role
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  submittedCases?: Prisma.CaseUncheckedCreateNestedManyWithoutSubmitterInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutReviewerInput
+}
+
+export type UserCreateOrConnectWithoutAssignedCasesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAssignedCasesInput, Prisma.UserUncheckedCreateWithoutAssignedCasesInput>
 }
 
 export type UserUpsertWithoutSubmittedCasesInput = {
@@ -745,6 +822,7 @@ export type UserUpdateWithoutSubmittedCasesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  assignedCases?: Prisma.CaseUpdateManyWithoutReviewerNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutReviewerNestedInput
 }
 
@@ -761,6 +839,52 @@ export type UserUncheckedUpdateWithoutSubmittedCasesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  assignedCases?: Prisma.CaseUncheckedUpdateManyWithoutReviewerNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutReviewerNestedInput
+}
+
+export type UserUpsertWithoutAssignedCasesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAssignedCasesInput, Prisma.UserUncheckedUpdateWithoutAssignedCasesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAssignedCasesInput, Prisma.UserUncheckedCreateWithoutAssignedCasesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAssignedCasesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAssignedCasesInput, Prisma.UserUncheckedUpdateWithoutAssignedCasesInput>
+}
+
+export type UserUpdateWithoutAssignedCasesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gdcNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  submittedCases?: Prisma.CaseUpdateManyWithoutSubmitterNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutReviewerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAssignedCasesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gdcNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  submittedCases?: Prisma.CaseUncheckedUpdateManyWithoutSubmitterNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutReviewerNestedInput
 }
 
@@ -778,6 +902,7 @@ export type UserCreateWithoutReviewsInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   submittedCases?: Prisma.CaseCreateNestedManyWithoutSubmitterInput
+  assignedCases?: Prisma.CaseCreateNestedManyWithoutReviewerInput
 }
 
 export type UserUncheckedCreateWithoutReviewsInput = {
@@ -794,6 +919,7 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   submittedCases?: Prisma.CaseUncheckedCreateNestedManyWithoutSubmitterInput
+  assignedCases?: Prisma.CaseUncheckedCreateNestedManyWithoutReviewerInput
 }
 
 export type UserCreateOrConnectWithoutReviewsInput = {
@@ -826,6 +952,7 @@ export type UserUpdateWithoutReviewsInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   submittedCases?: Prisma.CaseUpdateManyWithoutSubmitterNestedInput
+  assignedCases?: Prisma.CaseUpdateManyWithoutReviewerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -842,6 +969,7 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   submittedCases?: Prisma.CaseUncheckedUpdateManyWithoutSubmitterNestedInput
+  assignedCases?: Prisma.CaseUncheckedUpdateManyWithoutReviewerNestedInput
 }
 
 
@@ -853,6 +981,7 @@ export type UserCountOutputType = {
   accounts: number
   sessions: number
   submittedCases: number
+  assignedCases: number
   reviews: number
 }
 
@@ -860,6 +989,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   accounts?: boolean | UserCountOutputTypeCountAccountsArgs
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
   submittedCases?: boolean | UserCountOutputTypeCountSubmittedCasesArgs
+  assignedCases?: boolean | UserCountOutputTypeCountAssignedCasesArgs
   reviews?: boolean | UserCountOutputTypeCountReviewsArgs
 }
 
@@ -897,6 +1027,13 @@ export type UserCountOutputTypeCountSubmittedCasesArgs<ExtArgs extends runtime.T
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountAssignedCasesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CaseWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ReviewWhereInput
 }
@@ -916,6 +1053,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   submittedCases?: boolean | Prisma.User$submittedCasesArgs<ExtArgs>
+  assignedCases?: boolean | Prisma.User$assignedCasesArgs<ExtArgs>
   reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -964,6 +1102,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   submittedCases?: boolean | Prisma.User$submittedCasesArgs<ExtArgs>
+  assignedCases?: boolean | Prisma.User$assignedCasesArgs<ExtArgs>
   reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -976,6 +1115,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     accounts: Prisma.$AccountPayload<ExtArgs>[]
     sessions: Prisma.$SessionPayload<ExtArgs>[]
     submittedCases: Prisma.$CasePayload<ExtArgs>[]
+    assignedCases: Prisma.$CasePayload<ExtArgs>[]
     reviews: Prisma.$ReviewPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1386,6 +1526,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   submittedCases<T extends Prisma.User$submittedCasesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$submittedCasesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  assignedCases<T extends Prisma.User$assignedCasesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assignedCasesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reviews<T extends Prisma.User$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1870,6 +2011,30 @@ export type User$sessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
  * User.submittedCases
  */
 export type User$submittedCasesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Case
+   */
+  select?: Prisma.CaseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Case
+   */
+  omit?: Prisma.CaseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CaseInclude<ExtArgs> | null
+  where?: Prisma.CaseWhereInput
+  orderBy?: Prisma.CaseOrderByWithRelationInput | Prisma.CaseOrderByWithRelationInput[]
+  cursor?: Prisma.CaseWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CaseScalarFieldEnum | Prisma.CaseScalarFieldEnum[]
+}
+
+/**
+ * User.assignedCases
+ */
+export type User$assignedCasesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Case
    */

@@ -155,8 +155,23 @@ export default function NewCasePage() {
             Upload Files
           </h2>
           <p className="text-sm text-muted mb-4">
-            Upload your STL files, CBCT/DICOM scans, and planning screenshots.
+            Upload STL, PLY, OBJ, DICOM/CBCT scans, and planning screenshots from Blue Sky Bio, coDiagnostiX, or any planning software.
           </p>
+
+          {/* Drop zone */}
+          <div className="border-2 border-dashed border-gray-200 rounded-xl p-8 text-center hover:border-gold/30 hover:bg-gold/[0.02] transition-all mb-4">
+            <div className="w-12 h-12 rounded-full bg-navy/5 flex items-center justify-center mx-auto mb-3">
+              <svg className="w-6 h-6 text-navy/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
+              </svg>
+            </div>
+            <p className="text-sm text-muted mb-1">
+              Drag and drop your files here, or click to browse
+            </p>
+            <p className="text-xs text-muted/60">
+              STL, PLY, OBJ (up to 256MB) · DICOM (up to 512MB) · PNG, JPEG (up to 16MB)
+            </p>
+          </div>
 
           {uploadedFiles.length > 0 && (
             <div className="mb-4 space-y-2">

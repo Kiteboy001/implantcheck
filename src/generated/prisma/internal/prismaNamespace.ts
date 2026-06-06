@@ -1098,6 +1098,7 @@ export type VerificationTokenScalarFieldEnum = (typeof VerificationTokenScalarFi
 export const CaseScalarFieldEnum = {
   id: 'id',
   submitterId: 'submitterId',
+  reviewerId: 'reviewerId',
   tier: 'tier',
   status: 'status',
   patientContext: 'patientContext',

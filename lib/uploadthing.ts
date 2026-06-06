@@ -17,8 +17,16 @@ export const ourFileRouter = {
       return { userId: (session.user as any).id as string }
     })
     .onUploadComplete(async ({ metadata, file }) => {
-      console.log("Upload complete:", file.name, "by user", metadata.userId)
-      return { uploadedBy: metadata.userId }
+      // Detect file type from extension or MIME
+      const ext = file.name.split(".").pop()?.toLowerCase() || ""
+      const typeMap: Record<string, string> = {
+        stl: "STL", obj: "OBJ", ply: "PLY",
+        dcm: "CBCT", dicom: "CBCT",
+        png: "SCREENSHOT", jpg: "SCREENSHOT", jpeg: "SCREENSHOT", webp: "SCREENSHOT",
+      }
+      const detectedType = typeMap[ext] || "OTHER"
+      console.log(`Upload: ${file.name} (${detectedType}) by user ${metadata.userId}`)
+      return { uploadedBy: metadata.userId, detectedType }
     }),
 } satisfies FileRouter
 

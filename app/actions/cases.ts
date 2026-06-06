@@ -49,6 +49,10 @@ export async function submitCase(
     "image/png": "SCREENSHOT",
     "image/jpeg": "SCREENSHOT",
     "image/webp": "SCREENSHOT",
+    "model/stl": "STL",
+    "model/obj": "OBJ",
+    "model/ply": "PLY",
+    "application/sla": "STL",
   }
 
   const caseRecord = await prisma.case.create({

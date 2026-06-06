@@ -27,6 +27,7 @@ export type AggregateCase = {
 export type CaseMinAggregateOutputType = {
   id: string | null
   submitterId: string | null
+  reviewerId: string | null
   tier: $Enums.CaseTier | null
   status: $Enums.CaseStatus | null
   patientContext: string | null
@@ -39,6 +40,7 @@ export type CaseMinAggregateOutputType = {
 export type CaseMaxAggregateOutputType = {
   id: string | null
   submitterId: string | null
+  reviewerId: string | null
   tier: $Enums.CaseTier | null
   status: $Enums.CaseStatus | null
   patientContext: string | null
@@ -51,6 +53,7 @@ export type CaseMaxAggregateOutputType = {
 export type CaseCountAggregateOutputType = {
   id: number
   submitterId: number
+  reviewerId: number
   tier: number
   status: number
   patientContext: number
@@ -65,6 +68,7 @@ export type CaseCountAggregateOutputType = {
 export type CaseMinAggregateInputType = {
   id?: true
   submitterId?: true
+  reviewerId?: true
   tier?: true
   status?: true
   patientContext?: true
@@ -77,6 +81,7 @@ export type CaseMinAggregateInputType = {
 export type CaseMaxAggregateInputType = {
   id?: true
   submitterId?: true
+  reviewerId?: true
   tier?: true
   status?: true
   patientContext?: true
@@ -89,6 +94,7 @@ export type CaseMaxAggregateInputType = {
 export type CaseCountAggregateInputType = {
   id?: true
   submitterId?: true
+  reviewerId?: true
   tier?: true
   status?: true
   patientContext?: true
@@ -174,6 +180,7 @@ export type CaseGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type CaseGroupByOutputType = {
   id: string
   submitterId: string
+  reviewerId: string | null
   tier: $Enums.CaseTier
   status: $Enums.CaseStatus
   patientContext: string | null
@@ -207,6 +214,7 @@ export type CaseWhereInput = {
   NOT?: Prisma.CaseWhereInput | Prisma.CaseWhereInput[]
   id?: Prisma.StringFilter<"Case"> | string
   submitterId?: Prisma.StringFilter<"Case"> | string
+  reviewerId?: Prisma.StringNullableFilter<"Case"> | string | null
   tier?: Prisma.EnumCaseTierFilter<"Case"> | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusFilter<"Case"> | $Enums.CaseStatus
   patientContext?: Prisma.StringNullableFilter<"Case"> | string | null
@@ -215,6 +223,7 @@ export type CaseWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Case"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Case"> | Date | string
   submitter?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  reviewer?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   files?: Prisma.CaseFileListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
 }
@@ -222,6 +231,7 @@ export type CaseWhereInput = {
 export type CaseOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   submitterId?: Prisma.SortOrder
+  reviewerId?: Prisma.SortOrderInput | Prisma.SortOrder
   tier?: Prisma.SortOrder
   status?: Prisma.SortOrder
   patientContext?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -230,6 +240,7 @@ export type CaseOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   submitter?: Prisma.UserOrderByWithRelationInput
+  reviewer?: Prisma.UserOrderByWithRelationInput
   files?: Prisma.CaseFileOrderByRelationAggregateInput
   reviews?: Prisma.ReviewOrderByRelationAggregateInput
 }
@@ -240,6 +251,7 @@ export type CaseWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.CaseWhereInput[]
   NOT?: Prisma.CaseWhereInput | Prisma.CaseWhereInput[]
   submitterId?: Prisma.StringFilter<"Case"> | string
+  reviewerId?: Prisma.StringNullableFilter<"Case"> | string | null
   tier?: Prisma.EnumCaseTierFilter<"Case"> | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusFilter<"Case"> | $Enums.CaseStatus
   patientContext?: Prisma.StringNullableFilter<"Case"> | string | null
@@ -248,6 +260,7 @@ export type CaseWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Case"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Case"> | Date | string
   submitter?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  reviewer?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   files?: Prisma.CaseFileListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
 }, "id">
@@ -255,6 +268,7 @@ export type CaseWhereUniqueInput = Prisma.AtLeast<{
 export type CaseOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   submitterId?: Prisma.SortOrder
+  reviewerId?: Prisma.SortOrderInput | Prisma.SortOrder
   tier?: Prisma.SortOrder
   status?: Prisma.SortOrder
   patientContext?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -273,6 +287,7 @@ export type CaseScalarWhereWithAggregatesInput = {
   NOT?: Prisma.CaseScalarWhereWithAggregatesInput | Prisma.CaseScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Case"> | string
   submitterId?: Prisma.StringWithAggregatesFilter<"Case"> | string
+  reviewerId?: Prisma.StringNullableWithAggregatesFilter<"Case"> | string | null
   tier?: Prisma.EnumCaseTierWithAggregatesFilter<"Case"> | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusWithAggregatesFilter<"Case"> | $Enums.CaseStatus
   patientContext?: Prisma.StringNullableWithAggregatesFilter<"Case"> | string | null
@@ -292,6 +307,7 @@ export type CaseCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   submitter: Prisma.UserCreateNestedOneWithoutSubmittedCasesInput
+  reviewer?: Prisma.UserCreateNestedOneWithoutAssignedCasesInput
   files?: Prisma.CaseFileCreateNestedManyWithoutCaseInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutCaseInput
 }
@@ -299,6 +315,7 @@ export type CaseCreateInput = {
 export type CaseUncheckedCreateInput = {
   id?: string
   submitterId: string
+  reviewerId?: string | null
   tier?: $Enums.CaseTier
   status?: $Enums.CaseStatus
   patientContext?: string | null
@@ -320,6 +337,7 @@ export type CaseUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   submitter?: Prisma.UserUpdateOneRequiredWithoutSubmittedCasesNestedInput
+  reviewer?: Prisma.UserUpdateOneWithoutAssignedCasesNestedInput
   files?: Prisma.CaseFileUpdateManyWithoutCaseNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutCaseNestedInput
 }
@@ -327,6 +345,7 @@ export type CaseUpdateInput = {
 export type CaseUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   submitterId?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -341,6 +360,7 @@ export type CaseUncheckedUpdateInput = {
 export type CaseCreateManyInput = {
   id?: string
   submitterId: string
+  reviewerId?: string | null
   tier?: $Enums.CaseTier
   status?: $Enums.CaseStatus
   patientContext?: string | null
@@ -364,6 +384,7 @@ export type CaseUpdateManyMutationInput = {
 export type CaseUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   submitterId?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -386,6 +407,7 @@ export type CaseOrderByRelationAggregateInput = {
 export type CaseCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   submitterId?: Prisma.SortOrder
+  reviewerId?: Prisma.SortOrder
   tier?: Prisma.SortOrder
   status?: Prisma.SortOrder
   patientContext?: Prisma.SortOrder
@@ -398,6 +420,7 @@ export type CaseCountOrderByAggregateInput = {
 export type CaseMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   submitterId?: Prisma.SortOrder
+  reviewerId?: Prisma.SortOrder
   tier?: Prisma.SortOrder
   status?: Prisma.SortOrder
   patientContext?: Prisma.SortOrder
@@ -410,6 +433,7 @@ export type CaseMaxOrderByAggregateInput = {
 export type CaseMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   submitterId?: Prisma.SortOrder
+  reviewerId?: Prisma.SortOrder
   tier?: Prisma.SortOrder
   status?: Prisma.SortOrder
   patientContext?: Prisma.SortOrder
@@ -431,10 +455,24 @@ export type CaseCreateNestedManyWithoutSubmitterInput = {
   connect?: Prisma.CaseWhereUniqueInput | Prisma.CaseWhereUniqueInput[]
 }
 
+export type CaseCreateNestedManyWithoutReviewerInput = {
+  create?: Prisma.XOR<Prisma.CaseCreateWithoutReviewerInput, Prisma.CaseUncheckedCreateWithoutReviewerInput> | Prisma.CaseCreateWithoutReviewerInput[] | Prisma.CaseUncheckedCreateWithoutReviewerInput[]
+  connectOrCreate?: Prisma.CaseCreateOrConnectWithoutReviewerInput | Prisma.CaseCreateOrConnectWithoutReviewerInput[]
+  createMany?: Prisma.CaseCreateManyReviewerInputEnvelope
+  connect?: Prisma.CaseWhereUniqueInput | Prisma.CaseWhereUniqueInput[]
+}
+
 export type CaseUncheckedCreateNestedManyWithoutSubmitterInput = {
   create?: Prisma.XOR<Prisma.CaseCreateWithoutSubmitterInput, Prisma.CaseUncheckedCreateWithoutSubmitterInput> | Prisma.CaseCreateWithoutSubmitterInput[] | Prisma.CaseUncheckedCreateWithoutSubmitterInput[]
   connectOrCreate?: Prisma.CaseCreateOrConnectWithoutSubmitterInput | Prisma.CaseCreateOrConnectWithoutSubmitterInput[]
   createMany?: Prisma.CaseCreateManySubmitterInputEnvelope
+  connect?: Prisma.CaseWhereUniqueInput | Prisma.CaseWhereUniqueInput[]
+}
+
+export type CaseUncheckedCreateNestedManyWithoutReviewerInput = {
+  create?: Prisma.XOR<Prisma.CaseCreateWithoutReviewerInput, Prisma.CaseUncheckedCreateWithoutReviewerInput> | Prisma.CaseCreateWithoutReviewerInput[] | Prisma.CaseUncheckedCreateWithoutReviewerInput[]
+  connectOrCreate?: Prisma.CaseCreateOrConnectWithoutReviewerInput | Prisma.CaseCreateOrConnectWithoutReviewerInput[]
+  createMany?: Prisma.CaseCreateManyReviewerInputEnvelope
   connect?: Prisma.CaseWhereUniqueInput | Prisma.CaseWhereUniqueInput[]
 }
 
@@ -452,6 +490,20 @@ export type CaseUpdateManyWithoutSubmitterNestedInput = {
   deleteMany?: Prisma.CaseScalarWhereInput | Prisma.CaseScalarWhereInput[]
 }
 
+export type CaseUpdateManyWithoutReviewerNestedInput = {
+  create?: Prisma.XOR<Prisma.CaseCreateWithoutReviewerInput, Prisma.CaseUncheckedCreateWithoutReviewerInput> | Prisma.CaseCreateWithoutReviewerInput[] | Prisma.CaseUncheckedCreateWithoutReviewerInput[]
+  connectOrCreate?: Prisma.CaseCreateOrConnectWithoutReviewerInput | Prisma.CaseCreateOrConnectWithoutReviewerInput[]
+  upsert?: Prisma.CaseUpsertWithWhereUniqueWithoutReviewerInput | Prisma.CaseUpsertWithWhereUniqueWithoutReviewerInput[]
+  createMany?: Prisma.CaseCreateManyReviewerInputEnvelope
+  set?: Prisma.CaseWhereUniqueInput | Prisma.CaseWhereUniqueInput[]
+  disconnect?: Prisma.CaseWhereUniqueInput | Prisma.CaseWhereUniqueInput[]
+  delete?: Prisma.CaseWhereUniqueInput | Prisma.CaseWhereUniqueInput[]
+  connect?: Prisma.CaseWhereUniqueInput | Prisma.CaseWhereUniqueInput[]
+  update?: Prisma.CaseUpdateWithWhereUniqueWithoutReviewerInput | Prisma.CaseUpdateWithWhereUniqueWithoutReviewerInput[]
+  updateMany?: Prisma.CaseUpdateManyWithWhereWithoutReviewerInput | Prisma.CaseUpdateManyWithWhereWithoutReviewerInput[]
+  deleteMany?: Prisma.CaseScalarWhereInput | Prisma.CaseScalarWhereInput[]
+}
+
 export type CaseUncheckedUpdateManyWithoutSubmitterNestedInput = {
   create?: Prisma.XOR<Prisma.CaseCreateWithoutSubmitterInput, Prisma.CaseUncheckedCreateWithoutSubmitterInput> | Prisma.CaseCreateWithoutSubmitterInput[] | Prisma.CaseUncheckedCreateWithoutSubmitterInput[]
   connectOrCreate?: Prisma.CaseCreateOrConnectWithoutSubmitterInput | Prisma.CaseCreateOrConnectWithoutSubmitterInput[]
@@ -463,6 +515,20 @@ export type CaseUncheckedUpdateManyWithoutSubmitterNestedInput = {
   connect?: Prisma.CaseWhereUniqueInput | Prisma.CaseWhereUniqueInput[]
   update?: Prisma.CaseUpdateWithWhereUniqueWithoutSubmitterInput | Prisma.CaseUpdateWithWhereUniqueWithoutSubmitterInput[]
   updateMany?: Prisma.CaseUpdateManyWithWhereWithoutSubmitterInput | Prisma.CaseUpdateManyWithWhereWithoutSubmitterInput[]
+  deleteMany?: Prisma.CaseScalarWhereInput | Prisma.CaseScalarWhereInput[]
+}
+
+export type CaseUncheckedUpdateManyWithoutReviewerNestedInput = {
+  create?: Prisma.XOR<Prisma.CaseCreateWithoutReviewerInput, Prisma.CaseUncheckedCreateWithoutReviewerInput> | Prisma.CaseCreateWithoutReviewerInput[] | Prisma.CaseUncheckedCreateWithoutReviewerInput[]
+  connectOrCreate?: Prisma.CaseCreateOrConnectWithoutReviewerInput | Prisma.CaseCreateOrConnectWithoutReviewerInput[]
+  upsert?: Prisma.CaseUpsertWithWhereUniqueWithoutReviewerInput | Prisma.CaseUpsertWithWhereUniqueWithoutReviewerInput[]
+  createMany?: Prisma.CaseCreateManyReviewerInputEnvelope
+  set?: Prisma.CaseWhereUniqueInput | Prisma.CaseWhereUniqueInput[]
+  disconnect?: Prisma.CaseWhereUniqueInput | Prisma.CaseWhereUniqueInput[]
+  delete?: Prisma.CaseWhereUniqueInput | Prisma.CaseWhereUniqueInput[]
+  connect?: Prisma.CaseWhereUniqueInput | Prisma.CaseWhereUniqueInput[]
+  update?: Prisma.CaseUpdateWithWhereUniqueWithoutReviewerInput | Prisma.CaseUpdateWithWhereUniqueWithoutReviewerInput[]
+  updateMany?: Prisma.CaseUpdateManyWithWhereWithoutReviewerInput | Prisma.CaseUpdateManyWithWhereWithoutReviewerInput[]
   deleteMany?: Prisma.CaseScalarWhereInput | Prisma.CaseScalarWhereInput[]
 }
 
@@ -511,12 +577,14 @@ export type CaseCreateWithoutSubmitterInput = {
   softwareUsed?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  reviewer?: Prisma.UserCreateNestedOneWithoutAssignedCasesInput
   files?: Prisma.CaseFileCreateNestedManyWithoutCaseInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutCaseInput
 }
 
 export type CaseUncheckedCreateWithoutSubmitterInput = {
   id?: string
+  reviewerId?: string | null
   tier?: $Enums.CaseTier
   status?: $Enums.CaseStatus
   patientContext?: string | null
@@ -535,6 +603,44 @@ export type CaseCreateOrConnectWithoutSubmitterInput = {
 
 export type CaseCreateManySubmitterInputEnvelope = {
   data: Prisma.CaseCreateManySubmitterInput | Prisma.CaseCreateManySubmitterInput[]
+  skipDuplicates?: boolean
+}
+
+export type CaseCreateWithoutReviewerInput = {
+  id?: string
+  tier?: $Enums.CaseTier
+  status?: $Enums.CaseStatus
+  patientContext?: string | null
+  treatmentNotes: string
+  softwareUsed?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  submitter: Prisma.UserCreateNestedOneWithoutSubmittedCasesInput
+  files?: Prisma.CaseFileCreateNestedManyWithoutCaseInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutCaseInput
+}
+
+export type CaseUncheckedCreateWithoutReviewerInput = {
+  id?: string
+  submitterId: string
+  tier?: $Enums.CaseTier
+  status?: $Enums.CaseStatus
+  patientContext?: string | null
+  treatmentNotes: string
+  softwareUsed?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  files?: Prisma.CaseFileUncheckedCreateNestedManyWithoutCaseInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutCaseInput
+}
+
+export type CaseCreateOrConnectWithoutReviewerInput = {
+  where: Prisma.CaseWhereUniqueInput
+  create: Prisma.XOR<Prisma.CaseCreateWithoutReviewerInput, Prisma.CaseUncheckedCreateWithoutReviewerInput>
+}
+
+export type CaseCreateManyReviewerInputEnvelope = {
+  data: Prisma.CaseCreateManyReviewerInput | Prisma.CaseCreateManyReviewerInput[]
   skipDuplicates?: boolean
 }
 
@@ -560,6 +666,7 @@ export type CaseScalarWhereInput = {
   NOT?: Prisma.CaseScalarWhereInput | Prisma.CaseScalarWhereInput[]
   id?: Prisma.StringFilter<"Case"> | string
   submitterId?: Prisma.StringFilter<"Case"> | string
+  reviewerId?: Prisma.StringNullableFilter<"Case"> | string | null
   tier?: Prisma.EnumCaseTierFilter<"Case"> | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusFilter<"Case"> | $Enums.CaseStatus
   patientContext?: Prisma.StringNullableFilter<"Case"> | string | null
@@ -567,6 +674,22 @@ export type CaseScalarWhereInput = {
   softwareUsed?: Prisma.StringNullableFilter<"Case"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Case"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Case"> | Date | string
+}
+
+export type CaseUpsertWithWhereUniqueWithoutReviewerInput = {
+  where: Prisma.CaseWhereUniqueInput
+  update: Prisma.XOR<Prisma.CaseUpdateWithoutReviewerInput, Prisma.CaseUncheckedUpdateWithoutReviewerInput>
+  create: Prisma.XOR<Prisma.CaseCreateWithoutReviewerInput, Prisma.CaseUncheckedCreateWithoutReviewerInput>
+}
+
+export type CaseUpdateWithWhereUniqueWithoutReviewerInput = {
+  where: Prisma.CaseWhereUniqueInput
+  data: Prisma.XOR<Prisma.CaseUpdateWithoutReviewerInput, Prisma.CaseUncheckedUpdateWithoutReviewerInput>
+}
+
+export type CaseUpdateManyWithWhereWithoutReviewerInput = {
+  where: Prisma.CaseScalarWhereInput
+  data: Prisma.XOR<Prisma.CaseUpdateManyMutationInput, Prisma.CaseUncheckedUpdateManyWithoutReviewerInput>
 }
 
 export type CaseCreateWithoutFilesInput = {
@@ -579,12 +702,14 @@ export type CaseCreateWithoutFilesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   submitter: Prisma.UserCreateNestedOneWithoutSubmittedCasesInput
+  reviewer?: Prisma.UserCreateNestedOneWithoutAssignedCasesInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutCaseInput
 }
 
 export type CaseUncheckedCreateWithoutFilesInput = {
   id?: string
   submitterId: string
+  reviewerId?: string | null
   tier?: $Enums.CaseTier
   status?: $Enums.CaseStatus
   patientContext?: string | null
@@ -621,12 +746,14 @@ export type CaseUpdateWithoutFilesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   submitter?: Prisma.UserUpdateOneRequiredWithoutSubmittedCasesNestedInput
+  reviewer?: Prisma.UserUpdateOneWithoutAssignedCasesNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutCaseNestedInput
 }
 
 export type CaseUncheckedUpdateWithoutFilesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   submitterId?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -647,12 +774,14 @@ export type CaseCreateWithoutReviewsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   submitter: Prisma.UserCreateNestedOneWithoutSubmittedCasesInput
+  reviewer?: Prisma.UserCreateNestedOneWithoutAssignedCasesInput
   files?: Prisma.CaseFileCreateNestedManyWithoutCaseInput
 }
 
 export type CaseUncheckedCreateWithoutReviewsInput = {
   id?: string
   submitterId: string
+  reviewerId?: string | null
   tier?: $Enums.CaseTier
   status?: $Enums.CaseStatus
   patientContext?: string | null
@@ -689,12 +818,14 @@ export type CaseUpdateWithoutReviewsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   submitter?: Prisma.UserUpdateOneRequiredWithoutSubmittedCasesNestedInput
+  reviewer?: Prisma.UserUpdateOneWithoutAssignedCasesNestedInput
   files?: Prisma.CaseFileUpdateManyWithoutCaseNestedInput
 }
 
 export type CaseUncheckedUpdateWithoutReviewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   submitterId?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -707,6 +838,19 @@ export type CaseUncheckedUpdateWithoutReviewsInput = {
 
 export type CaseCreateManySubmitterInput = {
   id?: string
+  reviewerId?: string | null
+  tier?: $Enums.CaseTier
+  status?: $Enums.CaseStatus
+  patientContext?: string | null
+  treatmentNotes: string
+  softwareUsed?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type CaseCreateManyReviewerInput = {
+  id?: string
+  submitterId: string
   tier?: $Enums.CaseTier
   status?: $Enums.CaseStatus
   patientContext?: string | null
@@ -725,12 +869,14 @@ export type CaseUpdateWithoutSubmitterInput = {
   softwareUsed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  reviewer?: Prisma.UserUpdateOneWithoutAssignedCasesNestedInput
   files?: Prisma.CaseFileUpdateManyWithoutCaseNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutCaseNestedInput
 }
 
 export type CaseUncheckedUpdateWithoutSubmitterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -744,6 +890,47 @@ export type CaseUncheckedUpdateWithoutSubmitterInput = {
 
 export type CaseUncheckedUpdateManyWithoutSubmitterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
+  status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  treatmentNotes?: Prisma.StringFieldUpdateOperationsInput | string
+  softwareUsed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type CaseUpdateWithoutReviewerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
+  status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  treatmentNotes?: Prisma.StringFieldUpdateOperationsInput | string
+  softwareUsed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  submitter?: Prisma.UserUpdateOneRequiredWithoutSubmittedCasesNestedInput
+  files?: Prisma.CaseFileUpdateManyWithoutCaseNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutCaseNestedInput
+}
+
+export type CaseUncheckedUpdateWithoutReviewerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  submitterId?: Prisma.StringFieldUpdateOperationsInput | string
+  tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
+  status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  treatmentNotes?: Prisma.StringFieldUpdateOperationsInput | string
+  softwareUsed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  files?: Prisma.CaseFileUncheckedUpdateManyWithoutCaseNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutCaseNestedInput
+}
+
+export type CaseUncheckedUpdateManyWithoutReviewerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  submitterId?: Prisma.StringFieldUpdateOperationsInput | string
   tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
   status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -796,6 +983,7 @@ export type CaseCountOutputTypeCountReviewsArgs<ExtArgs extends runtime.Types.Ex
 export type CaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   submitterId?: boolean
+  reviewerId?: boolean
   tier?: boolean
   status?: boolean
   patientContext?: boolean
@@ -804,6 +992,7 @@ export type CaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean
   updatedAt?: boolean
   submitter?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  reviewer?: boolean | Prisma.Case$reviewerArgs<ExtArgs>
   files?: boolean | Prisma.Case$filesArgs<ExtArgs>
   reviews?: boolean | Prisma.Case$reviewsArgs<ExtArgs>
   _count?: boolean | Prisma.CaseCountOutputTypeDefaultArgs<ExtArgs>
@@ -812,6 +1001,7 @@ export type CaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 export type CaseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   submitterId?: boolean
+  reviewerId?: boolean
   tier?: boolean
   status?: boolean
   patientContext?: boolean
@@ -820,11 +1010,13 @@ export type CaseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   createdAt?: boolean
   updatedAt?: boolean
   submitter?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  reviewer?: boolean | Prisma.Case$reviewerArgs<ExtArgs>
 }, ExtArgs["result"]["case"]>
 
 export type CaseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   submitterId?: boolean
+  reviewerId?: boolean
   tier?: boolean
   status?: boolean
   patientContext?: boolean
@@ -833,11 +1025,13 @@ export type CaseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   createdAt?: boolean
   updatedAt?: boolean
   submitter?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  reviewer?: boolean | Prisma.Case$reviewerArgs<ExtArgs>
 }, ExtArgs["result"]["case"]>
 
 export type CaseSelectScalar = {
   id?: boolean
   submitterId?: boolean
+  reviewerId?: boolean
   tier?: boolean
   status?: boolean
   patientContext?: boolean
@@ -847,30 +1041,35 @@ export type CaseSelectScalar = {
   updatedAt?: boolean
 }
 
-export type CaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "submitterId" | "tier" | "status" | "patientContext" | "treatmentNotes" | "softwareUsed" | "createdAt" | "updatedAt", ExtArgs["result"]["case"]>
+export type CaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "submitterId" | "reviewerId" | "tier" | "status" | "patientContext" | "treatmentNotes" | "softwareUsed" | "createdAt" | "updatedAt", ExtArgs["result"]["case"]>
 export type CaseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   submitter?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  reviewer?: boolean | Prisma.Case$reviewerArgs<ExtArgs>
   files?: boolean | Prisma.Case$filesArgs<ExtArgs>
   reviews?: boolean | Prisma.Case$reviewsArgs<ExtArgs>
   _count?: boolean | Prisma.CaseCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CaseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   submitter?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  reviewer?: boolean | Prisma.Case$reviewerArgs<ExtArgs>
 }
 export type CaseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   submitter?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  reviewer?: boolean | Prisma.Case$reviewerArgs<ExtArgs>
 }
 
 export type $CasePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Case"
   objects: {
     submitter: Prisma.$UserPayload<ExtArgs>
+    reviewer: Prisma.$UserPayload<ExtArgs> | null
     files: Prisma.$CaseFilePayload<ExtArgs>[]
     reviews: Prisma.$ReviewPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     submitterId: string
+    reviewerId: string | null
     tier: $Enums.CaseTier
     status: $Enums.CaseStatus
     patientContext: string | null
@@ -1273,6 +1472,7 @@ readonly fields: CaseFieldRefs;
 export interface Prisma__CaseClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   submitter<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  reviewer<T extends Prisma.Case$reviewerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Case$reviewerArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   files<T extends Prisma.Case$filesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Case$filesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CaseFilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reviews<T extends Prisma.Case$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Case$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -1306,6 +1506,7 @@ export interface Prisma__CaseClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface CaseFieldRefs {
   readonly id: Prisma.FieldRef<"Case", 'String'>
   readonly submitterId: Prisma.FieldRef<"Case", 'String'>
+  readonly reviewerId: Prisma.FieldRef<"Case", 'String'>
   readonly tier: Prisma.FieldRef<"Case", 'CaseTier'>
   readonly status: Prisma.FieldRef<"Case", 'CaseStatus'>
   readonly patientContext: Prisma.FieldRef<"Case", 'String'>
@@ -1711,6 +1912,25 @@ export type CaseDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Cases to delete.
    */
   limit?: number
+}
+
+/**
+ * Case.reviewer
+ */
+export type Case$reviewerArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

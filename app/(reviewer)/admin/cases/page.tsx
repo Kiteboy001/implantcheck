@@ -41,6 +41,7 @@ export default async function AdminCasesPage({
     ],
     include: {
       submitter: { select: { name: true, email: true } },
+      reviewer: { select: { name: true } },
       files: { select: { id: true } },
     },
   })
@@ -112,12 +113,13 @@ export default async function AdminCasesPage({
         <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
           {/* Table header */}
           <div className="hidden md:grid grid-cols-12 gap-4 px-6 py-3 bg-warm-bg border-b border-gray-100 text-xs font-semibold text-muted uppercase tracking-wider">
-            <div className="col-span-3">Submitter</div>
+            <div className="col-span-2">Submitter</div>
             <div className="col-span-2">Tier</div>
-            <div className="col-span-2">Status</div>
-            <div className="col-span-2">Files</div>
+            <div className="col-span-1">Status</div>
+            <div className="col-span-2">Reviewer</div>
+            <div className="col-span-1">Files</div>
             <div className="col-span-2">Submitted</div>
-            <div className="col-span-1"></div>
+            <div className="col-span-2"></div>
           </div>
 
           {/* Table rows */}
@@ -128,7 +130,7 @@ export default async function AdminCasesPage({
                 href={`/admin/cases/${c.id}`}
                 className="grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-4 px-6 py-4 hover:bg-warm-bg transition-colors items-center"
               >
-                <div className="md:col-span-3">
+                <div className="md:col-span-2">
                   <p className="text-sm font-medium text-navy">
                     {c.submitter.name || "—"}
                   </p>
@@ -137,14 +139,19 @@ export default async function AdminCasesPage({
                 <div className="md:col-span-2">
                   <span className="text-sm text-body">{tierLabels[c.tier]}</span>
                 </div>
-                <div className="md:col-span-2">
+                <div className="md:col-span-1">
                   <span className={`inline-block text-xs px-2.5 py-1 rounded-full font-medium ${statusColors[c.status]}`}>
                     {statusLabels[c.status]}
                   </span>
                 </div>
                 <div className="md:col-span-2">
+                  <span className="text-sm text-body">
+                    {c.reviewer?.name || <span className="text-muted italic">Unassigned</span>}
+                  </span>
+                </div>
+                <div className="md:col-span-1">
                   <span className="text-sm text-muted">
-                    {c.files.length} file{c.files.length !== 1 ? "s" : ""}
+                    {c.files.length}
                   </span>
                 </div>
                 <div className="md:col-span-2">
@@ -156,7 +163,7 @@ export default async function AdminCasesPage({
                     })}
                   </span>
                 </div>
-                <div className="md:col-span-1 text-right">
+                <div className="md:col-span-2 text-right">
                   <span className="text-gold text-sm font-medium">View →</span>
                 </div>
               </Link>

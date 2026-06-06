@@ -38,6 +38,12 @@ export default async function ReviewerLayout({
                 >
                   Cases
                 </Link>
+                <Link
+                  href="/admin/users"
+                  className="text-sm text-body hover:text-navy transition-colors"
+                >
+                  Users
+                </Link>
               </div>
             </div>
             <div className="flex items-center gap-4">
