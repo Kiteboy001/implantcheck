@@ -26,7 +26,7 @@ export async function uploadFile(formData: FormData) {
 
   try {
     const blob = await put(`cases/${Date.now()}-${file.name}`, file, {
-      access: "public",
+      access: "private",
       addRandomSuffix: false,
     })
 
