@@ -244,32 +244,83 @@ export default async function SubmitterCasePage({
                           : "Rejected"}
                       </span>
                     </div>
-                    {review.implantPosition && (
-                      <div className="mb-2">
-                        <p className="text-xs font-semibold text-muted mb-1">
-                          Implant Position
-                        </p>
-                        <p className="text-sm text-body">
-                          {review.implantPosition}
-                        </p>
-                      </div>
-                    )}
-                    {review.angulation && (
-                      <div className="mb-2">
-                        <p className="text-xs font-semibold text-muted mb-1">
-                          Angulation
-                        </p>
-                        <p className="text-sm text-body">{review.angulation}</p>
-                      </div>
-                    )}
-                    {review.riskFlags && (
-                      <div className="mb-2">
-                        <p className="text-xs font-semibold text-muted mb-1">
-                          Risk Flags
-                        </p>
-                        <p className="text-sm text-body">{review.riskFlags}</p>
-                      </div>
-                    )}
+                    <div className="space-y-4">
+                      {review.caseSummary && (
+                        <div>
+                          <p className="text-xs font-semibold text-muted mb-1">
+                            1. Case Summary
+                          </p>
+                          <p className="text-sm text-body whitespace-pre-wrap">
+                            {review.caseSummary}
+                          </p>
+                        </div>
+                      )}
+                      {review.sacClassification && (
+                        <div>
+                          <p className="text-xs font-semibold text-muted mb-1">
+                            2. SAC Classification
+                          </p>
+                          <p className="text-sm text-body">
+                            {review.sacClassification}
+                          </p>
+                        </div>
+                      )}
+                      {review.implantPosition && (
+                        <div>
+                          <p className="text-xs font-semibold text-muted mb-1">
+                            3. Implant Position
+                          </p>
+                          <p className="text-sm text-body whitespace-pre-wrap">
+                            {review.implantPosition}
+                          </p>
+                        </div>
+                      )}
+                      {review.angulation && (
+                        <div>
+                          <p className="text-xs font-semibold text-muted mb-1">
+                            4. Angulation
+                          </p>
+                          <p className="text-sm text-body whitespace-pre-wrap">{review.angulation}</p>
+                        </div>
+                      )}
+                      {review.anatomicalConsiderations && (
+                        <div>
+                          <p className="text-xs font-semibold text-muted mb-1">
+                            5. Anatomical Considerations
+                          </p>
+                          <p className="text-sm text-body whitespace-pre-wrap">
+                            {review.anatomicalConsiderations}
+                          </p>
+                        </div>
+                      )}
+                      {review.prostheticConsiderations && (
+                        <div>
+                          <p className="text-xs font-semibold text-muted mb-1">
+                            6. Prosthetic Considerations
+                          </p>
+                          <p className="text-sm text-body whitespace-pre-wrap">
+                            {review.prostheticConsiderations}
+                          </p>
+                        </div>
+                      )}
+                      {review.riskFlags && (
+                        <div>
+                          <p className="text-xs font-semibold text-muted mb-1">
+                            7. Risk Assessment
+                          </p>
+                          <p className="text-sm text-body whitespace-pre-wrap">{review.riskFlags}</p>
+                        </div>
+                      )}
+                      {review.recommendations && (
+                        <div>
+                          <p className="text-xs font-semibold text-muted mb-1">
+                            8. Recommendations
+                          </p>
+                          <p className="text-sm text-body whitespace-pre-wrap">
+                            {review.recommendations}
+                          </p>
+                        </div>
+                      )}
                     <div>
                       <p className="text-xs font-semibold text-muted mb-1">
                         Overall Feedback
@@ -277,6 +328,7 @@ export default async function SubmitterCasePage({
                       <p className="text-sm text-body whitespace-pre-wrap">
                         {review.overallFeedback}
                       </p>
+                    </div>
                     </div>
                   </div>
                 ))}
