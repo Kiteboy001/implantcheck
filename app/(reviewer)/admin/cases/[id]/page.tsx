@@ -2,6 +2,9 @@ import { prisma } from "@/lib/prisma"
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { DownloadAllButton } from "./DownloadAllButton"
+import { ReviewerAssign } from "./ReviewerAssign"
+import { ReviewForm } from "./ReviewForm"
+import { EmailReportButton } from "./EmailReportButton"
 
 const statusLabels: Record<string, string> = {
   PENDING: "Pending",
@@ -237,32 +240,83 @@ export default async function CaseDetailPage({
                           : "Rejected"}
                       </span>
                     </div>
-                    {review.implantPosition && (
-                      <div className="mb-2">
-                        <p className="text-xs font-semibold text-muted mb-1">
-                          Implant Position
-                        </p>
-                        <p className="text-sm text-body">
-                          {review.implantPosition}
-                        </p>
-                      </div>
-                    )}
-                    {review.angulation && (
-                      <div className="mb-2">
-                        <p className="text-xs font-semibold text-muted mb-1">
-                          Angulation
-                        </p>
-                        <p className="text-sm text-body">{review.angulation}</p>
-                      </div>
-                    )}
-                    {review.riskFlags && (
-                      <div className="mb-2">
-                        <p className="text-xs font-semibold text-muted mb-1">
-                          Risk Flags
-                        </p>
-                        <p className="text-sm text-body">{review.riskFlags}</p>
-                      </div>
-                    )}
+                    <div className="space-y-4">
+                      {review.caseSummary && (
+                        <div>
+                          <p className="text-xs font-semibold text-muted mb-1">
+                            1. Case Summary
+                          </p>
+                          <p className="text-sm text-body whitespace-pre-wrap">
+                            {review.caseSummary}
+                          </p>
+                        </div>
+                      )}
+                      {review.sacClassification && (
+                        <div>
+                          <p className="text-xs font-semibold text-muted mb-1">
+                            2. SAC Classification
+                          </p>
+                          <p className="text-sm text-body">
+                            {review.sacClassification}
+                          </p>
+                        </div>
+                      )}
+                      {review.implantPosition && (
+                        <div>
+                          <p className="text-xs font-semibold text-muted mb-1">
+                            3. Implant Position
+                          </p>
+                          <p className="text-sm text-body whitespace-pre-wrap">
+                            {review.implantPosition}
+                          </p>
+                        </div>
+                      )}
+                      {review.angulation && (
+                        <div>
+                          <p className="text-xs font-semibold text-muted mb-1">
+                            4. Angulation
+                          </p>
+                          <p className="text-sm text-body whitespace-pre-wrap">{review.angulation}</p>
+                        </div>
+                      )}
+                      {review.anatomicalConsiderations && (
+                        <div>
+                          <p className="text-xs font-semibold text-muted mb-1">
+                            5. Anatomical Considerations
+                          </p>
+                          <p className="text-sm text-body whitespace-pre-wrap">
+                            {review.anatomicalConsiderations}
+                          </p>
+                        </div>
+                      )}
+                      {review.prostheticConsiderations && (
+                        <div>
+                          <p className="text-xs font-semibold text-muted mb-1">
+                            6. Prosthetic Considerations
+                          </p>
+                          <p className="text-sm text-body whitespace-pre-wrap">
+                            {review.prostheticConsiderations}
+                          </p>
+                        </div>
+                      )}
+                      {review.riskFlags && (
+                        <div>
+                          <p className="text-xs font-semibold text-muted mb-1">
+                            7. Risk Assessment
+                          </p>
+                          <p className="text-sm text-body whitespace-pre-wrap">{review.riskFlags}</p>
+                        </div>
+                      )}
+                      {review.recommendations && (
+                        <div>
+                          <p className="text-xs font-semibold text-muted mb-1">
+                            8. Recommendations
+                          </p>
+                          <p className="text-sm text-body whitespace-pre-wrap">
+                            {review.recommendations}
+                          </p>
+                        </div>
+                      )}
                     <div>
                       <p className="text-xs font-semibold text-muted mb-1">
                         Overall Feedback
@@ -272,7 +326,8 @@ export default async function CaseDetailPage({
                       </p>
                     </div>
                     <div className="mt-4 pt-3 border-t border-gray-100">
-                      <span className="text-xs text-muted">Email report (simplified)</span>
+                      <EmailReportButton reviewId={review.id} />
+                    </div>
                     </div>
                   </div>
                 ))}
@@ -282,12 +337,7 @@ export default async function CaseDetailPage({
 
           {/* Review form */}
           {caseData.status !== "APPROVED" && caseData.status !== "REJECTED" && (
-            <div className="bg-white rounded-xl border border-gray-100 p-6">
-              <h2 className="font-[(family-name:var(--font-garamond))] text-lg text-navy font-bold mb-4">
-                Submit Review
-              </h2>
-              <p className="text-sm text-muted">Review form (simplified — useActionState issue)</p>
-            </div>
+            <ReviewForm caseId={caseData.id} />
           )}
         </div>
 
@@ -310,12 +360,13 @@ export default async function CaseDetailPage({
           </div>
 
           {/* Reviewer assignment */}
-          <div className="bg-white rounded-xl border border-gray-100 p-5">
-            <h3 className="text-xs font-semibold text-muted uppercase tracking-wider mb-3">
-              Assigned Reviewer
-            </h3>
-            <p className="text-sm text-muted">Reviewer assignment (simplified)</p>
-          </div>
+          <ReviewerAssign
+            caseId={caseData.id}
+            currentReviewerId={caseData.reviewerId}
+            currentStatus={caseData.status}
+            reviewerName={assignedReviewer?.name || null}
+            reviewers={reviewers}
+          />
 
           {/* Case details */}
           <div className="bg-white rounded-xl border border-gray-100 p-5">

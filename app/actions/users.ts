@@ -44,6 +44,33 @@ export async function createReviewer(
   return { success: `Reviewer ${name} created` }
 }
 
+export async function changeUserRole(
+  prevState: ManageUserState,
+  formData: FormData
+): Promise<ManageUserState> {
+  const session = await auth()
+  if (!session?.user) redirect("/auth/login")
+  const role = (session.user as any).role
+  if (role !== "ADMIN") return { error: "Only admins can change roles" }
+
+  const userId = formData.get("userId") as string
+  const newRole = formData.get("newRole") as string
+
+  if (!userId || !newRole) return { error: "User ID and role are required" }
+  if (!["SUBMITTER", "REVIEWER"].includes(newRole)) return { error: "Invalid role" }
+
+  const user = await prisma.user.findUnique({ where: { id: userId }, select: { name: true, email: true, role: true } })
+  if (!user) return { error: "User not found" }
+
+  await prisma.user.update({
+    where: { id: userId },
+    data: { role: newRole as any },
+  })
+
+  revalidatePath("/admin/users")
+  return { success: `${user.name || user.email} is now a ${newRole.toLowerCase()}` }
+}
+
 export async function assignReviewer(
   prevState: ManageUserState,
   formData: FormData

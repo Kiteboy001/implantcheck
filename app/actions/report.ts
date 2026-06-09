@@ -18,9 +18,14 @@ function buildReportHtml(data: {
   reviewerName: string
   reviewDate: string
   decision: string
+  caseSummary?: string | null
+  sacClassification?: string | null
   implantPosition?: string | null
   angulation?: string | null
+  anatomicalConsiderations?: string | null
+  prostheticConsiderations?: string | null
   riskFlags?: string | null
+  recommendations?: string | null
   overallFeedback: string
 }): string {
   const decisionColor =
@@ -34,6 +39,30 @@ function buildReportHtml(data: {
   const tierPricing: Record<string, string> = {
     BASIC: "£95", STANDARD: "£199", COMPLEX: "£295", PILOT_GUIDE: "£399",
   }
+
+  // Build sections dynamically
+  const sections: { number: number; title: string; content: string | null | undefined }[] = [
+    { number: 1, title: "Case Summary", content: data.caseSummary },
+    { number: 2, title: "SAC Classification", content: data.sacClassification },
+    { number: 3, title: "Implant Positioning", content: data.implantPosition },
+    { number: 4, title: "Angulation Analysis", content: data.angulation },
+    { number: 5, title: "Anatomical Considerations", content: data.anatomicalConsiderations },
+    { number: 6, title: "Prosthetic Considerations", content: data.prostheticConsiderations },
+    { number: 7, title: "Risk Assessment", content: data.riskFlags },
+    { number: 8, title: "Recommendations", content: data.recommendations },
+    { number: 9, title: "Overall Feedback & Verdict", content: data.overallFeedback },
+  ]
+
+  const sectionsHtml = sections
+    .filter((s) => s.content)
+    .map(
+      (s) => `
+    <div style="margin-bottom: 20px;">
+      <h3 style="color: #001B3D; font-size: 14px; font-weight: 600; margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.5px;">${s.number}. ${s.title}</h3>
+      <p style="color: #4B5563; font-size: 14px; line-height: 1.6; margin: 0; white-space: pre-wrap;">${s.content}</p>
+    </div>`
+    )
+    .join("\n")
 
   return `<!DOCTYPE html>
 <html>
@@ -80,29 +109,7 @@ function buildReportHtml(data: {
 
   <!-- Sections -->
   <div style="padding: 0 32px 24px;">
-
-    ${data.implantPosition ? `
-    <div style="margin-bottom: 20px;">
-      <h3 style="color: #001B3D; font-size: 14px; font-weight: 600; margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.5px;">1. Implant Positioning</h3>
-      <p style="color: #4B5563; font-size: 14px; line-height: 1.6; margin: 0; white-space: pre-wrap;">${data.implantPosition}</p>
-    </div>` : ""}
-
-    ${data.angulation ? `
-    <div style="margin-bottom: 20px;">
-      <h3 style="color: #001B3D; font-size: 14px; font-weight: 600; margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.5px;">2. Angulation</h3>
-      <p style="color: #4B5563; font-size: 14px; line-height: 1.6; margin: 0; white-space: pre-wrap;">${data.angulation}</p>
-    </div>` : ""}
-
-    ${data.riskFlags ? `
-    <div style="margin-bottom: 20px;">
-      <h3 style="color: #001B3D; font-size: 14px; font-weight: 600; margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.5px;">3. Risk Assessment</h3>
-      <p style="color: #4B5563; font-size: 14px; line-height: 1.6; margin: 0; white-space: pre-wrap;">${data.riskFlags}</p>
-    </div>` : ""}
-
-    <div style="margin-bottom: 20px;">
-      <h3 style="color: #001B3D; font-size: 14px; font-weight: 600; margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.5px;">4. Overall Feedback</h3>
-      <p style="color: #4B5563; font-size: 14px; line-height: 1.6; margin: 0; white-space: pre-wrap;">${data.overallFeedback}</p>
-    </div>
+    ${sectionsHtml}
   </div>
 
   <!-- Footer -->
@@ -162,9 +169,14 @@ export async function emailReport(
       day: "numeric", month: "long", year: "numeric",
     }),
     decision: review.decision,
+    caseSummary: review.caseSummary,
+    sacClassification: review.sacClassification,
     implantPosition: review.implantPosition,
     angulation: review.angulation,
+    anatomicalConsiderations: review.anatomicalConsiderations,
+    prostheticConsiderations: review.prostheticConsiderations,
     riskFlags: review.riskFlags,
+    recommendations: review.recommendations,
     overallFeedback: review.overallFeedback,
   })
 

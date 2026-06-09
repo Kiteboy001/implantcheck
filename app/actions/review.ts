@@ -16,13 +16,18 @@ export async function submitReview(
 
   const caseId = formData.get("caseId") as string
   const decision = formData.get("decision") as string
+  const caseSummary = (formData.get("caseSummary") as string) || null
+  const sacClassification = (formData.get("sacClassification") as string) || null
+  const implantPosition = (formData.get("implantPosition") as string) || null
+  const angulation = (formData.get("angulation") as string) || null
+  const anatomicalConsiderations = (formData.get("anatomicalConsiderations") as string) || null
+  const prostheticConsiderations = (formData.get("prostheticConsiderations") as string) || null
+  const riskFlags = (formData.get("riskFlags") as string) || null
+  const recommendations = (formData.get("recommendations") as string) || null
   const overallFeedback = formData.get("overallFeedback") as string
-  const implantPosition = formData.get("implantPosition") as string
-  const angulation = formData.get("angulation") as string
-  const riskFlags = formData.get("riskFlags") as string
 
   if (!caseId || !decision || !overallFeedback) {
-    return { error: "Decision and feedback are required" }
+    return { error: "Decision and overall feedback are required" }
   }
 
   const userId = (session.user as any).id
@@ -33,10 +38,15 @@ export async function submitReview(
       caseId,
       reviewerId: userId,
       decision: decision as any,
+      caseSummary,
+      sacClassification,
+      implantPosition,
+      angulation,
+      anatomicalConsiderations,
+      prostheticConsiderations,
+      riskFlags,
+      recommendations,
       overallFeedback,
-      implantPosition: implantPosition || null,
-      angulation: angulation || null,
-      riskFlags: riskFlags || null,
     },
   })
 

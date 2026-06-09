@@ -164,9 +164,14 @@ model Review {
   caseId           String         @map("case_id")
   reviewerId       String         @map("reviewer_id")
   decision         ReviewDecision
+  caseSummary      String?        @map("case_summary")
+  sacClassification String?       @map("sac_classification") // Straightforward / Advanced / Complex
   implantPosition  String?        @map("implant_position")
   angulation       String?
+  anatomicalConsiderations String? @map("anatomical_considerations")
+  prostheticConsiderations String? @map("prosthetic_considerations")
   riskFlags        String?        @map("risk_flags")
+  recommendations  String?
   overallFeedback  String         @map("overall_feedback")
 
   case     Case @relation(fields: [caseId], references: [id], onDelete: Cascade)

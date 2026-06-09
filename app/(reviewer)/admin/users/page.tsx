@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma"
 import { redirect } from "next/navigation"
 import Link from "next/link"
 import { CreateReviewerForm } from "./CreateReviewerForm"
+import { RoleToggleButton } from "./RoleToggleButton"
 
 export default async function AdminUsersPage() {
   const session = await auth()
@@ -88,9 +89,12 @@ export default async function AdminUsersPage() {
                     <p className="text-sm font-medium text-navy">{s.name || "—"}</p>
                     <p className="text-xs text-muted">{s.email}</p>
                   </div>
-                  <span className="text-xs text-muted">
-                    {s._count.submittedCases} case{s._count.submittedCases !== 1 ? "s" : ""}
-                  </span>
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs text-muted">
+                      {s._count.submittedCases} case{s._count.submittedCases !== 1 ? "s" : ""}
+                    </span>
+                    <RoleToggleButton userId={s.id} currentRole="SUBMITTER" userName={s.name || s.email} />
+                  </div>
                 </div>
               ))}
             </div>

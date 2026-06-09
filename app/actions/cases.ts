@@ -15,6 +15,7 @@ export async function submitCase(
   if (!session?.user) redirect("/auth/login")
 
   const tier = formData.get("tier") as string
+  const reviewerId = (formData.get("reviewerId") as string) || null
   const treatmentNotes = formData.get("treatmentNotes") as string
   const patientContext = formData.get("patientContext") as string
   let softwareUsed = (formData.get("softwareUsed") as string) || null
@@ -60,9 +61,14 @@ export async function submitCase(
     "application/sla": "STL",
   }
 
+  // If reviewer selected, start in UNDER_REVIEW; otherwise PENDING
+  const initialStatus = reviewerId ? "UNDER_REVIEW" : "PENDING"
+
   const caseRecord = await prisma.case.create({
     data: {
       submitterId: userId,
+      reviewerId: reviewerId || undefined,
+      status: initialStatus as any,
       tier: tier as any,
       treatmentNotes,
       patientContext: patientContext || null,

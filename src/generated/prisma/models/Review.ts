@@ -29,9 +29,14 @@ export type ReviewMinAggregateOutputType = {
   caseId: string | null
   reviewerId: string | null
   decision: $Enums.ReviewDecision | null
+  caseSummary: string | null
+  sacClassification: string | null
   implantPosition: string | null
   angulation: string | null
+  anatomicalConsiderations: string | null
+  prostheticConsiderations: string | null
   riskFlags: string | null
+  recommendations: string | null
   overallFeedback: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -42,9 +47,14 @@ export type ReviewMaxAggregateOutputType = {
   caseId: string | null
   reviewerId: string | null
   decision: $Enums.ReviewDecision | null
+  caseSummary: string | null
+  sacClassification: string | null
   implantPosition: string | null
   angulation: string | null
+  anatomicalConsiderations: string | null
+  prostheticConsiderations: string | null
   riskFlags: string | null
+  recommendations: string | null
   overallFeedback: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -55,9 +65,14 @@ export type ReviewCountAggregateOutputType = {
   caseId: number
   reviewerId: number
   decision: number
+  caseSummary: number
+  sacClassification: number
   implantPosition: number
   angulation: number
+  anatomicalConsiderations: number
+  prostheticConsiderations: number
   riskFlags: number
+  recommendations: number
   overallFeedback: number
   createdAt: number
   updatedAt: number
@@ -70,9 +85,14 @@ export type ReviewMinAggregateInputType = {
   caseId?: true
   reviewerId?: true
   decision?: true
+  caseSummary?: true
+  sacClassification?: true
   implantPosition?: true
   angulation?: true
+  anatomicalConsiderations?: true
+  prostheticConsiderations?: true
   riskFlags?: true
+  recommendations?: true
   overallFeedback?: true
   createdAt?: true
   updatedAt?: true
@@ -83,9 +103,14 @@ export type ReviewMaxAggregateInputType = {
   caseId?: true
   reviewerId?: true
   decision?: true
+  caseSummary?: true
+  sacClassification?: true
   implantPosition?: true
   angulation?: true
+  anatomicalConsiderations?: true
+  prostheticConsiderations?: true
   riskFlags?: true
+  recommendations?: true
   overallFeedback?: true
   createdAt?: true
   updatedAt?: true
@@ -96,9 +121,14 @@ export type ReviewCountAggregateInputType = {
   caseId?: true
   reviewerId?: true
   decision?: true
+  caseSummary?: true
+  sacClassification?: true
   implantPosition?: true
   angulation?: true
+  anatomicalConsiderations?: true
+  prostheticConsiderations?: true
   riskFlags?: true
+  recommendations?: true
   overallFeedback?: true
   createdAt?: true
   updatedAt?: true
@@ -182,9 +212,14 @@ export type ReviewGroupByOutputType = {
   caseId: string
   reviewerId: string
   decision: $Enums.ReviewDecision
+  caseSummary: string | null
+  sacClassification: string | null
   implantPosition: string | null
   angulation: string | null
+  anatomicalConsiderations: string | null
+  prostheticConsiderations: string | null
   riskFlags: string | null
+  recommendations: string | null
   overallFeedback: string
   createdAt: Date
   updatedAt: Date
@@ -216,9 +251,14 @@ export type ReviewWhereInput = {
   caseId?: Prisma.StringFilter<"Review"> | string
   reviewerId?: Prisma.StringFilter<"Review"> | string
   decision?: Prisma.EnumReviewDecisionFilter<"Review"> | $Enums.ReviewDecision
+  caseSummary?: Prisma.StringNullableFilter<"Review"> | string | null
+  sacClassification?: Prisma.StringNullableFilter<"Review"> | string | null
   implantPosition?: Prisma.StringNullableFilter<"Review"> | string | null
   angulation?: Prisma.StringNullableFilter<"Review"> | string | null
+  anatomicalConsiderations?: Prisma.StringNullableFilter<"Review"> | string | null
+  prostheticConsiderations?: Prisma.StringNullableFilter<"Review"> | string | null
   riskFlags?: Prisma.StringNullableFilter<"Review"> | string | null
+  recommendations?: Prisma.StringNullableFilter<"Review"> | string | null
   overallFeedback?: Prisma.StringFilter<"Review"> | string
   createdAt?: Prisma.DateTimeFilter<"Review"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Review"> | Date | string
@@ -231,9 +271,14 @@ export type ReviewOrderByWithRelationInput = {
   caseId?: Prisma.SortOrder
   reviewerId?: Prisma.SortOrder
   decision?: Prisma.SortOrder
+  caseSummary?: Prisma.SortOrderInput | Prisma.SortOrder
+  sacClassification?: Prisma.SortOrderInput | Prisma.SortOrder
   implantPosition?: Prisma.SortOrderInput | Prisma.SortOrder
   angulation?: Prisma.SortOrderInput | Prisma.SortOrder
+  anatomicalConsiderations?: Prisma.SortOrderInput | Prisma.SortOrder
+  prostheticConsiderations?: Prisma.SortOrderInput | Prisma.SortOrder
   riskFlags?: Prisma.SortOrderInput | Prisma.SortOrder
+  recommendations?: Prisma.SortOrderInput | Prisma.SortOrder
   overallFeedback?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -249,9 +294,14 @@ export type ReviewWhereUniqueInput = Prisma.AtLeast<{
   caseId?: Prisma.StringFilter<"Review"> | string
   reviewerId?: Prisma.StringFilter<"Review"> | string
   decision?: Prisma.EnumReviewDecisionFilter<"Review"> | $Enums.ReviewDecision
+  caseSummary?: Prisma.StringNullableFilter<"Review"> | string | null
+  sacClassification?: Prisma.StringNullableFilter<"Review"> | string | null
   implantPosition?: Prisma.StringNullableFilter<"Review"> | string | null
   angulation?: Prisma.StringNullableFilter<"Review"> | string | null
+  anatomicalConsiderations?: Prisma.StringNullableFilter<"Review"> | string | null
+  prostheticConsiderations?: Prisma.StringNullableFilter<"Review"> | string | null
   riskFlags?: Prisma.StringNullableFilter<"Review"> | string | null
+  recommendations?: Prisma.StringNullableFilter<"Review"> | string | null
   overallFeedback?: Prisma.StringFilter<"Review"> | string
   createdAt?: Prisma.DateTimeFilter<"Review"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Review"> | Date | string
@@ -264,9 +314,14 @@ export type ReviewOrderByWithAggregationInput = {
   caseId?: Prisma.SortOrder
   reviewerId?: Prisma.SortOrder
   decision?: Prisma.SortOrder
+  caseSummary?: Prisma.SortOrderInput | Prisma.SortOrder
+  sacClassification?: Prisma.SortOrderInput | Prisma.SortOrder
   implantPosition?: Prisma.SortOrderInput | Prisma.SortOrder
   angulation?: Prisma.SortOrderInput | Prisma.SortOrder
+  anatomicalConsiderations?: Prisma.SortOrderInput | Prisma.SortOrder
+  prostheticConsiderations?: Prisma.SortOrderInput | Prisma.SortOrder
   riskFlags?: Prisma.SortOrderInput | Prisma.SortOrder
+  recommendations?: Prisma.SortOrderInput | Prisma.SortOrder
   overallFeedback?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -283,9 +338,14 @@ export type ReviewScalarWhereWithAggregatesInput = {
   caseId?: Prisma.StringWithAggregatesFilter<"Review"> | string
   reviewerId?: Prisma.StringWithAggregatesFilter<"Review"> | string
   decision?: Prisma.EnumReviewDecisionWithAggregatesFilter<"Review"> | $Enums.ReviewDecision
+  caseSummary?: Prisma.StringNullableWithAggregatesFilter<"Review"> | string | null
+  sacClassification?: Prisma.StringNullableWithAggregatesFilter<"Review"> | string | null
   implantPosition?: Prisma.StringNullableWithAggregatesFilter<"Review"> | string | null
   angulation?: Prisma.StringNullableWithAggregatesFilter<"Review"> | string | null
+  anatomicalConsiderations?: Prisma.StringNullableWithAggregatesFilter<"Review"> | string | null
+  prostheticConsiderations?: Prisma.StringNullableWithAggregatesFilter<"Review"> | string | null
   riskFlags?: Prisma.StringNullableWithAggregatesFilter<"Review"> | string | null
+  recommendations?: Prisma.StringNullableWithAggregatesFilter<"Review"> | string | null
   overallFeedback?: Prisma.StringWithAggregatesFilter<"Review"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Review"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Review"> | Date | string
@@ -294,9 +354,14 @@ export type ReviewScalarWhereWithAggregatesInput = {
 export type ReviewCreateInput = {
   id?: string
   decision: $Enums.ReviewDecision
+  caseSummary?: string | null
+  sacClassification?: string | null
   implantPosition?: string | null
   angulation?: string | null
+  anatomicalConsiderations?: string | null
+  prostheticConsiderations?: string | null
   riskFlags?: string | null
+  recommendations?: string | null
   overallFeedback: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -309,9 +374,14 @@ export type ReviewUncheckedCreateInput = {
   caseId: string
   reviewerId: string
   decision: $Enums.ReviewDecision
+  caseSummary?: string | null
+  sacClassification?: string | null
   implantPosition?: string | null
   angulation?: string | null
+  anatomicalConsiderations?: string | null
+  prostheticConsiderations?: string | null
   riskFlags?: string | null
+  recommendations?: string | null
   overallFeedback: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -320,9 +390,14 @@ export type ReviewUncheckedCreateInput = {
 export type ReviewUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   decision?: Prisma.EnumReviewDecisionFieldUpdateOperationsInput | $Enums.ReviewDecision
+  caseSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sacClassification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   implantPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   angulation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  anatomicalConsiderations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prostheticConsiderations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   riskFlags?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recommendations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   overallFeedback?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -335,9 +410,14 @@ export type ReviewUncheckedUpdateInput = {
   caseId?: Prisma.StringFieldUpdateOperationsInput | string
   reviewerId?: Prisma.StringFieldUpdateOperationsInput | string
   decision?: Prisma.EnumReviewDecisionFieldUpdateOperationsInput | $Enums.ReviewDecision
+  caseSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sacClassification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   implantPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   angulation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  anatomicalConsiderations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prostheticConsiderations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   riskFlags?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recommendations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   overallFeedback?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -348,9 +428,14 @@ export type ReviewCreateManyInput = {
   caseId: string
   reviewerId: string
   decision: $Enums.ReviewDecision
+  caseSummary?: string | null
+  sacClassification?: string | null
   implantPosition?: string | null
   angulation?: string | null
+  anatomicalConsiderations?: string | null
+  prostheticConsiderations?: string | null
   riskFlags?: string | null
+  recommendations?: string | null
   overallFeedback: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -359,9 +444,14 @@ export type ReviewCreateManyInput = {
 export type ReviewUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   decision?: Prisma.EnumReviewDecisionFieldUpdateOperationsInput | $Enums.ReviewDecision
+  caseSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sacClassification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   implantPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   angulation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  anatomicalConsiderations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prostheticConsiderations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   riskFlags?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recommendations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   overallFeedback?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -372,9 +462,14 @@ export type ReviewUncheckedUpdateManyInput = {
   caseId?: Prisma.StringFieldUpdateOperationsInput | string
   reviewerId?: Prisma.StringFieldUpdateOperationsInput | string
   decision?: Prisma.EnumReviewDecisionFieldUpdateOperationsInput | $Enums.ReviewDecision
+  caseSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sacClassification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   implantPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   angulation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  anatomicalConsiderations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prostheticConsiderations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   riskFlags?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recommendations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   overallFeedback?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -395,9 +490,14 @@ export type ReviewCountOrderByAggregateInput = {
   caseId?: Prisma.SortOrder
   reviewerId?: Prisma.SortOrder
   decision?: Prisma.SortOrder
+  caseSummary?: Prisma.SortOrder
+  sacClassification?: Prisma.SortOrder
   implantPosition?: Prisma.SortOrder
   angulation?: Prisma.SortOrder
+  anatomicalConsiderations?: Prisma.SortOrder
+  prostheticConsiderations?: Prisma.SortOrder
   riskFlags?: Prisma.SortOrder
+  recommendations?: Prisma.SortOrder
   overallFeedback?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -408,9 +508,14 @@ export type ReviewMaxOrderByAggregateInput = {
   caseId?: Prisma.SortOrder
   reviewerId?: Prisma.SortOrder
   decision?: Prisma.SortOrder
+  caseSummary?: Prisma.SortOrder
+  sacClassification?: Prisma.SortOrder
   implantPosition?: Prisma.SortOrder
   angulation?: Prisma.SortOrder
+  anatomicalConsiderations?: Prisma.SortOrder
+  prostheticConsiderations?: Prisma.SortOrder
   riskFlags?: Prisma.SortOrder
+  recommendations?: Prisma.SortOrder
   overallFeedback?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -421,9 +526,14 @@ export type ReviewMinOrderByAggregateInput = {
   caseId?: Prisma.SortOrder
   reviewerId?: Prisma.SortOrder
   decision?: Prisma.SortOrder
+  caseSummary?: Prisma.SortOrder
+  sacClassification?: Prisma.SortOrder
   implantPosition?: Prisma.SortOrder
   angulation?: Prisma.SortOrder
+  anatomicalConsiderations?: Prisma.SortOrder
+  prostheticConsiderations?: Prisma.SortOrder
   riskFlags?: Prisma.SortOrder
+  recommendations?: Prisma.SortOrder
   overallFeedback?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -520,9 +630,14 @@ export type EnumReviewDecisionFieldUpdateOperationsInput = {
 export type ReviewCreateWithoutReviewerInput = {
   id?: string
   decision: $Enums.ReviewDecision
+  caseSummary?: string | null
+  sacClassification?: string | null
   implantPosition?: string | null
   angulation?: string | null
+  anatomicalConsiderations?: string | null
+  prostheticConsiderations?: string | null
   riskFlags?: string | null
+  recommendations?: string | null
   overallFeedback: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -533,9 +648,14 @@ export type ReviewUncheckedCreateWithoutReviewerInput = {
   id?: string
   caseId: string
   decision: $Enums.ReviewDecision
+  caseSummary?: string | null
+  sacClassification?: string | null
   implantPosition?: string | null
   angulation?: string | null
+  anatomicalConsiderations?: string | null
+  prostheticConsiderations?: string | null
   riskFlags?: string | null
+  recommendations?: string | null
   overallFeedback: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -575,9 +695,14 @@ export type ReviewScalarWhereInput = {
   caseId?: Prisma.StringFilter<"Review"> | string
   reviewerId?: Prisma.StringFilter<"Review"> | string
   decision?: Prisma.EnumReviewDecisionFilter<"Review"> | $Enums.ReviewDecision
+  caseSummary?: Prisma.StringNullableFilter<"Review"> | string | null
+  sacClassification?: Prisma.StringNullableFilter<"Review"> | string | null
   implantPosition?: Prisma.StringNullableFilter<"Review"> | string | null
   angulation?: Prisma.StringNullableFilter<"Review"> | string | null
+  anatomicalConsiderations?: Prisma.StringNullableFilter<"Review"> | string | null
+  prostheticConsiderations?: Prisma.StringNullableFilter<"Review"> | string | null
   riskFlags?: Prisma.StringNullableFilter<"Review"> | string | null
+  recommendations?: Prisma.StringNullableFilter<"Review"> | string | null
   overallFeedback?: Prisma.StringFilter<"Review"> | string
   createdAt?: Prisma.DateTimeFilter<"Review"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Review"> | Date | string
@@ -586,9 +711,14 @@ export type ReviewScalarWhereInput = {
 export type ReviewCreateWithoutCaseInput = {
   id?: string
   decision: $Enums.ReviewDecision
+  caseSummary?: string | null
+  sacClassification?: string | null
   implantPosition?: string | null
   angulation?: string | null
+  anatomicalConsiderations?: string | null
+  prostheticConsiderations?: string | null
   riskFlags?: string | null
+  recommendations?: string | null
   overallFeedback: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -599,9 +729,14 @@ export type ReviewUncheckedCreateWithoutCaseInput = {
   id?: string
   reviewerId: string
   decision: $Enums.ReviewDecision
+  caseSummary?: string | null
+  sacClassification?: string | null
   implantPosition?: string | null
   angulation?: string | null
+  anatomicalConsiderations?: string | null
+  prostheticConsiderations?: string | null
   riskFlags?: string | null
+  recommendations?: string | null
   overallFeedback: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -637,9 +772,14 @@ export type ReviewCreateManyReviewerInput = {
   id?: string
   caseId: string
   decision: $Enums.ReviewDecision
+  caseSummary?: string | null
+  sacClassification?: string | null
   implantPosition?: string | null
   angulation?: string | null
+  anatomicalConsiderations?: string | null
+  prostheticConsiderations?: string | null
   riskFlags?: string | null
+  recommendations?: string | null
   overallFeedback: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -648,9 +788,14 @@ export type ReviewCreateManyReviewerInput = {
 export type ReviewUpdateWithoutReviewerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   decision?: Prisma.EnumReviewDecisionFieldUpdateOperationsInput | $Enums.ReviewDecision
+  caseSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sacClassification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   implantPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   angulation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  anatomicalConsiderations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prostheticConsiderations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   riskFlags?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recommendations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   overallFeedback?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -661,9 +806,14 @@ export type ReviewUncheckedUpdateWithoutReviewerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   caseId?: Prisma.StringFieldUpdateOperationsInput | string
   decision?: Prisma.EnumReviewDecisionFieldUpdateOperationsInput | $Enums.ReviewDecision
+  caseSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sacClassification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   implantPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   angulation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  anatomicalConsiderations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prostheticConsiderations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   riskFlags?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recommendations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   overallFeedback?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -673,9 +823,14 @@ export type ReviewUncheckedUpdateManyWithoutReviewerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   caseId?: Prisma.StringFieldUpdateOperationsInput | string
   decision?: Prisma.EnumReviewDecisionFieldUpdateOperationsInput | $Enums.ReviewDecision
+  caseSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sacClassification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   implantPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   angulation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  anatomicalConsiderations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prostheticConsiderations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   riskFlags?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recommendations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   overallFeedback?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -685,9 +840,14 @@ export type ReviewCreateManyCaseInput = {
   id?: string
   reviewerId: string
   decision: $Enums.ReviewDecision
+  caseSummary?: string | null
+  sacClassification?: string | null
   implantPosition?: string | null
   angulation?: string | null
+  anatomicalConsiderations?: string | null
+  prostheticConsiderations?: string | null
   riskFlags?: string | null
+  recommendations?: string | null
   overallFeedback: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -696,9 +856,14 @@ export type ReviewCreateManyCaseInput = {
 export type ReviewUpdateWithoutCaseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   decision?: Prisma.EnumReviewDecisionFieldUpdateOperationsInput | $Enums.ReviewDecision
+  caseSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sacClassification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   implantPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   angulation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  anatomicalConsiderations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prostheticConsiderations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   riskFlags?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recommendations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   overallFeedback?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -709,9 +874,14 @@ export type ReviewUncheckedUpdateWithoutCaseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   reviewerId?: Prisma.StringFieldUpdateOperationsInput | string
   decision?: Prisma.EnumReviewDecisionFieldUpdateOperationsInput | $Enums.ReviewDecision
+  caseSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sacClassification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   implantPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   angulation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  anatomicalConsiderations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prostheticConsiderations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   riskFlags?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recommendations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   overallFeedback?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -721,9 +891,14 @@ export type ReviewUncheckedUpdateManyWithoutCaseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   reviewerId?: Prisma.StringFieldUpdateOperationsInput | string
   decision?: Prisma.EnumReviewDecisionFieldUpdateOperationsInput | $Enums.ReviewDecision
+  caseSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sacClassification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   implantPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   angulation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  anatomicalConsiderations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prostheticConsiderations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   riskFlags?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recommendations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   overallFeedback?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -736,9 +911,14 @@ export type ReviewSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   caseId?: boolean
   reviewerId?: boolean
   decision?: boolean
+  caseSummary?: boolean
+  sacClassification?: boolean
   implantPosition?: boolean
   angulation?: boolean
+  anatomicalConsiderations?: boolean
+  prostheticConsiderations?: boolean
   riskFlags?: boolean
+  recommendations?: boolean
   overallFeedback?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -751,9 +931,14 @@ export type ReviewSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   caseId?: boolean
   reviewerId?: boolean
   decision?: boolean
+  caseSummary?: boolean
+  sacClassification?: boolean
   implantPosition?: boolean
   angulation?: boolean
+  anatomicalConsiderations?: boolean
+  prostheticConsiderations?: boolean
   riskFlags?: boolean
+  recommendations?: boolean
   overallFeedback?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -766,9 +951,14 @@ export type ReviewSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   caseId?: boolean
   reviewerId?: boolean
   decision?: boolean
+  caseSummary?: boolean
+  sacClassification?: boolean
   implantPosition?: boolean
   angulation?: boolean
+  anatomicalConsiderations?: boolean
+  prostheticConsiderations?: boolean
   riskFlags?: boolean
+  recommendations?: boolean
   overallFeedback?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -781,15 +971,20 @@ export type ReviewSelectScalar = {
   caseId?: boolean
   reviewerId?: boolean
   decision?: boolean
+  caseSummary?: boolean
+  sacClassification?: boolean
   implantPosition?: boolean
   angulation?: boolean
+  anatomicalConsiderations?: boolean
+  prostheticConsiderations?: boolean
   riskFlags?: boolean
+  recommendations?: boolean
   overallFeedback?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ReviewOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "caseId" | "reviewerId" | "decision" | "implantPosition" | "angulation" | "riskFlags" | "overallFeedback" | "createdAt" | "updatedAt", ExtArgs["result"]["review"]>
+export type ReviewOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "caseId" | "reviewerId" | "decision" | "caseSummary" | "sacClassification" | "implantPosition" | "angulation" | "anatomicalConsiderations" | "prostheticConsiderations" | "riskFlags" | "recommendations" | "overallFeedback" | "createdAt" | "updatedAt", ExtArgs["result"]["review"]>
 export type ReviewInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   case?: boolean | Prisma.CaseDefaultArgs<ExtArgs>
   reviewer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -814,9 +1009,14 @@ export type $ReviewPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     caseId: string
     reviewerId: string
     decision: $Enums.ReviewDecision
+    caseSummary: string | null
+    sacClassification: string | null
     implantPosition: string | null
     angulation: string | null
+    anatomicalConsiderations: string | null
+    prostheticConsiderations: string | null
     riskFlags: string | null
+    recommendations: string | null
     overallFeedback: string
     createdAt: Date
     updatedAt: Date
@@ -1249,9 +1449,14 @@ export interface ReviewFieldRefs {
   readonly caseId: Prisma.FieldRef<"Review", 'String'>
   readonly reviewerId: Prisma.FieldRef<"Review", 'String'>
   readonly decision: Prisma.FieldRef<"Review", 'ReviewDecision'>
+  readonly caseSummary: Prisma.FieldRef<"Review", 'String'>
+  readonly sacClassification: Prisma.FieldRef<"Review", 'String'>
   readonly implantPosition: Prisma.FieldRef<"Review", 'String'>
   readonly angulation: Prisma.FieldRef<"Review", 'String'>
+  readonly anatomicalConsiderations: Prisma.FieldRef<"Review", 'String'>
+  readonly prostheticConsiderations: Prisma.FieldRef<"Review", 'String'>
   readonly riskFlags: Prisma.FieldRef<"Review", 'String'>
+  readonly recommendations: Prisma.FieldRef<"Review", 'String'>
   readonly overallFeedback: Prisma.FieldRef<"Review", 'String'>
   readonly createdAt: Prisma.FieldRef<"Review", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Review", 'DateTime'>
