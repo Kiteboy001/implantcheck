@@ -10,29 +10,8 @@ export async function GET(request: Request) {
 
   if (!blobUrl) return NextResponse.json({ error: "Missing url parameter" }, { status: 400 })
 
-  try {
-    // Public blobs can be fetched directly — no auth needed
-    const response = await fetch(blobUrl)
-    if (!response.ok) {
-      return NextResponse.json(
-        { error: `Download failed (${response.status})` },
-        { status: response.status }
-      )
-    }
-
-    const disposition = response.headers.get("content-disposition")
-    const filename = disposition
-      ? disposition.split("filename=").pop()?.replace(/"/g, "")
-      : "download"
-
-    const headers = new Headers()
-    headers.set("Content-Type", response.headers.get("content-type") || "application/octet-stream")
-    headers.set("Content-Disposition", `attachment; filename="${filename}"`)
-    const length = response.headers.get("content-length")
-    if (length) headers.set("Content-Length", length)
-
-    return new NextResponse(response.body, { headers })
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message || "Download failed" }, { status: 500 })
-  }
+  // Vercel Blob public URLs are directly accessible — redirect the browser
+  // rather than proxying through the server, which avoids fetch issues
+  // in serverless environments and handles large files better.
+  return NextResponse.redirect(blobUrl)
 }
