@@ -15,6 +15,8 @@ export async function POST(request: Request) {
       await handleUpload({
         body: json,
         request,
+        // Vercel names env vars after the store: BLOB2_*
+        token: process.env.BLOB2_READ_WRITE_TOKEN!,
         onBeforeGenerateToken: async () => {
           return {
             // Allow all content types — Blue Sky Bio exports vary by platform
