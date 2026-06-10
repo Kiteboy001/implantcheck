@@ -6,7 +6,7 @@
 import { auth } from "@/auth"
 import { redirect } from "next/navigation"
 
-const ALLOWED_EXTS = ["stl", "obj", "ply", "dcm", "dicom", "png", "jpg", "jpeg", "webp"]
+const ALLOWED_EXTS = ["stl", "obj", "ply", "dcm", "dicom", "png", "jpg", "jpeg", "webp", "bsb"]
 const MAX_FILE_SIZE = 512 * 1024 * 1024 // 512MB
 
 export type UploadedFileMeta = {

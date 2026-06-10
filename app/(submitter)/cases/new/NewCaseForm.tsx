@@ -97,7 +97,7 @@ type Reviewer = {
 // Map file extensions to type keys
 function detectFileType(fileName: string): string {
   const ext = fileName.split(".").pop()?.toLowerCase() || ""
-  if (["stl", "obj", "ply"].includes(ext)) return "stl"
+  if (["stl", "obj", "ply", "bsb"].includes(ext)) return "stl"
   if (["dcm", "dicom"].includes(ext)) return "dicom"
   if (["png", "jpg", "jpeg", "webp"].includes(ext)) return "screenshots"
   return "stl" // fallback
@@ -201,7 +201,7 @@ export default function NewCaseForm({
   })
 
   const isUploading = uploadingFiles.size > 0
-  const acceptFormats = ".stl,.obj,.ply,.dcm,.dicom,.png,.jpg,.jpeg,.webp"
+  const acceptFormats = ".stl,.obj,.ply,.dcm,.dicom,.png,.jpg,.jpeg,.webp,.bsb"
 
   // Client-side direct upload to Vercel Blob — no server body limits
   async function handleFiles(files: FileList | File[]) {
