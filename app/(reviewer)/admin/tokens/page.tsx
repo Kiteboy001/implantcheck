@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma"
 import { redirect } from "next/navigation"
 import { GenerateTokenForm } from "./GenerateTokenForm"
 import { TokenRow } from "./TokenRow"
+import { CopyBatchButton } from "./CopyBatchButton"
 
 const tierLabels: Record<string, string> = {
   BASIC: "Basic Check (£95)",
@@ -104,15 +105,10 @@ export default async function AdminTokensPage() {
 
                 {/* Batch quick actions */}
                 <div className="flex items-center gap-2">
-                  <button
-                    onClick={async () => {
-                      const codes = batch.tokens.map((t: any) => t.code).join("\n")
-                      await navigator.clipboard.writeText(codes)
-                    }}
-                    className="text-xs text-gold hover:text-gold-light font-medium"
-                  >
-                    Copy {batch.totalCount} codes
-                  </button>
+                  <CopyBatchButton
+                  codes={batch.tokens.map((t: any) => t.code)}
+                  count={batch.totalCount}
+                />
                 </div>
               </div>
 
