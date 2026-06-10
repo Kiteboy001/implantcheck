@@ -1,4 +1,5 @@
 import { auth } from "@/auth"
+import { prisma } from "@/lib/prisma"
 import { redirect } from "next/navigation"
 import Link from "next/link"
 
@@ -13,6 +14,17 @@ export default async function ReviewerLayout({
   const role = (session.user as any).role
   if (role !== "REVIEWER" && role !== "ADMIN") {
     redirect("/dashboard")
+  }
+
+  const userId = (session.user as any).id
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { waiverAccepted: true },
+  })
+
+  // Waiver page is outside this route group — no redirect loop risk
+  if (!user?.waiverAccepted) {
+    redirect("/waiver")
   }
 
   return (

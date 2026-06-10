@@ -321,10 +321,6 @@ export type ReportTemplateMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 
 
 export type ReportTemplateSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{

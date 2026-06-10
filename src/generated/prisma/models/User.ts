@@ -35,6 +35,8 @@ export type UserMinAggregateOutputType = {
   role: $Enums.Role | null
   createdAt: Date | null
   updatedAt: Date | null
+  waiverAccepted: boolean | null
+  waiverAcceptedAt: Date | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -48,6 +50,8 @@ export type UserMaxAggregateOutputType = {
   role: $Enums.Role | null
   createdAt: Date | null
   updatedAt: Date | null
+  waiverAccepted: boolean | null
+  waiverAcceptedAt: Date | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -61,6 +65,8 @@ export type UserCountAggregateOutputType = {
   role: number
   createdAt: number
   updatedAt: number
+  waiverAccepted: number
+  waiverAcceptedAt: number
   _all: number
 }
 
@@ -76,6 +82,8 @@ export type UserMinAggregateInputType = {
   role?: true
   createdAt?: true
   updatedAt?: true
+  waiverAccepted?: true
+  waiverAcceptedAt?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -89,6 +97,8 @@ export type UserMaxAggregateInputType = {
   role?: true
   createdAt?: true
   updatedAt?: true
+  waiverAccepted?: true
+  waiverAcceptedAt?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -102,6 +112,8 @@ export type UserCountAggregateInputType = {
   role?: true
   createdAt?: true
   updatedAt?: true
+  waiverAccepted?: true
+  waiverAcceptedAt?: true
   _all?: true
 }
 
@@ -188,6 +200,8 @@ export type UserGroupByOutputType = {
   role: $Enums.Role
   createdAt: Date
   updatedAt: Date
+  waiverAccepted: boolean
+  waiverAcceptedAt: Date | null
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -222,6 +236,8 @@ export type UserWhereInput = {
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  waiverAccepted?: Prisma.BoolFilter<"User"> | boolean
+  waiverAcceptedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   accounts?: Prisma.AccountListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
   submittedCases?: Prisma.CaseListRelationFilter
@@ -242,6 +258,8 @@ export type UserOrderByWithRelationInput = {
   role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  waiverAccepted?: Prisma.SortOrder
+  waiverAcceptedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   accounts?: Prisma.AccountOrderByRelationAggregateInput
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   submittedCases?: Prisma.CaseOrderByRelationAggregateInput
@@ -265,6 +283,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  waiverAccepted?: Prisma.BoolFilter<"User"> | boolean
+  waiverAcceptedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   accounts?: Prisma.AccountListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
   submittedCases?: Prisma.CaseListRelationFilter
@@ -285,6 +305,8 @@ export type UserOrderByWithAggregationInput = {
   role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  waiverAccepted?: Prisma.SortOrder
+  waiverAcceptedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -304,6 +326,8 @@ export type UserScalarWhereWithAggregatesInput = {
   role?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  waiverAccepted?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  waiverAcceptedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
 }
 
 export type UserCreateInput = {
@@ -317,6 +341,8 @@ export type UserCreateInput = {
   role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
+  waiverAccepted?: boolean
+  waiverAcceptedAt?: Date | string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   submittedCases?: Prisma.CaseCreateNestedManyWithoutSubmitterInput
@@ -337,6 +363,8 @@ export type UserUncheckedCreateInput = {
   role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
+  waiverAccepted?: boolean
+  waiverAcceptedAt?: Date | string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   submittedCases?: Prisma.CaseUncheckedCreateNestedManyWithoutSubmitterInput
@@ -357,6 +385,8 @@ export type UserUpdateInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  waiverAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  waiverAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   submittedCases?: Prisma.CaseUpdateManyWithoutSubmitterNestedInput
@@ -377,6 +407,8 @@ export type UserUncheckedUpdateInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  waiverAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  waiverAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   submittedCases?: Prisma.CaseUncheckedUpdateManyWithoutSubmitterNestedInput
@@ -397,6 +429,8 @@ export type UserCreateManyInput = {
   role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
+  waiverAccepted?: boolean
+  waiverAcceptedAt?: Date | string | null
 }
 
 export type UserUpdateManyMutationInput = {
@@ -410,6 +444,8 @@ export type UserUpdateManyMutationInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  waiverAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  waiverAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -423,6 +459,8 @@ export type UserUncheckedUpdateManyInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  waiverAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  waiverAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -436,6 +474,8 @@ export type UserCountOrderByAggregateInput = {
   role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  waiverAccepted?: Prisma.SortOrder
+  waiverAcceptedAt?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -449,6 +489,8 @@ export type UserMaxOrderByAggregateInput = {
   role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  waiverAccepted?: Prisma.SortOrder
+  waiverAcceptedAt?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -462,6 +504,8 @@ export type UserMinOrderByAggregateInput = {
   role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  waiverAccepted?: Prisma.SortOrder
+  waiverAcceptedAt?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -492,6 +536,10 @@ export type EnumRoleFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
 }
 
 export type UserCreateNestedOneWithoutAccountsInput = {
@@ -607,6 +655,8 @@ export type UserCreateWithoutAccountsInput = {
   role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
+  waiverAccepted?: boolean
+  waiverAcceptedAt?: Date | string | null
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   submittedCases?: Prisma.CaseCreateNestedManyWithoutSubmitterInput
   assignedCases?: Prisma.CaseCreateNestedManyWithoutReviewerInput
@@ -626,6 +676,8 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
+  waiverAccepted?: boolean
+  waiverAcceptedAt?: Date | string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   submittedCases?: Prisma.CaseUncheckedCreateNestedManyWithoutSubmitterInput
   assignedCases?: Prisma.CaseUncheckedCreateNestedManyWithoutReviewerInput
@@ -661,6 +713,8 @@ export type UserUpdateWithoutAccountsInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  waiverAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  waiverAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   submittedCases?: Prisma.CaseUpdateManyWithoutSubmitterNestedInput
   assignedCases?: Prisma.CaseUpdateManyWithoutReviewerNestedInput
@@ -680,6 +734,8 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  waiverAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  waiverAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   submittedCases?: Prisma.CaseUncheckedUpdateManyWithoutSubmitterNestedInput
   assignedCases?: Prisma.CaseUncheckedUpdateManyWithoutReviewerNestedInput
@@ -699,6 +755,8 @@ export type UserCreateWithoutSessionsInput = {
   role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
+  waiverAccepted?: boolean
+  waiverAcceptedAt?: Date | string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   submittedCases?: Prisma.CaseCreateNestedManyWithoutSubmitterInput
   assignedCases?: Prisma.CaseCreateNestedManyWithoutReviewerInput
@@ -718,6 +776,8 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
+  waiverAccepted?: boolean
+  waiverAcceptedAt?: Date | string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   submittedCases?: Prisma.CaseUncheckedCreateNestedManyWithoutSubmitterInput
   assignedCases?: Prisma.CaseUncheckedCreateNestedManyWithoutReviewerInput
@@ -753,6 +813,8 @@ export type UserUpdateWithoutSessionsInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  waiverAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  waiverAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   submittedCases?: Prisma.CaseUpdateManyWithoutSubmitterNestedInput
   assignedCases?: Prisma.CaseUpdateManyWithoutReviewerNestedInput
@@ -772,6 +834,8 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  waiverAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  waiverAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   submittedCases?: Prisma.CaseUncheckedUpdateManyWithoutSubmitterNestedInput
   assignedCases?: Prisma.CaseUncheckedUpdateManyWithoutReviewerNestedInput
@@ -791,6 +855,8 @@ export type UserCreateWithoutSubmittedCasesInput = {
   role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
+  waiverAccepted?: boolean
+  waiverAcceptedAt?: Date | string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   assignedCases?: Prisma.CaseCreateNestedManyWithoutReviewerInput
@@ -810,6 +876,8 @@ export type UserUncheckedCreateWithoutSubmittedCasesInput = {
   role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
+  waiverAccepted?: boolean
+  waiverAcceptedAt?: Date | string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   assignedCases?: Prisma.CaseUncheckedCreateNestedManyWithoutReviewerInput
@@ -834,6 +902,8 @@ export type UserCreateWithoutAssignedCasesInput = {
   role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
+  waiverAccepted?: boolean
+  waiverAcceptedAt?: Date | string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   submittedCases?: Prisma.CaseCreateNestedManyWithoutSubmitterInput
@@ -853,6 +923,8 @@ export type UserUncheckedCreateWithoutAssignedCasesInput = {
   role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
+  waiverAccepted?: boolean
+  waiverAcceptedAt?: Date | string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   submittedCases?: Prisma.CaseUncheckedCreateNestedManyWithoutSubmitterInput
@@ -888,6 +960,8 @@ export type UserUpdateWithoutSubmittedCasesInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  waiverAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  waiverAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   assignedCases?: Prisma.CaseUpdateManyWithoutReviewerNestedInput
@@ -907,6 +981,8 @@ export type UserUncheckedUpdateWithoutSubmittedCasesInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  waiverAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  waiverAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   assignedCases?: Prisma.CaseUncheckedUpdateManyWithoutReviewerNestedInput
@@ -937,6 +1013,8 @@ export type UserUpdateWithoutAssignedCasesInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  waiverAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  waiverAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   submittedCases?: Prisma.CaseUpdateManyWithoutSubmitterNestedInput
@@ -956,6 +1034,8 @@ export type UserUncheckedUpdateWithoutAssignedCasesInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  waiverAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  waiverAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   submittedCases?: Prisma.CaseUncheckedUpdateManyWithoutSubmitterNestedInput
@@ -975,6 +1055,8 @@ export type UserCreateWithoutReviewsInput = {
   role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
+  waiverAccepted?: boolean
+  waiverAcceptedAt?: Date | string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   submittedCases?: Prisma.CaseCreateNestedManyWithoutSubmitterInput
@@ -994,6 +1076,8 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
+  waiverAccepted?: boolean
+  waiverAcceptedAt?: Date | string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   submittedCases?: Prisma.CaseUncheckedCreateNestedManyWithoutSubmitterInput
@@ -1029,6 +1113,8 @@ export type UserUpdateWithoutReviewsInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  waiverAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  waiverAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   submittedCases?: Prisma.CaseUpdateManyWithoutSubmitterNestedInput
@@ -1048,6 +1134,8 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  waiverAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  waiverAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   submittedCases?: Prisma.CaseUncheckedUpdateManyWithoutSubmitterNestedInput
@@ -1067,6 +1155,8 @@ export type UserCreateWithoutUsedTokensInput = {
   role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
+  waiverAccepted?: boolean
+  waiverAcceptedAt?: Date | string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   submittedCases?: Prisma.CaseCreateNestedManyWithoutSubmitterInput
@@ -1086,6 +1176,8 @@ export type UserUncheckedCreateWithoutUsedTokensInput = {
   role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
+  waiverAccepted?: boolean
+  waiverAcceptedAt?: Date | string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   submittedCases?: Prisma.CaseUncheckedCreateNestedManyWithoutSubmitterInput
@@ -1110,6 +1202,8 @@ export type UserCreateWithoutCreatedTokensInput = {
   role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
+  waiverAccepted?: boolean
+  waiverAcceptedAt?: Date | string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   submittedCases?: Prisma.CaseCreateNestedManyWithoutSubmitterInput
@@ -1129,6 +1223,8 @@ export type UserUncheckedCreateWithoutCreatedTokensInput = {
   role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
+  waiverAccepted?: boolean
+  waiverAcceptedAt?: Date | string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   submittedCases?: Prisma.CaseUncheckedCreateNestedManyWithoutSubmitterInput
@@ -1164,6 +1260,8 @@ export type UserUpdateWithoutUsedTokensInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  waiverAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  waiverAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   submittedCases?: Prisma.CaseUpdateManyWithoutSubmitterNestedInput
@@ -1183,6 +1281,8 @@ export type UserUncheckedUpdateWithoutUsedTokensInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  waiverAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  waiverAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   submittedCases?: Prisma.CaseUncheckedUpdateManyWithoutSubmitterNestedInput
@@ -1213,6 +1313,8 @@ export type UserUpdateWithoutCreatedTokensInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  waiverAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  waiverAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   submittedCases?: Prisma.CaseUpdateManyWithoutSubmitterNestedInput
@@ -1232,6 +1334,8 @@ export type UserUncheckedUpdateWithoutCreatedTokensInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  waiverAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  waiverAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   submittedCases?: Prisma.CaseUncheckedUpdateManyWithoutSubmitterNestedInput
@@ -1336,6 +1440,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   role?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  waiverAccepted?: boolean
+  waiverAcceptedAt?: boolean
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   submittedCases?: boolean | Prisma.User$submittedCasesArgs<ExtArgs>
@@ -1357,6 +1463,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   role?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  waiverAccepted?: boolean
+  waiverAcceptedAt?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1370,6 +1478,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   role?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  waiverAccepted?: boolean
+  waiverAcceptedAt?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -1383,9 +1493,11 @@ export type UserSelectScalar = {
   role?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  waiverAccepted?: boolean
+  waiverAcceptedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "passwordHash" | "gdcNumber" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "passwordHash" | "gdcNumber" | "role" | "createdAt" | "updatedAt" | "waiverAccepted" | "waiverAcceptedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
@@ -1421,6 +1533,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     role: $Enums.Role
     createdAt: Date
     updatedAt: Date
+    waiverAccepted: boolean
+    waiverAcceptedAt: Date | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1861,6 +1975,8 @@ export interface UserFieldRefs {
   readonly role: Prisma.FieldRef<"User", 'Role'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly waiverAccepted: Prisma.FieldRef<"User", 'Boolean'>
+  readonly waiverAcceptedAt: Prisma.FieldRef<"User", 'DateTime'>
 }
     
 

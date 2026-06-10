@@ -1,4 +1,5 @@
 import { auth } from "@/auth"
+import { prisma } from "@/lib/prisma"
 import { redirect } from "next/navigation"
 import Link from "next/link"
 
@@ -9,6 +10,17 @@ export default async function SubmitterLayout({
 }) {
   const session = await auth()
   if (!session?.user) redirect("/auth/login")
+
+  const userId = (session.user as any).id
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { waiverAccepted: true },
+  })
+
+  // Waiver page is outside this route group — no redirect loop risk
+  if (!user?.waiverAccepted) {
+    redirect("/waiver")
+  }
 
   return (
     <div className="min-h-screen bg-warm-bg">
