@@ -219,7 +219,6 @@ export default function NewCaseForm({
         const blob = await upload(`cases/${Date.now()}-${file.name}`, file, {
           access: "public",
           handleUploadUrl: "/api/blob-upload",
-          allowedContentTypes: ["*/*"],
           multipart: true,
           onUploadProgress: (progress: { percentage: number }) => {
             setUploadingFiles((prev) => {

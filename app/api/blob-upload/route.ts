@@ -19,8 +19,8 @@ export async function POST(request: Request) {
         token: process.env.BLOB2_READ_WRITE_TOKEN!,
         onBeforeGenerateToken: async () => {
           return {
-            // Allow all content types — Blue Sky Bio exports vary by platform
-            allowedContentTypes: ["*/*"],
+            // Binary files (STL, DICOM, etc.) arrive as application/octet-stream
+            allowedContentTypes: ["application/octet-stream", "*/*"],
             maximumSizeInBytes: 512 * 1024 * 1024, // 512MB
             tokenPayload: JSON.stringify({ userId: (session.user as any).id }),
           }
