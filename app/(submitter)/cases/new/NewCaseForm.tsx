@@ -3,7 +3,8 @@
 import { useActionState, useState, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { submitCase, type SubmitCaseState } from "@/app/actions/cases"
-import { uploadFile } from "@/app/actions/upload"
+import { validateUpload } from "@/app/actions/upload"
+import { upload } from "@vercel/blob/client"
 
 const initialState: SubmitCaseState = {}
 
@@ -186,7 +187,7 @@ export default function NewCaseForm({
   const [uploadError, setUploadError] = useState("")
   const [selectedTier, setSelectedTier] = useState(initialTier || "")
   const [selectedReviewer, setSelectedReviewer] = useState("")
-  const [isUploading, setIsUploading] = useState(false)
+  const [uploadingFiles, setUploadingFiles] = useState<Map<string, number>>(new Map()) // fileName → progress %
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const currentTier = tierData[selectedTier]
@@ -199,30 +200,69 @@ export default function NewCaseForm({
     uploadedByType[type] = (uploadedByType[type] || 0) + 1
   })
 
+  const isUploading = uploadingFiles.size > 0
   const acceptFormats = ".stl,.obj,.ply,.dcm,.dicom,.png,.jpg,.jpeg,.webp"
 
+  // Client-side direct upload to Vercel Blob — no server body limits
   async function handleFiles(files: FileList | File[]) {
-    setIsUploading(true)
     setUploadError("")
 
     const fileArray = Array.from(files)
     const newFiles: UploadedFile[] = []
 
     for (const file of fileArray) {
-      const formData = new FormData()
-      formData.append("file", file)
+      // Mark as uploading
+      setUploadingFiles((prev) => new Map(prev).set(file.name, 0))
 
       try {
-        const result = await uploadFile(formData)
-        if ("error" in result && result.error) {
-          setUploadError(result.error)
-          break
+        // Upload directly from browser to Vercel Blob
+        const blob = await upload(`cases/${Date.now()}-${file.name}`, file, {
+          access: "public",
+          handleUploadUrl: "/api/blob-upload",
+          onUploadProgress: (progress: { percentage: number }) => {
+            setUploadingFiles((prev) => {
+              const next = new Map(prev)
+              next.set(file.name, progress.percentage)
+              return next
+            })
+          },
+        })
+
+        // Validate the completed upload via server action
+        const validation = await validateUpload({
+          url: blob.url,
+          name: file.name,
+          size: file.size,
+          type: file.type,
+        })
+
+        if ("error" in validation && validation.error) {
+          setUploadError(validation.error)
+          setUploadingFiles((prev) => {
+            const next = new Map(prev)
+            next.delete(file.name)
+            return next
+          })
+          continue
         }
-        if ("success" in result && result.file) {
-          newFiles.push(result.file)
+
+        if ("success" in validation && validation.file) {
+          newFiles.push(validation.file)
         }
+
+        // Remove from uploading
+        setUploadingFiles((prev) => {
+          const next = new Map(prev)
+          next.delete(file.name)
+          return next
+        })
       } catch (e: any) {
-        setUploadError(e.message || "Upload failed")
+        setUploadError(e.message || "Upload failed. Please try again.")
+        setUploadingFiles((prev) => {
+          const next = new Map(prev)
+          next.delete(file.name)
+          return next
+        })
         break
       }
     }
@@ -230,11 +270,10 @@ export default function NewCaseForm({
     if (newFiles.length > 0) {
       setUploadedFiles((prev) => [...prev, ...newFiles])
     }
-    setIsUploading(false)
 
+    // Reset input
     if (fileInputRef.current) fileInputRef.current.value = ""
   }
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       handleFiles(e.target.files)
@@ -396,11 +435,26 @@ export default function NewCaseForm({
                   </svg>
                 </div>
                 {isUploading ? (
-                  <p className="text-sm text-gold font-medium animate-pulse">Uploading...</p>
+                  <div className="space-y-2">
+                    <p className="text-sm text-gold font-medium">Uploading...</p>
+                    {Array.from(uploadingFiles.entries()).map(([name, pct]) => (
+                      <div key={name} className="flex items-center gap-3 max-w-xs mx-auto">
+                        <span className="text-xs text-muted truncate flex-1 text-left">{name}</span>
+                        <div className="w-24 h-1.5 bg-gray-100 rounded-full overflow-hidden shrink-0">
+                          <div
+                            className="h-full bg-gold rounded-full transition-all duration-300"
+                            style={{ width: `${pct}%` }}
+                          />
+                        </div>
+                        <span className="text-xs text-gold font-medium w-8 text-right">{pct}%</span>
+                      </div>
+                    ))}
+                  </div>
                 ) : (
                   <>
                     <p className="text-sm text-muted mb-1">Drag and drop your files here, or click to browse</p>
                     <p className="text-xs text-muted/60">STL, PLY, OBJ (up to 512MB) · DICOM (up to 512MB) · PNG, JPEG (up to 16MB)</p>
+                    <p className="text-xs text-gold/60 mt-1">Files upload directly — no compression needed</p>
                   </>
                 )}
               </label>
