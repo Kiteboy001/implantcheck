@@ -1,7 +1,16 @@
 import { prisma } from "@/lib/prisma"
 import NewCaseForm from "./NewCaseForm"
 
-export default async function NewCasePage() {
+const VALID_TIERS = ["BASIC", "STANDARD", "COMPLEX", "PILOT_GUIDE"]
+
+export default async function NewCasePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ tier?: string }>
+}) {
+  const { tier } = await searchParams
+  const initialTier = tier && VALID_TIERS.includes(tier.toUpperCase()) ? tier.toUpperCase() : undefined
+
   // Fetch available reviewers for the selection dropdown
   const reviewers = await prisma.user.findMany({
     where: { role: { in: ["REVIEWER", "ADMIN"] } },
@@ -21,5 +30,5 @@ export default async function NewCasePage() {
     activeCases: r._count.assignedCases,
   }))
 
-  return <NewCaseForm reviewers={reviewersWithWorkload} />
+  return <NewCaseForm reviewers={reviewersWithWorkload} initialTier={initialTier} />
 }

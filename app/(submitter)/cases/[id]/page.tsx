@@ -245,6 +245,18 @@ export default async function SubmitterCasePage({
                       </span>
                     </div>
                     <div className="space-y-4">
+                      {/* New-style full narrative report (from AI dictation) */}
+                      {!review.caseSummary && !review.sacClassification && !review.implantPosition && !review.angulation && !review.anatomicalConsiderations && !review.prostheticConsiderations && !review.riskFlags && !review.recommendations && review.overallFeedback ? (
+                        <div>
+                          <p className="text-xs font-semibold text-muted mb-3 uppercase tracking-wider">
+                            Full Assessment Report
+                          </p>
+                          <div className="text-sm text-body whitespace-pre-wrap leading-relaxed bg-warm-bg rounded-lg p-5 border border-gray-100">
+                            {review.overallFeedback}
+                          </div>
+                        </div>
+                      ) : (
+                        <>
                       {review.caseSummary && (
                         <div>
                           <p className="text-xs font-semibold text-muted mb-1">
@@ -329,6 +341,8 @@ export default async function SubmitterCasePage({
                         {review.overallFeedback}
                       </p>
                     </div>
+                        </>
+                      )}
                     </div>
                   </div>
                 ))}

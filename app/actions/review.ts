@@ -16,37 +16,21 @@ export async function submitReview(
 
   const caseId = formData.get("caseId") as string
   const decision = formData.get("decision") as string
-  const caseSummary = (formData.get("caseSummary") as string) || null
-  const sacClassification = (formData.get("sacClassification") as string) || null
-  const implantPosition = (formData.get("implantPosition") as string) || null
-  const angulation = (formData.get("angulation") as string) || null
-  const anatomicalConsiderations = (formData.get("anatomicalConsiderations") as string) || null
-  const prostheticConsiderations = (formData.get("prostheticConsiderations") as string) || null
-  const riskFlags = (formData.get("riskFlags") as string) || null
-  const recommendations = (formData.get("recommendations") as string) || null
-  const overallFeedback = formData.get("overallFeedback") as string
+  const reportText = formData.get("reportText") as string
 
-  if (!caseId || !decision || !overallFeedback) {
-    return { error: "Decision and overall feedback are required" }
+  if (!caseId || !decision || !reportText || reportText.trim().length === 0) {
+    return { error: "Decision and review report are required" }
   }
 
   const userId = (session.user as any).id
 
-  // Create the review
+  // Create the review — store the full report in overallFeedback
   await prisma.review.create({
     data: {
       caseId,
       reviewerId: userId,
       decision: decision as any,
-      caseSummary,
-      sacClassification,
-      implantPosition,
-      angulation,
-      anatomicalConsiderations,
-      prostheticConsiderations,
-      riskFlags,
-      recommendations,
-      overallFeedback,
+      overallFeedback: reportText.trim(),
     },
   })
 

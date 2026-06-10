@@ -1,19 +1,123 @@
 "use client"
 
-import { useActionState } from "react"
+import { useActionState, useState, useRef, useEffect } from "react"
 import { submitReview, type ReviewState } from "@/app/actions/review"
 
 const initialState: ReviewState = {}
 
-const sacOptions = [
-  { value: "", label: "— Select classification —" },
-  { value: "Straightforward", label: "Straightforward — routine case, low risk" },
-  { value: "Advanced", label: "Advanced — moderate complexity, some risk factors" },
-  { value: "Complex", label: "Complex — high complexity, multiple risk factors" },
-]
+// Speech recognition types
+interface SpeechRecognitionEvent extends Event {
+  resultIndex: number
+  results: SpeechRecognitionResultList
+}
+
+interface SpeechRecognitionErrorEvent extends Event {
+  error: string
+}
+
+declare global {
+  interface Window {
+    SpeechRecognition: any
+    webkitSpeechRecognition: any
+  }
+}
 
 export function ReviewForm({ caseId }: { caseId: string }) {
   const [state, formAction, isPending] = useActionState(submitReview, initialState)
+  const [reportText, setReportText] = useState("")
+  const [isGenerating, setIsGenerating] = useState(false)
+  const [generateError, setGenerateError] = useState("")
+  const [isRecording, setIsRecording] = useState(false)
+  const [recordingSupported, setRecordingSupported] = useState(false)
+  const recognitionRef = useRef<any>(null)
+
+  // Check speech recognition support
+  useEffect(() => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+    setRecordingSupported(!!SpeechRecognition)
+  }, [])
+
+  function startRecording() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+    if (!SpeechRecognition) return
+
+    const recognition = new SpeechRecognition()
+    recognition.continuous = true
+    recognition.interimResults = true
+    recognition.lang = "en-GB"
+
+    recognition.onresult = (event: SpeechRecognitionEvent) => {
+      let interim = ""
+      let final = ""
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const transcript = event.results[i][0].transcript
+        if (event.results[i].isFinal) {
+          final += transcript + " "
+        } else {
+          interim += transcript
+        }
+      }
+      setReportText((prev) => {
+        // Append final results, show interim in the text
+        const base = prev + final
+        return base + (interim ? ` [${interim}]` : "")
+      })
+    }
+
+    recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
+      console.error("Speech recognition error:", event.error)
+      setIsRecording(false)
+    }
+
+    recognition.onend = () => {
+      setIsRecording(false)
+    }
+
+    recognitionRef.current = recognition
+    recognition.start()
+    setIsRecording(true)
+  }
+
+  function stopRecording() {
+    if (recognitionRef.current) {
+      recognitionRef.current.stop()
+      recognitionRef.current = null
+    }
+    setIsRecording(false)
+    // Clean up any interim markers left in text
+    setReportText((prev) => prev.replace(/\s*\[.*?\]\s*$/, ""))
+  }
+
+  async function handleGenerate() {
+    if (!reportText.trim() || reportText.trim().length < 20) {
+      setGenerateError("Please dictate or type at least a few sentences before generating the report.")
+      return
+    }
+
+    setIsGenerating(true)
+    setGenerateError("")
+
+    try {
+      const response = await fetch("/api/generate-report", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ transcript: reportText }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        setGenerateError(data.error || "Failed to generate report.")
+        return
+      }
+
+      setReportText(data.report)
+    } catch (e: any) {
+      setGenerateError(e.message || "Network error. Please try again.")
+    } finally {
+      setIsGenerating(false)
+    }
+  }
 
   if (state.success) {
     return (
@@ -31,141 +135,80 @@ export function ReviewForm({ caseId }: { caseId: string }) {
 
   return (
     <div className="bg-white rounded-xl border border-gray-100 p-6">
-      <h2 className="font-[(family-name:var(--font-garamond))] text-lg text-navy font-bold mb-1">
-        Submit Review
-      </h2>
-      <p className="text-sm text-muted mb-6">
-        Complete each section of the templated report. Dictate or type your assessment.
+      <div className="flex items-center justify-between mb-1">
+        <h2 className="font-[(family-name:var(--font-garamond))] text-lg text-navy font-bold">
+          Submit Review
+        </h2>
+        <span className="text-xs px-2.5 py-1 rounded-full bg-navy/5 text-navy font-medium">
+          AI-Assisted
+        </span>
+      </div>
+      <p className="text-sm text-muted mb-5">
+        Dictate or type your review naturally. The AI will structure it into a polished report following Dr. Dandapat&apos;s style.
       </p>
 
       <form action={formAction} className="space-y-5">
         <input type="hidden" name="caseId" value={caseId} />
+        <input type="hidden" name="reportText" value={reportText} />
 
-        {/* 1. Case Summary */}
+        {/* Dictation area */}
         <div>
-          <label className="block text-sm font-semibold text-navy mb-1.5">
-            1. Case Summary
-          </label>
+          <div className="flex items-center justify-between mb-2">
+            <label className="block text-sm font-semibold text-navy">
+              Dictate Your Review <span className="text-red-500">*</span>
+            </label>
+            <div className="flex items-center gap-2">
+              {recordingSupported && (
+                <button
+                  type="button"
+                  onClick={isRecording ? stopRecording : startRecording}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                    isRecording
+                      ? "bg-red-500 text-white animate-pulse"
+                      : "bg-warm-bg text-navy border border-gray-200 hover:border-gold/30"
+                  }`}
+                >
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 1a2.5 2.5 0 00-2.5 2.5v4a2.5 2.5 0 005 0v-4A2.5 2.5 0 008 1z" />
+                    <path d="M3.5 7a4.5 4.5 0 009 0h-9z" />
+                  </svg>
+                  {isRecording ? "Stop" : "Record"}
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={handleGenerate}
+                disabled={isGenerating || reportText.trim().length < 20}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-gold text-navy rounded-lg text-xs font-semibold hover:bg-gold-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                <svg className="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M2 8c0-3.314 2.686-6 6-6s6 2.686 6 6-2.686 6-6 6" strokeLinecap="round" />
+                  <path d="M8 10l2-2-2-2M8 8H2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                {isGenerating ? "Generating..." : "Generate Report"}
+              </button>
+            </div>
+          </div>
+
           <textarea
-            name="caseSummary"
-            rows={2}
-            className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-body focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-colors resize-none"
-            placeholder="Brief overview of the treatment plan: which teeth/sites, implant system proposed, key clinical context..."
-          />
-        </div>
-
-        {/* 2. SAC Classification */}
-        <div>
-          <label className="block text-sm font-semibold text-navy mb-1.5">
-            2. SAC Classification (ITI Framework)
-          </label>
-          <select
-            name="sacClassification"
-            defaultValue=""
-            className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-body focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-colors bg-white"
-          >
-            {sacOptions.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
-          <p className="text-xs text-muted mt-1">
-            Straightforward = routine single implant, good bone, no grafting. Advanced = moderate complexity, some grafting or sinus lift. Complex = full arch, extensive grafting, compromised anatomy.
-          </p>
-        </div>
-
-        {/* 3. Implant Positioning */}
-        <div>
-          <label className="block text-sm font-semibold text-navy mb-1.5">
-            3. Implant Positioning
-          </label>
-          <textarea
-            name="implantPosition"
-            rows={3}
-            className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-body focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-colors resize-none"
-            placeholder="Assess each implant's position: mesiodistal spacing, buccolingual placement, apicocoronal depth, proximity to adjacent teeth/implants (min 1.5mm from adjacent teeth, 3mm between implants)..."
-          />
-        </div>
-
-        {/* 4. Angulation */}
-        <div>
-          <label className="block text-sm font-semibold text-navy mb-1.5">
-            4. Angulation Analysis
-          </label>
-          <textarea
-            name="angulation"
-            rows={3}
-            className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-body focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-colors resize-none"
-            placeholder="Assess angulation relative to planned restoration: mesiodistal and buccolingual tilt, restorative-driven placement, screw-access channel trajectory, any need for angulated abutments..."
-          />
-        </div>
-
-        {/* 5. Anatomical Considerations */}
-        <div>
-          <label className="block text-sm font-semibold text-navy mb-1.5">
-            5. Anatomical Considerations
-          </label>
-          <textarea
-            name="anatomicalConsiderations"
-            rows={3}
-            className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-body focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-colors resize-none"
-            placeholder="Nerve proximity (IAN, mental nerve, lingual nerve), sinus proximity and membrane integrity, bone quality (D1-D4), ridge morphology, adjacent root proximity, vital structures..."
-          />
-        </div>
-
-        {/* 6. Prosthetic Considerations */}
-        <div>
-          <label className="block text-sm font-semibold text-navy mb-1.5">
-            6. Prosthetic Considerations
-          </label>
-          <textarea
-            name="prostheticConsiderations"
-            rows={3}
-            className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-body focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-colors resize-none"
-            placeholder="Emergence profile, restorative space (interocclusal clearance), crown-to-implant ratio, abutment type recommendations, cement vs screw-retained, soft tissue considerations..."
-          />
-        </div>
-
-        {/* 7. Risk Assessment */}
-        <div>
-          <label className="block text-sm font-semibold text-navy mb-1.5">
-            7. Risk Assessment
-          </label>
-          <textarea
-            name="riskFlags"
-            rows={3}
-            className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-body focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-colors resize-none"
-            placeholder="Flag any risks: surgical (nerve damage, perforation, bleeding), prosthetic (aesthetic compromise, occlusal overload), patient factors (smoking, bruxism, diabetes, bisphosphonates), short-term and long-term concerns..."
-          />
-        </div>
-
-        {/* 8. Recommendations */}
-        <div>
-          <label className="block text-sm font-semibold text-navy mb-1.5">
-            8. Recommendations
-          </label>
-          <textarea
-            name="recommendations"
-            rows={3}
-            className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-body focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-colors resize-none"
-            placeholder="Specific adjustments needed: reposition implant X, reduce angulation, add grafting, change implant diameter/length, alternative treatment approach, additional diagnostics needed (CBCT with different FOV)..."
-          />
-        </div>
-
-        {/* 9. Overall Feedback & Verdict */}
-        <div>
-          <label className="block text-sm font-semibold text-navy mb-1.5">
-            9. Overall Feedback &amp; Verdict <span className="text-red-500">*</span>
-          </label>
-          <textarea
-            name="overallFeedback"
-            rows={4}
+            value={reportText}
+            onChange={(e) => setReportText(e.target.value)}
+            rows={16}
             required
-            className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-body focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-colors resize-none"
-            placeholder="Your overall assessment and summary of the treatment plan. This is the key section the submitter will read..."
+            className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm text-body focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-colors resize-y font-['Inter',sans-serif] leading-relaxed"
+            placeholder={`Dictate or type your review naturally. For example:
+
+"So this is Mr Smith, 62 years old, ASA I. He's missing an upper right first molar after an extraction about 2 years ago. Oral hygiene is good, BPE 1s and 2s. CBCT shows about 8mm ridge width, 12mm height, D2 bone quality. I'm thinking a 4.5 by 10mm implant, standard loading, heal for about 3-4 months. Non-smoker, no bruxism. Good prognosis — straightforward case..."
+
+The AI will structure this into a professional Dental Implant Assessment Report.`}
           />
         </div>
+
+        {generateError && (
+          <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+            <p className="text-sm text-red-700">{generateError}</p>
+          </div>
+        )}
 
         {/* Decision */}
         <div>
@@ -212,7 +255,7 @@ export function ReviewForm({ caseId }: { caseId: string }) {
 
         <button
           type="submit"
-          disabled={isPending}
+          disabled={isPending || reportText.trim().length === 0}
           className="w-full px-6 py-3 bg-navy text-white rounded-lg font-semibold hover:bg-navy-light transition-colors disabled:opacity-50"
         >
           {isPending ? "Submitting..." : "Submit Review"}
