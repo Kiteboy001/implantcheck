@@ -1245,6 +1245,7 @@ export const TokenScalarFieldEnum = {
   usedAt: 'usedAt',
   createdById: 'createdById',
   notes: 'notes',
+  batchId: 'batchId',
   createdAt: 'createdAt'
 } as const
 

@@ -207,6 +207,7 @@ model Token {
   usedAt     DateTime?    @map("used_at")
   createdById String      @map("created_by_id")
   notes      String?      // admin notes (e.g. "Cohort 3 student token")
+  batchId    String?      @map("batch_id") // groups tokens from same batch generation
 
   usedBy    User?  @relation("TokenUser", fields: [usedById], references: [id])
   usedCase  Case?  @relation("TokenCase", fields: [usedCaseId], references: [id])

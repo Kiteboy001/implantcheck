@@ -7,15 +7,16 @@ import { redirect } from "next/navigation"
 
 // ── Types ─────────────────────────────────────────────────────
 
-export type GenerateTokenState = { error?: string; success?: { code: string; tier: string } }
-
+export type TokenResult = { code: string; tier: string }
+export type GenerateTokenState = { error?: string; success?: { tokens: TokenResult[]; batchId: string; count: number } }
 export type RedeemTokenState = { error?: string; success?: string }
+export type RevokeTokenState = { error?: string; success?: string }
 
-// ── Generate token (admin only) ───────────────────────────────
+// ── Helpers ───────────────────────────────────────────────────
 
 function generateCode(): string {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789" // no I/O/0/1 for readability
-  const segments = [4, 4] // e.g. "IC-A7B3-X9K2"
+  const segments = [4, 4]
   const parts: string[] = ["IC"]
 
   for (const len of segments) {
@@ -29,10 +30,85 @@ function generateCode(): string {
   return parts.join("-")
 }
 
-export async function generateToken(
+async function createUniqueToken(
+  tier: string,
+  createdById: string,
+  notes: string | null,
+  batchId: string
+): Promise<TokenResult> {
+  let code = generateCode()
+  let attempts = 0
+
+  while (attempts < 10) {
+    const existing = await prisma.token.findUnique({ where: { code } })
+    if (!existing) break
+    code = generateCode()
+    attempts++
+  }
+
+  if (attempts >= 10) {
+    throw new Error("Could not generate a unique code — too many collisions")
+  }
+
+  const token = await prisma.token.create({
+    data: {
+      code,
+      tier: tier as any,
+      createdById,
+      notes,
+      batchId,
+    },
+  })
+
+  return { code: token.code, tier: token.tier }
+}
+
+// ── Batch generate tokens (admin only) ────────────────────────
+
+export async function generateTokens(
   prevState: GenerateTokenState,
   formData: FormData
 ): Promise<GenerateTokenState> {
+  const session = await auth()
+  if (!session?.user) redirect("/auth/login")
+
+  const role = (session.user as any).role
+  if (role !== "ADMIN") return { error: "Only admins can generate tokens" }
+
+  const tier = formData.get("tier") as string
+  const notes = (formData.get("notes") as string) || null
+  const countStr = formData.get("count") as string
+  const count = parseInt(countStr, 10) || 1
+
+  const validTiers = ["BASIC", "STANDARD", "COMPLEX", "PILOT_GUIDE"]
+  if (!validTiers.includes(tier)) return { error: "Invalid tier selected" }
+
+  if (count < 1 || count > 50) return { error: "Count must be between 1 and 50" }
+
+  const batchId = crypto.randomUUID()
+  const userId = (session.user as any).id
+  const tokens: TokenResult[] = []
+
+  try {
+    for (let i = 0; i < count; i++) {
+      const token = await createUniqueToken(tier, userId, notes, batchId)
+      tokens.push(token)
+    }
+  } catch (err: any) {
+    return { error: err.message || "Failed to generate tokens" }
+  }
+
+  revalidatePath("/admin/tokens")
+
+  return { success: { tokens, batchId, count } }
+}
+
+// ── Single token (kept for backward compat) ───────────────────
+
+export async function generateToken(
+  prevState: { error?: string; success?: { code: string; tier: string } },
+  formData: FormData
+) {
   const session = await auth()
   if (!session?.user) redirect("/auth/login")
 
@@ -45,29 +121,16 @@ export async function generateToken(
   const validTiers = ["BASIC", "STANDARD", "COMPLEX", "PILOT_GUIDE"]
   if (!validTiers.includes(tier)) return { error: "Invalid tier selected" }
 
-  // Generate unique code with collision retry
-  let code = generateCode()
-  let attempts = 0
-  while (attempts < 5) {
-    const existing = await prisma.token.findUnique({ where: { code } })
-    if (!existing) break
-    code = generateCode()
-    attempts++
+  const batchId = crypto.randomUUID()
+  const userId = (session.user as any).id
+
+  try {
+    const token = await createUniqueToken(tier, userId, notes, batchId)
+    revalidatePath("/admin/tokens")
+    return { success: { code: token.code, tier: token.tier } }
+  } catch (err: any) {
+    return { error: err.message || "Failed to generate token" }
   }
-  if (attempts >= 5) return { error: "Could not generate a unique code — please try again" }
-
-  const token = await prisma.token.create({
-    data: {
-      code,
-      tier: tier as any,
-      createdById: (session.user as any).id,
-      notes,
-    },
-  })
-
-  revalidatePath("/admin/tokens")
-
-  return { success: { code: token.code, tier: token.tier } }
 }
 
 // ── Redeem token (submitters) ─────────────────────────────────
@@ -84,18 +147,15 @@ export async function redeemToken(
 
   if (!code || !caseId) return { error: "Token code and case ID are required" }
 
-  // Find token
   const token = await prisma.token.findUnique({ where: { code } })
   if (!token) return { error: "Invalid token code" }
   if (token.isUsed) return { error: "This token has already been used" }
 
-  // Find case
   const c = await prisma.case.findUnique({ where: { id: caseId } })
   if (!c) return { error: "Case not found" }
   if (c.submitterId !== (session.user as any).id) return { error: "This is not your case" }
   if (c.paymentStatus !== "UNPAID") return { error: "This case is already paid" }
 
-  // Token tier must match case tier
   if (token.tier !== c.tier) {
     const tierLabels: Record<string, string> = {
       BASIC: "Basic Check (£95)",
@@ -106,7 +166,6 @@ export async function redeemToken(
     return { error: `This token is for ${tierLabels[token.tier] || token.tier}, but your case is ${tierLabels[c.tier] || c.tier}` }
   }
 
-  // Redeem
   await prisma.token.update({
     where: { id: token.id },
     data: {
@@ -129,8 +188,6 @@ export async function redeemToken(
 }
 
 // ── Revoke token (admin only) ──────────────────────────────────
-
-export type RevokeTokenState = { error?: string; success?: string }
 
 export async function revokeToken(
   prevState: RevokeTokenState,

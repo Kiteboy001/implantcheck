@@ -34,6 +34,7 @@ export type TokenMinAggregateOutputType = {
   usedAt: Date | null
   createdById: string | null
   notes: string | null
+  batchId: string | null
   createdAt: Date | null
 }
 
@@ -47,6 +48,7 @@ export type TokenMaxAggregateOutputType = {
   usedAt: Date | null
   createdById: string | null
   notes: string | null
+  batchId: string | null
   createdAt: Date | null
 }
 
@@ -60,6 +62,7 @@ export type TokenCountAggregateOutputType = {
   usedAt: number
   createdById: number
   notes: number
+  batchId: number
   createdAt: number
   _all: number
 }
@@ -75,6 +78,7 @@ export type TokenMinAggregateInputType = {
   usedAt?: true
   createdById?: true
   notes?: true
+  batchId?: true
   createdAt?: true
 }
 
@@ -88,6 +92,7 @@ export type TokenMaxAggregateInputType = {
   usedAt?: true
   createdById?: true
   notes?: true
+  batchId?: true
   createdAt?: true
 }
 
@@ -101,6 +106,7 @@ export type TokenCountAggregateInputType = {
   usedAt?: true
   createdById?: true
   notes?: true
+  batchId?: true
   createdAt?: true
   _all?: true
 }
@@ -187,6 +193,7 @@ export type TokenGroupByOutputType = {
   usedAt: Date | null
   createdById: string
   notes: string | null
+  batchId: string | null
   createdAt: Date
   _count: TokenCountAggregateOutputType | null
   _min: TokenMinAggregateOutputType | null
@@ -221,6 +228,7 @@ export type TokenWhereInput = {
   usedAt?: Prisma.DateTimeNullableFilter<"Token"> | Date | string | null
   createdById?: Prisma.StringFilter<"Token"> | string
   notes?: Prisma.StringNullableFilter<"Token"> | string | null
+  batchId?: Prisma.StringNullableFilter<"Token"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Token"> | Date | string
   usedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   usedCase?: Prisma.XOR<Prisma.CaseNullableScalarRelationFilter, Prisma.CaseWhereInput> | null
@@ -237,6 +245,7 @@ export type TokenOrderByWithRelationInput = {
   usedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  batchId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   usedBy?: Prisma.UserOrderByWithRelationInput
   usedCase?: Prisma.CaseOrderByWithRelationInput
@@ -256,6 +265,7 @@ export type TokenWhereUniqueInput = Prisma.AtLeast<{
   usedAt?: Prisma.DateTimeNullableFilter<"Token"> | Date | string | null
   createdById?: Prisma.StringFilter<"Token"> | string
   notes?: Prisma.StringNullableFilter<"Token"> | string | null
+  batchId?: Prisma.StringNullableFilter<"Token"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Token"> | Date | string
   usedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   usedCase?: Prisma.XOR<Prisma.CaseNullableScalarRelationFilter, Prisma.CaseWhereInput> | null
@@ -272,6 +282,7 @@ export type TokenOrderByWithAggregationInput = {
   usedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  batchId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.TokenCountOrderByAggregateInput
   _max?: Prisma.TokenMaxOrderByAggregateInput
@@ -291,6 +302,7 @@ export type TokenScalarWhereWithAggregatesInput = {
   usedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Token"> | Date | string | null
   createdById?: Prisma.StringWithAggregatesFilter<"Token"> | string
   notes?: Prisma.StringNullableWithAggregatesFilter<"Token"> | string | null
+  batchId?: Prisma.StringNullableWithAggregatesFilter<"Token"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Token"> | Date | string
 }
 
@@ -301,6 +313,7 @@ export type TokenCreateInput = {
   isUsed?: boolean
   usedAt?: Date | string | null
   notes?: string | null
+  batchId?: string | null
   createdAt?: Date | string
   usedBy?: Prisma.UserCreateNestedOneWithoutUsedTokensInput
   usedCase?: Prisma.CaseCreateNestedOneWithoutTokenInput
@@ -317,6 +330,7 @@ export type TokenUncheckedCreateInput = {
   usedAt?: Date | string | null
   createdById: string
   notes?: string | null
+  batchId?: string | null
   createdAt?: Date | string
 }
 
@@ -327,6 +341,7 @@ export type TokenUpdateInput = {
   isUsed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   usedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   usedBy?: Prisma.UserUpdateOneWithoutUsedTokensNestedInput
   usedCase?: Prisma.CaseUpdateOneWithoutTokenNestedInput
@@ -343,6 +358,7 @@ export type TokenUncheckedUpdateInput = {
   usedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -356,6 +372,7 @@ export type TokenCreateManyInput = {
   usedAt?: Date | string | null
   createdById: string
   notes?: string | null
+  batchId?: string | null
   createdAt?: Date | string
 }
 
@@ -366,6 +383,7 @@ export type TokenUpdateManyMutationInput = {
   isUsed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   usedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -379,6 +397,7 @@ export type TokenUncheckedUpdateManyInput = {
   usedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -407,6 +426,7 @@ export type TokenCountOrderByAggregateInput = {
   usedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  batchId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -420,6 +440,7 @@ export type TokenMaxOrderByAggregateInput = {
   usedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  batchId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -433,6 +454,7 @@ export type TokenMinOrderByAggregateInput = {
   usedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  batchId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -559,6 +581,7 @@ export type TokenCreateWithoutCreatedByInput = {
   isUsed?: boolean
   usedAt?: Date | string | null
   notes?: string | null
+  batchId?: string | null
   createdAt?: Date | string
   usedBy?: Prisma.UserCreateNestedOneWithoutUsedTokensInput
   usedCase?: Prisma.CaseCreateNestedOneWithoutTokenInput
@@ -573,6 +596,7 @@ export type TokenUncheckedCreateWithoutCreatedByInput = {
   usedCaseId?: string | null
   usedAt?: Date | string | null
   notes?: string | null
+  batchId?: string | null
   createdAt?: Date | string
 }
 
@@ -593,6 +617,7 @@ export type TokenCreateWithoutUsedByInput = {
   isUsed?: boolean
   usedAt?: Date | string | null
   notes?: string | null
+  batchId?: string | null
   createdAt?: Date | string
   usedCase?: Prisma.CaseCreateNestedOneWithoutTokenInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedTokensInput
@@ -607,6 +632,7 @@ export type TokenUncheckedCreateWithoutUsedByInput = {
   usedAt?: Date | string | null
   createdById: string
   notes?: string | null
+  batchId?: string | null
   createdAt?: Date | string
 }
 
@@ -649,6 +675,7 @@ export type TokenScalarWhereInput = {
   usedAt?: Prisma.DateTimeNullableFilter<"Token"> | Date | string | null
   createdById?: Prisma.StringFilter<"Token"> | string
   notes?: Prisma.StringNullableFilter<"Token"> | string | null
+  batchId?: Prisma.StringNullableFilter<"Token"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Token"> | Date | string
 }
 
@@ -675,6 +702,7 @@ export type TokenCreateWithoutUsedCaseInput = {
   isUsed?: boolean
   usedAt?: Date | string | null
   notes?: string | null
+  batchId?: string | null
   createdAt?: Date | string
   usedBy?: Prisma.UserCreateNestedOneWithoutUsedTokensInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedTokensInput
@@ -689,6 +717,7 @@ export type TokenUncheckedCreateWithoutUsedCaseInput = {
   usedAt?: Date | string | null
   createdById: string
   notes?: string | null
+  batchId?: string | null
   createdAt?: Date | string
 }
 
@@ -715,6 +744,7 @@ export type TokenUpdateWithoutUsedCaseInput = {
   isUsed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   usedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   usedBy?: Prisma.UserUpdateOneWithoutUsedTokensNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedTokensNestedInput
@@ -729,6 +759,7 @@ export type TokenUncheckedUpdateWithoutUsedCaseInput = {
   usedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -741,6 +772,7 @@ export type TokenCreateManyCreatedByInput = {
   usedCaseId?: string | null
   usedAt?: Date | string | null
   notes?: string | null
+  batchId?: string | null
   createdAt?: Date | string
 }
 
@@ -753,6 +785,7 @@ export type TokenCreateManyUsedByInput = {
   usedAt?: Date | string | null
   createdById: string
   notes?: string | null
+  batchId?: string | null
   createdAt?: Date | string
 }
 
@@ -763,6 +796,7 @@ export type TokenUpdateWithoutCreatedByInput = {
   isUsed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   usedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   usedBy?: Prisma.UserUpdateOneWithoutUsedTokensNestedInput
   usedCase?: Prisma.CaseUpdateOneWithoutTokenNestedInput
@@ -777,6 +811,7 @@ export type TokenUncheckedUpdateWithoutCreatedByInput = {
   usedCaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   usedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -789,6 +824,7 @@ export type TokenUncheckedUpdateManyWithoutCreatedByInput = {
   usedCaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   usedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -799,6 +835,7 @@ export type TokenUpdateWithoutUsedByInput = {
   isUsed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   usedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   usedCase?: Prisma.CaseUpdateOneWithoutTokenNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedTokensNestedInput
@@ -813,6 +850,7 @@ export type TokenUncheckedUpdateWithoutUsedByInput = {
   usedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -825,6 +863,7 @@ export type TokenUncheckedUpdateManyWithoutUsedByInput = {
   usedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -840,6 +879,7 @@ export type TokenSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   usedAt?: boolean
   createdById?: boolean
   notes?: boolean
+  batchId?: boolean
   createdAt?: boolean
   usedBy?: boolean | Prisma.Token$usedByArgs<ExtArgs>
   usedCase?: boolean | Prisma.Token$usedCaseArgs<ExtArgs>
@@ -856,6 +896,7 @@ export type TokenSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   usedAt?: boolean
   createdById?: boolean
   notes?: boolean
+  batchId?: boolean
   createdAt?: boolean
   usedBy?: boolean | Prisma.Token$usedByArgs<ExtArgs>
   usedCase?: boolean | Prisma.Token$usedCaseArgs<ExtArgs>
@@ -872,6 +913,7 @@ export type TokenSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   usedAt?: boolean
   createdById?: boolean
   notes?: boolean
+  batchId?: boolean
   createdAt?: boolean
   usedBy?: boolean | Prisma.Token$usedByArgs<ExtArgs>
   usedCase?: boolean | Prisma.Token$usedCaseArgs<ExtArgs>
@@ -888,10 +930,11 @@ export type TokenSelectScalar = {
   usedAt?: boolean
   createdById?: boolean
   notes?: boolean
+  batchId?: boolean
   createdAt?: boolean
 }
 
-export type TokenOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "tier" | "isUsed" | "usedById" | "usedCaseId" | "usedAt" | "createdById" | "notes" | "createdAt", ExtArgs["result"]["token"]>
+export type TokenOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "tier" | "isUsed" | "usedById" | "usedCaseId" | "usedAt" | "createdById" | "notes" | "batchId" | "createdAt", ExtArgs["result"]["token"]>
 export type TokenInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   usedBy?: boolean | Prisma.Token$usedByArgs<ExtArgs>
   usedCase?: boolean | Prisma.Token$usedCaseArgs<ExtArgs>
@@ -925,6 +968,7 @@ export type $TokenPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     usedAt: Date | null
     createdById: string
     notes: string | null
+    batchId: string | null
     createdAt: Date
   }, ExtArgs["result"]["token"]>
   composites: {}
@@ -1361,6 +1405,7 @@ export interface TokenFieldRefs {
   readonly usedAt: Prisma.FieldRef<"Token", 'DateTime'>
   readonly createdById: Prisma.FieldRef<"Token", 'String'>
   readonly notes: Prisma.FieldRef<"Token", 'String'>
+  readonly batchId: Prisma.FieldRef<"Token", 'String'>
   readonly createdAt: Prisma.FieldRef<"Token", 'DateTime'>
 }
     
