@@ -47,21 +47,13 @@ export function ReviewForm({ caseId }: { caseId: string }) {
     recognition.lang = "en-GB"
 
     recognition.onresult = (event: SpeechRecognitionEvent) => {
-      let interim = ""
       let final = ""
       for (let i = event.resultIndex; i < event.results.length; i++) {
-        const transcript = event.results[i][0].transcript
         if (event.results[i].isFinal) {
-          final += transcript + " "
-        } else {
-          interim += transcript
+          final += event.results[i][0].transcript + " "
         }
       }
-      setReportText((prev) => {
-        // Append final results, show interim in the text
-        const base = prev + final
-        return base + (interim ? ` [${interim}]` : "")
-      })
+      setReportText((prev) => prev + final)
     }
 
     recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
@@ -84,8 +76,6 @@ export function ReviewForm({ caseId }: { caseId: string }) {
       recognitionRef.current = null
     }
     setIsRecording(false)
-    // Clean up any interim markers left in text
-    setReportText((prev) => prev.replace(/\s*\[.*?\]\s*$/, ""))
   }
 
   async function handleGenerate() {
