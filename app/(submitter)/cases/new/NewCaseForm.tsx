@@ -25,6 +25,8 @@ const tiers = [
         photo_retracted: { label: "Photo — Retracted", desc: "Retracted view of treatment site", required: false, minCount: 0, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
         photo_left: { label: "Photo — Left View", desc: "Left lateral view", required: false, minCount: 0, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
         photo_right: { label: "Photo — Right View", desc: "Right lateral view", required: false, minCount: 0, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
+        photo_occlusal_upper: { label: "Photo — Upper Arch Occlusal", desc: "Occlusal view of upper arch", required: false, minCount: 0, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
+        photo_occlusal_lower: { label: "Photo — Lower Arch Occlusal", desc: "Occlusal view of lower arch", required: false, minCount: 0, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
       },
       treatmentNotes: { required: true, detail: "brief", label: "Brief — describe the implant position and your reasoning" },
       patientContext: { required: false },
@@ -46,6 +48,8 @@ const tiers = [
         photo_retracted: { label: "Photo — Retracted", desc: "Retracted view of treatment site", required: true, minCount: 1, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
         photo_left: { label: "Photo — Left View", desc: "Left lateral view", required: true, minCount: 1, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
         photo_right: { label: "Photo — Right View", desc: "Right lateral view", required: true, minCount: 1, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
+        photo_occlusal_upper: { label: "Photo — Upper Arch Occlusal", desc: "Occlusal view of upper arch", required: false, minCount: 0, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
+        photo_occlusal_lower: { label: "Photo — Lower Arch Occlusal", desc: "Occlusal view of lower arch", required: false, minCount: 0, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
       },
       treatmentNotes: { required: true, detail: "standard", label: "Detailed — describe implant positions, bone quality, surgical approach" },
       patientContext: { required: false },
@@ -67,6 +71,8 @@ const tiers = [
         photo_retracted: { label: "Photo — Retracted", desc: "Retracted view of treatment site", required: true, minCount: 1, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
         photo_left: { label: "Photo — Left View", desc: "Left lateral view", required: true, minCount: 1, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
         photo_right: { label: "Photo — Right View", desc: "Right lateral view", required: true, minCount: 1, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
+        photo_occlusal_upper: { label: "Photo — Upper Arch Occlusal", desc: "Occlusal view of upper arch", required: false, minCount: 0, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
+        photo_occlusal_lower: { label: "Photo — Lower Arch Occlusal", desc: "Occlusal view of lower arch", required: false, minCount: 0, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
       },
       treatmentNotes: { required: true, detail: "comprehensive", label: "Comprehensive — full treatment plan with implant positions, bone assessment, surgical and prosthetic considerations" },
       patientContext: { required: true },
@@ -88,6 +94,8 @@ const tiers = [
         photo_retracted: { label: "Photo — Retracted", desc: "Retracted view of treatment site", required: true, minCount: 1, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
         photo_left: { label: "Photo — Left View", desc: "Left lateral view", required: true, minCount: 1, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
         photo_right: { label: "Photo — Right View", desc: "Right lateral view", required: true, minCount: 1, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
+        photo_occlusal_upper: { label: "Photo — Upper Arch Occlusal", desc: "Occlusal view of upper arch", required: false, minCount: 0, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
+        photo_occlusal_lower: { label: "Photo — Lower Arch Occlusal", desc: "Occlusal view of lower arch", required: false, minCount: 0, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
         surgicalGuide: { label: "Surgical Guide STL", desc: "Your draft surgical guide STL export", required: false, minCount: 0, recommendedCount: 1, accept: ".stl,.obj,.ply" },
         opposingArch: { label: "Opposing Arch Data", desc: "Opposing arch STL or scan data", required: false, minCount: 0, recommendedCount: 1, accept: ".stl,.obj,.ply,.png,.jpg,.jpeg" },
       },
@@ -100,7 +108,7 @@ const tiers = [
 
 const tierData = Object.fromEntries(tiers.map((t) => [t.value, t])) as Record<string, (typeof tiers)[number]>
 
-type UploadedFile = { url: string; name: string; size: number; type: string }
+type UploadedFile = { url: string; name: string; size: number; type: string; category?: string }
 type Reviewer = {
   id: string
   name: string | null
@@ -188,6 +196,8 @@ const fileTypeIcons: Record<string, React.ReactNode> = {
   photo_retracted: <ScreenshotIcon />,
   photo_left: <ScreenshotIcon />,
   photo_right: <ScreenshotIcon />,
+  photo_occlusal_upper: <ScreenshotIcon />,
+  photo_occlusal_lower: <ScreenshotIcon />,
   surgicalGuide: <GuideIcon />,
   opposingArch: <ArchIcon />,
 }
@@ -213,10 +223,10 @@ export default function NewCaseForm({
   const currentTier = tierData[selectedTier]
   const fileTypes = currentTier ? Object.entries(currentTier.requirements.fileTypes) : []
 
-  // Count uploaded files per type
+  // Count uploaded files per type (use assigned category, not auto-detect)
   const uploadedByType: Record<string, number> = {}
   uploadedFiles.forEach((f) => {
-    const type = detectFileType(f.name)
+    const type = f.category || detectFileType(f.name)
     uploadedByType[type] = (uploadedByType[type] || 0) + 1
   })
 
@@ -224,7 +234,7 @@ export default function NewCaseForm({
   const acceptFormats = ".stl,.obj,.ply,.dcm,.dicom,.png,.jpg,.jpeg,.webp,.bsb"
 
   // Client-side direct upload to Vercel Blob — no server body limits
-  async function handleFiles(files: FileList | File[]) {
+  async function handleFiles(files: FileList | File[], typeKey?: string) {
     setUploadError("")
 
     const fileArray = Array.from(files)
@@ -268,7 +278,9 @@ export default function NewCaseForm({
         }
 
         if ("success" in validation && validation.file) {
-          newFiles.push(validation.file)
+          // Tag with the drop-zone category if provided, else auto-detect
+          const category = typeKey || detectFileType(file.name)
+          newFiles.push({ ...validation.file, category })
         }
 
         // Remove from uploading
@@ -395,7 +407,7 @@ export default function NewCaseForm({
                 Your reviewer needs these files for this tier. Upload each type to complete your submission.
               </p>
 
-              {/* File type cards */}
+              {/* File type cards — each is its own drop zone */}
               <div className="grid sm:grid-cols-2 gap-3 mb-5">
                 {fileTypes.map(([key, ft]) => {
                   const count = uploadedByType[key] || 0
@@ -403,14 +415,25 @@ export default function NewCaseForm({
                   const isRequired = ft.required
 
                   return (
-                    <div
+                    <label
                       key={key}
-                      className={`p-4 rounded-lg border-2 transition-colors ${
+                      htmlFor={`file-upload-${key}`}
+                      onDragOver={(e) => {
+                        e.preventDefault()
+                        e.dataTransfer.dropEffect = "copy"
+                      }}
+                      onDrop={(e) => {
+                        e.preventDefault()
+                        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                          handleFiles(e.dataTransfer.files, key)
+                        }
+                      }}
+                      className={`block p-4 rounded-lg border-2 transition-all cursor-pointer ${
                         isMet
-                          ? "border-green-200 bg-green-50/30"
+                          ? "border-green-200 bg-green-50/30 hover:border-green-300"
                           : isRequired && count === 0
-                          ? "border-amber-200 bg-amber-50/30"
-                          : "border-gray-100"
+                          ? "border-amber-200 bg-amber-50/30 hover:border-amber-300"
+                          : "border-gray-100 hover:border-gray-300"
                       }`}
                     >
                       <div className="flex items-start gap-3">
@@ -432,14 +455,44 @@ export default function NewCaseForm({
                               <span className="text-xs text-muted">· need at least {ft.minCount}</span>
                             )}
                           </div>
+                          {isUploading && uploadingFiles.size > 0 && (
+                            <div className="mt-2">
+                              {Array.from(uploadingFiles.entries()).map(([name, pct]) => (
+                                <div key={name} className="flex items-center gap-2">
+                                  <span className="text-[10px] text-muted truncate flex-1 text-left">{name}</span>
+                                  <div className="w-20 h-1 bg-gray-100 rounded-full overflow-hidden shrink-0">
+                                    <div className="h-full bg-gold rounded-full transition-all duration-300" style={{ width: `${pct}%` }} />
+                                  </div>
+                                  <span className="text-[10px] text-gold font-medium w-7 text-right">{pct}%</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                          <p className="text-[10px] text-gold/50 mt-1.5">
+                            Drop {ft.accept.split(",").slice(0, 3).join(", ")} here
+                          </p>
                         </div>
                       </div>
-                    </div>
+                      {/* Hidden file input per category */}
+                      <input
+                        id={`file-upload-${key}`}
+                        type="file"
+                        multiple
+                        accept={ft.accept}
+                        onChange={(e) => {
+                          if (e.target.files && e.target.files.length > 0) {
+                            handleFiles(e.target.files, key)
+                            e.target.value = ""
+                          }
+                        }}
+                        className="hidden"
+                      />
+                    </label>
                   )
                 })}
               </div>
 
-              {/* Drop zone */}
+              {/* General drop zone — fallback for uncategorized uploads */}
               <label
                 htmlFor="file-upload"
                 onDragOver={(e) => {
@@ -447,36 +500,15 @@ export default function NewCaseForm({
                   e.dataTransfer.dropEffect = "copy"
                 }}
                 onDrop={handleDrop}
-                className="block border-2 border-dashed border-gray-200 rounded-xl p-8 text-center hover:border-gold/30 hover:bg-gold/[0.02] transition-all cursor-pointer"
+                className="block border-2 border-dashed border-gray-200 rounded-xl p-6 text-center hover:border-gold/30 hover:bg-gold/[0.02] transition-all cursor-pointer"
               >
-                <div className="w-12 h-12 rounded-full bg-navy/5 flex items-center justify-center mx-auto mb-3">
-                  <svg className="w-6 h-6 text-navy/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <div className="w-10 h-10 rounded-full bg-navy/5 flex items-center justify-center mx-auto mb-2">
+                  <svg className="w-5 h-5 text-navy/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
                   </svg>
                 </div>
-                {isUploading ? (
-                  <div className="space-y-2">
-                    <p className="text-sm text-gold font-medium">Uploading...</p>
-                    {Array.from(uploadingFiles.entries()).map(([name, pct]) => (
-                      <div key={name} className="flex items-center gap-3 max-w-xs mx-auto">
-                        <span className="text-xs text-muted truncate flex-1 text-left">{name}</span>
-                        <div className="w-24 h-1.5 bg-gray-100 rounded-full overflow-hidden shrink-0">
-                          <div
-                            className="h-full bg-gold rounded-full transition-all duration-300"
-                            style={{ width: `${pct}%` }}
-                          />
-                        </div>
-                        <span className="text-xs text-gold font-medium w-8 text-right">{pct}%</span>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <>
-                    <p className="text-sm text-muted mb-1">Drag and drop your files here, or click to browse</p>
-                    <p className="text-xs text-muted/60">STL, PLY, OBJ (up to 512MB) · DICOM (up to 512MB) · PNG, JPEG (up to 16MB)</p>
-                    <p className="text-xs text-gold/60 mt-1">Files upload directly — no compression needed</p>
-                  </>
-                )}
+                <p className="text-sm text-muted mb-0.5">Or drop files here for auto-detection</p>
+                <p className="text-xs text-muted/60">STL, PLY, OBJ (up to 512MB) · DICOM (up to 512MB) · PNG, JPEG (up to 16MB)</p>
               </label>
 
               <input
