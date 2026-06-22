@@ -134,16 +134,88 @@ model Case {
   treatmentNotes String     @map("treatment_notes")
   softwareUsed   String?    @map("software_used") // e.g. "Blue Sky Bio"
 
-  submitter User       @relation("Submitter", fields: [submitterId], references: [id])
-  reviewer  User?      @relation("ReviewerAssignment", fields: [reviewerId], references: [id])
-  files     CaseFile[]
-  reviews   Review[]
-  token     Token?     @relation("TokenCase")
+  submitter  User        @relation("Submitter", fields: [submitterId], references: [id])
+  reviewer   User?       @relation("ReviewerAssignment", fields: [reviewerId], references: [id])
+  files      CaseFile[]
+  reviews    Review[]
+  assessment Assessment?  // 1:1 — BCDIS clinical assessment
+  token      Token?      @relation("TokenCase")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("cases")
+}
+
+// ── BCDIS Surgical Notes — digitized assessment form ────────────
+// Maps to Sections 1–3 of the BCDIS Recommended Initial Assessment Form
+
+model Assessment {
+  id        String @id @default(uuid())
+  caseId    String @unique @map("case_id")
+  case      Case   @relation(fields: [caseId], references: [id], onDelete: Cascade)
+
+  // ── Section 1: Patient & History ──
+  complaint            String?  // Expectations of treatment outcomes
+  dentalHistory        String?  // Social / Dental History
+  medicallyFit         Boolean?
+  complicatingFactors  Boolean?
+  smoker               Boolean?
+  cigarettesPerDay     Int?
+  alcoholUnitsPerWeek  Int?
+  asaGrade             Int?     // 1–4
+  relevantHistory      String?
+
+  // ── Section 2: Examination ──
+  extraOralTmj        Boolean?
+  extraOralLymph      Boolean?
+  extraOralSoft       Boolean?
+  extraOralSkin       Boolean?
+  intraOralFom        Boolean?
+  intraOralPalate     Boolean?
+  intraOralTongue     Boolean?
+  intraOralSulcus     Boolean?
+  bpeSextant1         Int?
+  bpeSextant2         Int?
+  bpeSextant3         Int?
+  bpeSextant4         Int?
+  bpeSextant5         Int?
+  bpeSextant6         Int?
+  oralHygiene         String?  // POOR / FAIR / GOOD
+  occlusionDetails    String?
+  interArchSpace      String?  // ADEQUATE / INADEQUATE
+  specialTestsXrays   String?  // BWs / CT Scan notes
+  diagnosis1          String?
+  diagnosis2          String?
+  diagnosis3          String?
+  discussedAlt        String?  // DENTURE / BRIDGE
+  reportGiven         Boolean?
+  preOpInstructions   Boolean?
+
+  // ── Section 3: Planning ──
+  interarchDistance    Float?   // mm
+  interdentalSpace     Float?   // mm
+  biotype              String?  // THICK / THIN
+  papillae             String?  // PRESENT / ABSENT
+  complicatingAnatomy  String?  // IDB, Sinus, Adjacent roots
+  anglesClass          String?
+  overbite             Float?
+  overjet              Float?
+  guidanceRight        String?
+  guidanceLeft         String?
+  ovdFreewaySpace      String?
+  cbctFindings         String?
+  phase1Stabilisation  String?
+  phase2MediumTerm     String?
+  phase3LongTerm       String?
+  implantPlanning      String?  // DELAYED / IMMEDIATE / AUGMENTATION
+  graftMaterial        String?  // BIOSS_PRGF / ETHOSS / AUTOGENOUS / BLOCK
+  ridgeDeficiencyType  String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("assessments")
 }
 
 model CaseFile {

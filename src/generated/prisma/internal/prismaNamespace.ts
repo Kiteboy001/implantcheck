@@ -389,6 +389,7 @@ export const ModelName = {
   Session: 'Session',
   VerificationToken: 'VerificationToken',
   Case: 'Case',
+  Assessment: 'Assessment',
   CaseFile: 'CaseFile',
   Review: 'Review',
   ReportTemplate: 'ReportTemplate',
@@ -408,7 +409,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "account" | "session" | "verificationToken" | "case" | "caseFile" | "review" | "reportTemplate" | "token"
+    modelProps: "user" | "account" | "session" | "verificationToken" | "case" | "assessment" | "caseFile" | "review" | "reportTemplate" | "token"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -779,6 +780,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.CaseCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.CaseCountAggregateOutputType> | number
+        }
+      }
+    }
+    Assessment: {
+      payload: Prisma.$AssessmentPayload<ExtArgs>
+      fields: Prisma.AssessmentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AssessmentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssessmentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AssessmentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssessmentPayload>
+        }
+        findFirst: {
+          args: Prisma.AssessmentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssessmentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AssessmentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssessmentPayload>
+        }
+        findMany: {
+          args: Prisma.AssessmentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssessmentPayload>[]
+        }
+        create: {
+          args: Prisma.AssessmentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssessmentPayload>
+        }
+        createMany: {
+          args: Prisma.AssessmentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AssessmentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssessmentPayload>[]
+        }
+        delete: {
+          args: Prisma.AssessmentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssessmentPayload>
+        }
+        update: {
+          args: Prisma.AssessmentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssessmentPayload>
+        }
+        deleteMany: {
+          args: Prisma.AssessmentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AssessmentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AssessmentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssessmentPayload>[]
+        }
+        upsert: {
+          args: Prisma.AssessmentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssessmentPayload>
+        }
+        aggregate: {
+          args: Prisma.AssessmentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAssessment>
+        }
+        groupBy: {
+          args: Prisma.AssessmentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AssessmentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AssessmentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AssessmentCountAggregateOutputType> | number
         }
       }
     }
@@ -1189,6 +1264,67 @@ export const CaseScalarFieldEnum = {
 export type CaseScalarFieldEnum = (typeof CaseScalarFieldEnum)[keyof typeof CaseScalarFieldEnum]
 
 
+export const AssessmentScalarFieldEnum = {
+  id: 'id',
+  caseId: 'caseId',
+  complaint: 'complaint',
+  dentalHistory: 'dentalHistory',
+  medicallyFit: 'medicallyFit',
+  complicatingFactors: 'complicatingFactors',
+  smoker: 'smoker',
+  cigarettesPerDay: 'cigarettesPerDay',
+  alcoholUnitsPerWeek: 'alcoholUnitsPerWeek',
+  asaGrade: 'asaGrade',
+  relevantHistory: 'relevantHistory',
+  extraOralTmj: 'extraOralTmj',
+  extraOralLymph: 'extraOralLymph',
+  extraOralSoft: 'extraOralSoft',
+  extraOralSkin: 'extraOralSkin',
+  intraOralFom: 'intraOralFom',
+  intraOralPalate: 'intraOralPalate',
+  intraOralTongue: 'intraOralTongue',
+  intraOralSulcus: 'intraOralSulcus',
+  bpeSextant1: 'bpeSextant1',
+  bpeSextant2: 'bpeSextant2',
+  bpeSextant3: 'bpeSextant3',
+  bpeSextant4: 'bpeSextant4',
+  bpeSextant5: 'bpeSextant5',
+  bpeSextant6: 'bpeSextant6',
+  oralHygiene: 'oralHygiene',
+  occlusionDetails: 'occlusionDetails',
+  interArchSpace: 'interArchSpace',
+  specialTestsXrays: 'specialTestsXrays',
+  diagnosis1: 'diagnosis1',
+  diagnosis2: 'diagnosis2',
+  diagnosis3: 'diagnosis3',
+  discussedAlt: 'discussedAlt',
+  reportGiven: 'reportGiven',
+  preOpInstructions: 'preOpInstructions',
+  interarchDistance: 'interarchDistance',
+  interdentalSpace: 'interdentalSpace',
+  biotype: 'biotype',
+  papillae: 'papillae',
+  complicatingAnatomy: 'complicatingAnatomy',
+  anglesClass: 'anglesClass',
+  overbite: 'overbite',
+  overjet: 'overjet',
+  guidanceRight: 'guidanceRight',
+  guidanceLeft: 'guidanceLeft',
+  ovdFreewaySpace: 'ovdFreewaySpace',
+  cbctFindings: 'cbctFindings',
+  phase1Stabilisation: 'phase1Stabilisation',
+  phase2MediumTerm: 'phase2MediumTerm',
+  phase3LongTerm: 'phase3LongTerm',
+  implantPlanning: 'implantPlanning',
+  graftMaterial: 'graftMaterial',
+  ridgeDeficiencyType: 'ridgeDeficiencyType',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AssessmentScalarFieldEnum = (typeof AssessmentScalarFieldEnum)[keyof typeof AssessmentScalarFieldEnum]
+
+
 export const CaseFileScalarFieldEnum = {
   id: 'id',
   caseId: 'caseId',
@@ -1404,6 +1540,20 @@ export type ListEnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType
 
 
 /**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
  * Reference to a field of type 'FileType'
  */
 export type EnumFileTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FileType'>
@@ -1442,20 +1592,6 @@ export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'J
  * Reference to a field of type 'QueryMode'
  */
 export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
-    
-
-
-/**
- * Reference to a field of type 'Float'
- */
-export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-/**
- * Reference to a field of type 'Float[]'
- */
-export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 /**
@@ -1573,6 +1709,7 @@ export type GlobalOmitConfig = {
   session?: Prisma.SessionOmit
   verificationToken?: Prisma.VerificationTokenOmit
   case?: Prisma.CaseOmit
+  assessment?: Prisma.AssessmentOmit
   caseFile?: Prisma.CaseFileOmit
   review?: Prisma.ReviewOmit
   reportTemplate?: Prisma.ReportTemplateOmit

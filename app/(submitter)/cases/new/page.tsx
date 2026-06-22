@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma"
-import NewCaseForm from "./NewCaseForm"
+import CaseSubmissionWizard from "./CaseSubmissionWizard"
 
 const VALID_TIERS = ["BASIC", "STANDARD", "COMPLEX", "PILOT_GUIDE"]
 
@@ -30,5 +30,5 @@ export default async function NewCasePage({
     activeCases: r._count.assignedCases,
   }))
 
-  return <NewCaseForm reviewers={reviewersWithWorkload} initialTier={initialTier} />
+  return <CaseSubmissionWizard reviewers={reviewersWithWorkload} initialTier={initialTier} />
 }

@@ -17,15 +17,19 @@ const tiers = [
     desc: "Single implant — full STL/CBCT review with written feedback",
     requirements: {
       fileTypes: {
-        stl: { label: "STL Files", desc: "Your implant planning STL exports", required: true, minCount: 1, recommendedCount: 2, accept: ".stl,.obj,.ply" },
-        cbct: { label: "CBCT Slices", desc: "Key CBCT cross-sections showing bone quality", required: false, minCount: 0, recommendedCount: 2, accept: ".dcm,.dicom,.png,.jpg,.jpeg" },
-        screenshots: { label: "Planning Screenshots", desc: "Screenshots from your planning software", required: false, minCount: 0, recommendedCount: 2, accept: ".png,.jpg,.jpeg,.webp" },
+        stl_upper: { label: "STL — Upper Arch", desc: "Upper arch STL export", required: true, minCount: 1, recommendedCount: 1, accept: ".stl,.obj,.ply" },
+        stl_lower: { label: "STL — Lower Arch", desc: "Lower arch STL export", required: true, minCount: 1, recommendedCount: 1, accept: ".stl,.obj,.ply" },
+        stl_bite: { label: "STL — Bite Registration", desc: "Bite registration STL", required: true, minCount: 1, recommendedCount: 1, accept: ".stl,.obj,.ply" },
+        cbct: { label: "Full CBCT Volume", desc: "Complete CBCT DICOM dataset", required: true, minCount: 1, recommendedCount: 1, accept: ".dcm,.dicom" },
+        photo_smile: { label: "Photo — Smile", desc: "Patient smiling, full-face", required: false, minCount: 0, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
+        photo_retracted: { label: "Photo — Retracted", desc: "Retracted view of treatment site", required: false, minCount: 0, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
+        photo_left: { label: "Photo — Left View", desc: "Left lateral view", required: false, minCount: 0, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
+        photo_right: { label: "Photo — Right View", desc: "Right lateral view", required: false, minCount: 0, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
       },
       treatmentNotes: { required: true, detail: "brief", label: "Brief — describe the implant position and your reasoning" },
       patientContext: { required: false },
       softwareUsed: { required: false },
     },
-    turnaround: "48 hours",
   },
   {
     value: "STANDARD",
@@ -34,15 +38,19 @@ const tiers = [
     desc: "2–4 implants — comprehensive review with detailed plan feedback",
     requirements: {
       fileTypes: {
-        stl: { label: "STL Files", desc: "All implant planning STL exports", required: true, minCount: 2, recommendedCount: 3, accept: ".stl,.obj,.ply" },
-        cbct: { label: "CBCT Scans", desc: "CBCT slices or full volume showing implant sites", required: true, minCount: 1, recommendedCount: 3, accept: ".dcm,.dicom,.png,.jpg,.jpeg" },
-        screenshots: { label: "Planning Screenshots", desc: "Key views from your planning software", required: true, minCount: 1, recommendedCount: 3, accept: ".png,.jpg,.jpeg,.webp" },
+        stl_upper: { label: "STL — Upper Arch", desc: "Upper arch STL export", required: true, minCount: 1, recommendedCount: 1, accept: ".stl,.obj,.ply" },
+        stl_lower: { label: "STL — Lower Arch", desc: "Lower arch STL export", required: true, minCount: 1, recommendedCount: 1, accept: ".stl,.obj,.ply" },
+        stl_bite: { label: "STL — Bite Registration", desc: "Bite registration STL", required: true, minCount: 1, recommendedCount: 1, accept: ".stl,.obj,.ply" },
+        cbct: { label: "Full CBCT Volume", desc: "Complete CBCT DICOM dataset", required: true, minCount: 1, recommendedCount: 1, accept: ".dcm,.dicom" },
+        photo_smile: { label: "Photo — Smile", desc: "Patient smiling, full-face", required: true, minCount: 1, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
+        photo_retracted: { label: "Photo — Retracted", desc: "Retracted view of treatment site", required: true, minCount: 1, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
+        photo_left: { label: "Photo — Left View", desc: "Left lateral view", required: true, minCount: 1, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
+        photo_right: { label: "Photo — Right View", desc: "Right lateral view", required: true, minCount: 1, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
       },
       treatmentNotes: { required: true, detail: "standard", label: "Detailed — describe implant positions, bone quality, surgical approach" },
       patientContext: { required: false },
       softwareUsed: { required: true },
     },
-    turnaround: "36 hours",
   },
   {
     value: "COMPLEX",
@@ -51,16 +59,19 @@ const tiers = [
     desc: "4+ implants — full review with 1-on-1 Zoom consultation",
     requirements: {
       fileTypes: {
-        stl: { label: "STL Files", desc: "All implant and restoration STL exports", required: true, minCount: 2, recommendedCount: 4, accept: ".stl,.obj,.ply" },
-        cbct: { label: "Full CBCT Volume", desc: "Complete CBCT DICOM dataset or key slices", required: true, minCount: 1, recommendedCount: 5, accept: ".dcm,.dicom,.png,.jpg,.jpeg" },
-        screenshots: { label: "Planning Views", desc: "All views from Blue Sky Bio or your planning software", required: true, minCount: 2, recommendedCount: 4, accept: ".png,.jpg,.jpeg,.webp" },
-        dicom: { label: "DICOM Dataset", desc: "Raw DICOM files for 3D analysis (optional)", required: false, minCount: 0, recommendedCount: 0, accept: ".dcm,.dicom" },
+        stl_upper: { label: "STL — Upper Arch", desc: "Upper arch STL export", required: true, minCount: 1, recommendedCount: 1, accept: ".stl,.obj,.ply" },
+        stl_lower: { label: "STL — Lower Arch", desc: "Lower arch STL export", required: true, minCount: 1, recommendedCount: 1, accept: ".stl,.obj,.ply" },
+        stl_bite: { label: "STL — Bite Registration", desc: "Bite registration STL", required: true, minCount: 1, recommendedCount: 1, accept: ".stl,.obj,.ply" },
+        cbct: { label: "Full CBCT Volume", desc: "Complete CBCT DICOM dataset", required: true, minCount: 1, recommendedCount: 1, accept: ".dcm,.dicom" },
+        photo_smile: { label: "Photo — Smile", desc: "Patient smiling, full-face", required: true, minCount: 1, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
+        photo_retracted: { label: "Photo — Retracted", desc: "Retracted view of treatment site", required: true, minCount: 1, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
+        photo_left: { label: "Photo — Left View", desc: "Left lateral view", required: true, minCount: 1, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
+        photo_right: { label: "Photo — Right View", desc: "Right lateral view", required: true, minCount: 1, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
       },
       treatmentNotes: { required: true, detail: "comprehensive", label: "Comprehensive — full treatment plan with implant positions, bone assessment, surgical and prosthetic considerations" },
       patientContext: { required: true },
       softwareUsed: { required: true },
     },
-    turnaround: "24 hours",
   },
   {
     value: "PILOT_GUIDE",
@@ -69,10 +80,14 @@ const tiers = [
     desc: "Collaborative surgical guide — downloadable STL ready to print",
     requirements: {
       fileTypes: {
-        stl: { label: "STL Files", desc: "All implant planning and restoration STL exports", required: true, minCount: 3, recommendedCount: 5, accept: ".stl,.obj,.ply" },
-        cbct: { label: "Full CBCT Volume", desc: "Complete CBCT DICOM dataset for guide design", required: true, minCount: 1, recommendedCount: 5, accept: ".dcm,.dicom,.png,.jpg,.jpeg" },
-        screenshots: { label: "Planning Views", desc: "All views from your planning software", required: true, minCount: 3, recommendedCount: 5, accept: ".png,.jpg,.jpeg,.webp" },
-        dicom: { label: "DICOM Dataset", desc: "Raw DICOM files for surgical guide design", required: true, minCount: 1, recommendedCount: 3, accept: ".dcm,.dicom" },
+        stl_upper: { label: "STL — Upper Arch", desc: "Upper arch STL export", required: true, minCount: 1, recommendedCount: 1, accept: ".stl,.obj,.ply" },
+        stl_lower: { label: "STL — Lower Arch", desc: "Lower arch STL export", required: true, minCount: 1, recommendedCount: 1, accept: ".stl,.obj,.ply" },
+        stl_bite: { label: "STL — Bite Registration", desc: "Bite registration STL", required: true, minCount: 1, recommendedCount: 1, accept: ".stl,.obj,.ply" },
+        cbct: { label: "Full CBCT Volume", desc: "Complete CBCT DICOM dataset", required: true, minCount: 1, recommendedCount: 1, accept: ".dcm,.dicom" },
+        photo_smile: { label: "Photo — Smile", desc: "Patient smiling, full-face", required: true, minCount: 1, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
+        photo_retracted: { label: "Photo — Retracted", desc: "Retracted view of treatment site", required: true, minCount: 1, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
+        photo_left: { label: "Photo — Left View", desc: "Left lateral view", required: true, minCount: 1, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
+        photo_right: { label: "Photo — Right View", desc: "Right lateral view", required: true, minCount: 1, recommendedCount: 1, accept: ".png,.jpg,.jpeg,.webp" },
         surgicalGuide: { label: "Surgical Guide STL", desc: "Your draft surgical guide STL export", required: false, minCount: 0, recommendedCount: 1, accept: ".stl,.obj,.ply" },
         opposingArch: { label: "Opposing Arch Data", desc: "Opposing arch STL or scan data", required: false, minCount: 0, recommendedCount: 1, accept: ".stl,.obj,.ply,.png,.jpg,.jpeg" },
       },
@@ -80,7 +95,6 @@ const tiers = [
       patientContext: { required: true },
       softwareUsed: { required: true },
     },
-    turnaround: "5–7 working days",
   },
 ]
 
@@ -97,10 +111,10 @@ type Reviewer = {
 // Map file extensions to type keys
 function detectFileType(fileName: string): string {
   const ext = fileName.split(".").pop()?.toLowerCase() || ""
-  if (["stl", "obj", "ply", "bsb"].includes(ext)) return "stl"
-  if (["dcm", "dicom"].includes(ext)) return "dicom"
-  if (["png", "jpg", "jpeg", "webp"].includes(ext)) return "screenshots"
-  return "stl" // fallback
+  if (["stl", "obj", "ply", "bsb"].includes(ext)) return "stl_upper" // generic STL fallback
+  if (["dcm", "dicom"].includes(ext)) return "cbct"
+  if (["png", "jpg", "jpeg", "webp"].includes(ext)) return "photo_smile" // generic photo fallback
+  return "stl_upper" // fallback
 }
 
 // SVG icons for file type cards
@@ -166,10 +180,14 @@ function ArchIcon() {
 }
 
 const fileTypeIcons: Record<string, React.ReactNode> = {
-  stl: <StlIcon />,
+  stl_upper: <StlIcon />,
+  stl_lower: <StlIcon />,
+  stl_bite: <StlIcon />,
   cbct: <CbctIcon />,
-  screenshots: <ScreenshotIcon />,
-  dicom: <DicomIcon />,
+  photo_smile: <ScreenshotIcon />,
+  photo_retracted: <ScreenshotIcon />,
+  photo_left: <ScreenshotIcon />,
+  photo_right: <ScreenshotIcon />,
   surgicalGuide: <GuideIcon />,
   opposingArch: <ArchIcon />,
 }
@@ -177,9 +195,11 @@ const fileTypeIcons: Record<string, React.ReactNode> = {
 export default function NewCaseForm({
   reviewers,
   initialTier,
+  assessmentData,
 }: {
   reviewers: Reviewer[]
   initialTier?: string
+  assessmentData?: Record<string, string>
 }) {
   const router = useRouter()
   const [state, formAction, isPending] = useActionState(submitCase, initialState)
@@ -352,7 +372,6 @@ export default function NewCaseForm({
                     <span className="text-xs text-gold font-medium">{tier.price}</span>
                   </div>
                   <p className="text-xs text-muted mt-0.5">{tier.desc}</p>
-                  <p className="text-xs text-muted/60 mt-1">⌛ {tier.turnaround}</p>
                 </div>
               </label>
             ))}
@@ -657,6 +676,11 @@ export default function NewCaseForm({
             <p className="text-sm text-red-700">{state.error}</p>
           </div>
         )}
+
+        {/* Hidden BCDIS assessment fields — injected by CaseSubmissionWizard */}
+        {assessmentData && Object.entries(assessmentData).map(([key, value]) => (
+          <input key={key} type="hidden" name={key} value={value} />
+        ))}
 
         {currentTier && (
           <button

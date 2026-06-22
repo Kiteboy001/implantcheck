@@ -43,11 +43,18 @@ export async function signup(_prev: any, formData: FormData) {
   })
 
   // Auto-sign-in after signup
-  await signIn("credentials", {
-    email,
-    password,
-    redirect: false,
-  })
+  try {
+    await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    })
+  } catch (err: any) {
+    // Sign-in can fail even after successful user creation (NextAuth session timing).
+    // Fall back to login redirect rather than crashing to blank page.
+    console.error("Auto-sign-in after signup failed:", err.message)
+    redirect("/auth/login?registered=true")
+  }
 
   redirect("/dashboard")
 }

@@ -234,6 +234,7 @@ export type CaseWhereInput = {
   reviewer?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   files?: Prisma.CaseFileListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
+  assessment?: Prisma.XOR<Prisma.AssessmentNullableScalarRelationFilter, Prisma.AssessmentWhereInput> | null
   token?: Prisma.XOR<Prisma.TokenNullableScalarRelationFilter, Prisma.TokenWhereInput> | null
 }
 
@@ -253,6 +254,7 @@ export type CaseOrderByWithRelationInput = {
   reviewer?: Prisma.UserOrderByWithRelationInput
   files?: Prisma.CaseFileOrderByRelationAggregateInput
   reviews?: Prisma.ReviewOrderByRelationAggregateInput
+  assessment?: Prisma.AssessmentOrderByWithRelationInput
   token?: Prisma.TokenOrderByWithRelationInput
 }
 
@@ -275,6 +277,7 @@ export type CaseWhereUniqueInput = Prisma.AtLeast<{
   reviewer?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   files?: Prisma.CaseFileListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
+  assessment?: Prisma.XOR<Prisma.AssessmentNullableScalarRelationFilter, Prisma.AssessmentWhereInput> | null
   token?: Prisma.XOR<Prisma.TokenNullableScalarRelationFilter, Prisma.TokenWhereInput> | null
 }, "id">
 
@@ -326,6 +329,7 @@ export type CaseCreateInput = {
   reviewer?: Prisma.UserCreateNestedOneWithoutAssignedCasesInput
   files?: Prisma.CaseFileCreateNestedManyWithoutCaseInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutCaseInput
+  assessment?: Prisma.AssessmentCreateNestedOneWithoutCaseInput
   token?: Prisma.TokenCreateNestedOneWithoutUsedCaseInput
 }
 
@@ -343,6 +347,7 @@ export type CaseUncheckedCreateInput = {
   updatedAt?: Date | string
   files?: Prisma.CaseFileUncheckedCreateNestedManyWithoutCaseInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutCaseInput
+  assessment?: Prisma.AssessmentUncheckedCreateNestedOneWithoutCaseInput
   token?: Prisma.TokenUncheckedCreateNestedOneWithoutUsedCaseInput
 }
 
@@ -360,6 +365,7 @@ export type CaseUpdateInput = {
   reviewer?: Prisma.UserUpdateOneWithoutAssignedCasesNestedInput
   files?: Prisma.CaseFileUpdateManyWithoutCaseNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutCaseNestedInput
+  assessment?: Prisma.AssessmentUpdateOneWithoutCaseNestedInput
   token?: Prisma.TokenUpdateOneWithoutUsedCaseNestedInput
 }
 
@@ -377,6 +383,7 @@ export type CaseUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   files?: Prisma.CaseFileUncheckedUpdateManyWithoutCaseNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutCaseNestedInput
+  assessment?: Prisma.AssessmentUncheckedUpdateOneWithoutCaseNestedInput
   token?: Prisma.TokenUncheckedUpdateOneWithoutUsedCaseNestedInput
 }
 
@@ -578,6 +585,20 @@ export type EnumPaymentStatusFieldUpdateOperationsInput = {
   set?: $Enums.PaymentStatus
 }
 
+export type CaseCreateNestedOneWithoutAssessmentInput = {
+  create?: Prisma.XOR<Prisma.CaseCreateWithoutAssessmentInput, Prisma.CaseUncheckedCreateWithoutAssessmentInput>
+  connectOrCreate?: Prisma.CaseCreateOrConnectWithoutAssessmentInput
+  connect?: Prisma.CaseWhereUniqueInput
+}
+
+export type CaseUpdateOneRequiredWithoutAssessmentNestedInput = {
+  create?: Prisma.XOR<Prisma.CaseCreateWithoutAssessmentInput, Prisma.CaseUncheckedCreateWithoutAssessmentInput>
+  connectOrCreate?: Prisma.CaseCreateOrConnectWithoutAssessmentInput
+  upsert?: Prisma.CaseUpsertWithoutAssessmentInput
+  connect?: Prisma.CaseWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CaseUpdateToOneWithWhereWithoutAssessmentInput, Prisma.CaseUpdateWithoutAssessmentInput>, Prisma.CaseUncheckedUpdateWithoutAssessmentInput>
+}
+
 export type CaseCreateNestedOneWithoutFilesInput = {
   create?: Prisma.XOR<Prisma.CaseCreateWithoutFilesInput, Prisma.CaseUncheckedCreateWithoutFilesInput>
   connectOrCreate?: Prisma.CaseCreateOrConnectWithoutFilesInput
@@ -635,6 +656,7 @@ export type CaseCreateWithoutSubmitterInput = {
   reviewer?: Prisma.UserCreateNestedOneWithoutAssignedCasesInput
   files?: Prisma.CaseFileCreateNestedManyWithoutCaseInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutCaseInput
+  assessment?: Prisma.AssessmentCreateNestedOneWithoutCaseInput
   token?: Prisma.TokenCreateNestedOneWithoutUsedCaseInput
 }
 
@@ -651,6 +673,7 @@ export type CaseUncheckedCreateWithoutSubmitterInput = {
   updatedAt?: Date | string
   files?: Prisma.CaseFileUncheckedCreateNestedManyWithoutCaseInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutCaseInput
+  assessment?: Prisma.AssessmentUncheckedCreateNestedOneWithoutCaseInput
   token?: Prisma.TokenUncheckedCreateNestedOneWithoutUsedCaseInput
 }
 
@@ -677,6 +700,7 @@ export type CaseCreateWithoutReviewerInput = {
   submitter: Prisma.UserCreateNestedOneWithoutSubmittedCasesInput
   files?: Prisma.CaseFileCreateNestedManyWithoutCaseInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutCaseInput
+  assessment?: Prisma.AssessmentCreateNestedOneWithoutCaseInput
   token?: Prisma.TokenCreateNestedOneWithoutUsedCaseInput
 }
 
@@ -693,6 +717,7 @@ export type CaseUncheckedCreateWithoutReviewerInput = {
   updatedAt?: Date | string
   files?: Prisma.CaseFileUncheckedCreateNestedManyWithoutCaseInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutCaseInput
+  assessment?: Prisma.AssessmentUncheckedCreateNestedOneWithoutCaseInput
   token?: Prisma.TokenUncheckedCreateNestedOneWithoutUsedCaseInput
 }
 
@@ -755,6 +780,90 @@ export type CaseUpdateManyWithWhereWithoutReviewerInput = {
   data: Prisma.XOR<Prisma.CaseUpdateManyMutationInput, Prisma.CaseUncheckedUpdateManyWithoutReviewerInput>
 }
 
+export type CaseCreateWithoutAssessmentInput = {
+  id?: string
+  tier?: $Enums.CaseTier
+  status?: $Enums.CaseStatus
+  paymentStatus?: $Enums.PaymentStatus
+  patientContext?: string | null
+  treatmentNotes: string
+  softwareUsed?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  submitter: Prisma.UserCreateNestedOneWithoutSubmittedCasesInput
+  reviewer?: Prisma.UserCreateNestedOneWithoutAssignedCasesInput
+  files?: Prisma.CaseFileCreateNestedManyWithoutCaseInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutCaseInput
+  token?: Prisma.TokenCreateNestedOneWithoutUsedCaseInput
+}
+
+export type CaseUncheckedCreateWithoutAssessmentInput = {
+  id?: string
+  submitterId: string
+  reviewerId?: string | null
+  tier?: $Enums.CaseTier
+  status?: $Enums.CaseStatus
+  paymentStatus?: $Enums.PaymentStatus
+  patientContext?: string | null
+  treatmentNotes: string
+  softwareUsed?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  files?: Prisma.CaseFileUncheckedCreateNestedManyWithoutCaseInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutCaseInput
+  token?: Prisma.TokenUncheckedCreateNestedOneWithoutUsedCaseInput
+}
+
+export type CaseCreateOrConnectWithoutAssessmentInput = {
+  where: Prisma.CaseWhereUniqueInput
+  create: Prisma.XOR<Prisma.CaseCreateWithoutAssessmentInput, Prisma.CaseUncheckedCreateWithoutAssessmentInput>
+}
+
+export type CaseUpsertWithoutAssessmentInput = {
+  update: Prisma.XOR<Prisma.CaseUpdateWithoutAssessmentInput, Prisma.CaseUncheckedUpdateWithoutAssessmentInput>
+  create: Prisma.XOR<Prisma.CaseCreateWithoutAssessmentInput, Prisma.CaseUncheckedCreateWithoutAssessmentInput>
+  where?: Prisma.CaseWhereInput
+}
+
+export type CaseUpdateToOneWithWhereWithoutAssessmentInput = {
+  where?: Prisma.CaseWhereInput
+  data: Prisma.XOR<Prisma.CaseUpdateWithoutAssessmentInput, Prisma.CaseUncheckedUpdateWithoutAssessmentInput>
+}
+
+export type CaseUpdateWithoutAssessmentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
+  status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  treatmentNotes?: Prisma.StringFieldUpdateOperationsInput | string
+  softwareUsed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  submitter?: Prisma.UserUpdateOneRequiredWithoutSubmittedCasesNestedInput
+  reviewer?: Prisma.UserUpdateOneWithoutAssignedCasesNestedInput
+  files?: Prisma.CaseFileUpdateManyWithoutCaseNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutCaseNestedInput
+  token?: Prisma.TokenUpdateOneWithoutUsedCaseNestedInput
+}
+
+export type CaseUncheckedUpdateWithoutAssessmentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  submitterId?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tier?: Prisma.EnumCaseTierFieldUpdateOperationsInput | $Enums.CaseTier
+  status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  patientContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  treatmentNotes?: Prisma.StringFieldUpdateOperationsInput | string
+  softwareUsed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  files?: Prisma.CaseFileUncheckedUpdateManyWithoutCaseNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutCaseNestedInput
+  token?: Prisma.TokenUncheckedUpdateOneWithoutUsedCaseNestedInput
+}
+
 export type CaseCreateWithoutFilesInput = {
   id?: string
   tier?: $Enums.CaseTier
@@ -768,6 +877,7 @@ export type CaseCreateWithoutFilesInput = {
   submitter: Prisma.UserCreateNestedOneWithoutSubmittedCasesInput
   reviewer?: Prisma.UserCreateNestedOneWithoutAssignedCasesInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutCaseInput
+  assessment?: Prisma.AssessmentCreateNestedOneWithoutCaseInput
   token?: Prisma.TokenCreateNestedOneWithoutUsedCaseInput
 }
 
@@ -784,6 +894,7 @@ export type CaseUncheckedCreateWithoutFilesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutCaseInput
+  assessment?: Prisma.AssessmentUncheckedCreateNestedOneWithoutCaseInput
   token?: Prisma.TokenUncheckedCreateNestedOneWithoutUsedCaseInput
 }
 
@@ -816,6 +927,7 @@ export type CaseUpdateWithoutFilesInput = {
   submitter?: Prisma.UserUpdateOneRequiredWithoutSubmittedCasesNestedInput
   reviewer?: Prisma.UserUpdateOneWithoutAssignedCasesNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutCaseNestedInput
+  assessment?: Prisma.AssessmentUpdateOneWithoutCaseNestedInput
   token?: Prisma.TokenUpdateOneWithoutUsedCaseNestedInput
 }
 
@@ -832,6 +944,7 @@ export type CaseUncheckedUpdateWithoutFilesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutCaseNestedInput
+  assessment?: Prisma.AssessmentUncheckedUpdateOneWithoutCaseNestedInput
   token?: Prisma.TokenUncheckedUpdateOneWithoutUsedCaseNestedInput
 }
 
@@ -848,6 +961,7 @@ export type CaseCreateWithoutReviewsInput = {
   submitter: Prisma.UserCreateNestedOneWithoutSubmittedCasesInput
   reviewer?: Prisma.UserCreateNestedOneWithoutAssignedCasesInput
   files?: Prisma.CaseFileCreateNestedManyWithoutCaseInput
+  assessment?: Prisma.AssessmentCreateNestedOneWithoutCaseInput
   token?: Prisma.TokenCreateNestedOneWithoutUsedCaseInput
 }
 
@@ -864,6 +978,7 @@ export type CaseUncheckedCreateWithoutReviewsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   files?: Prisma.CaseFileUncheckedCreateNestedManyWithoutCaseInput
+  assessment?: Prisma.AssessmentUncheckedCreateNestedOneWithoutCaseInput
   token?: Prisma.TokenUncheckedCreateNestedOneWithoutUsedCaseInput
 }
 
@@ -896,6 +1011,7 @@ export type CaseUpdateWithoutReviewsInput = {
   submitter?: Prisma.UserUpdateOneRequiredWithoutSubmittedCasesNestedInput
   reviewer?: Prisma.UserUpdateOneWithoutAssignedCasesNestedInput
   files?: Prisma.CaseFileUpdateManyWithoutCaseNestedInput
+  assessment?: Prisma.AssessmentUpdateOneWithoutCaseNestedInput
   token?: Prisma.TokenUpdateOneWithoutUsedCaseNestedInput
 }
 
@@ -912,6 +1028,7 @@ export type CaseUncheckedUpdateWithoutReviewsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   files?: Prisma.CaseFileUncheckedUpdateManyWithoutCaseNestedInput
+  assessment?: Prisma.AssessmentUncheckedUpdateOneWithoutCaseNestedInput
   token?: Prisma.TokenUncheckedUpdateOneWithoutUsedCaseNestedInput
 }
 
@@ -929,6 +1046,7 @@ export type CaseCreateWithoutTokenInput = {
   reviewer?: Prisma.UserCreateNestedOneWithoutAssignedCasesInput
   files?: Prisma.CaseFileCreateNestedManyWithoutCaseInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutCaseInput
+  assessment?: Prisma.AssessmentCreateNestedOneWithoutCaseInput
 }
 
 export type CaseUncheckedCreateWithoutTokenInput = {
@@ -945,6 +1063,7 @@ export type CaseUncheckedCreateWithoutTokenInput = {
   updatedAt?: Date | string
   files?: Prisma.CaseFileUncheckedCreateNestedManyWithoutCaseInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutCaseInput
+  assessment?: Prisma.AssessmentUncheckedCreateNestedOneWithoutCaseInput
 }
 
 export type CaseCreateOrConnectWithoutTokenInput = {
@@ -977,6 +1096,7 @@ export type CaseUpdateWithoutTokenInput = {
   reviewer?: Prisma.UserUpdateOneWithoutAssignedCasesNestedInput
   files?: Prisma.CaseFileUpdateManyWithoutCaseNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutCaseNestedInput
+  assessment?: Prisma.AssessmentUpdateOneWithoutCaseNestedInput
 }
 
 export type CaseUncheckedUpdateWithoutTokenInput = {
@@ -993,6 +1113,7 @@ export type CaseUncheckedUpdateWithoutTokenInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   files?: Prisma.CaseFileUncheckedUpdateManyWithoutCaseNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutCaseNestedInput
+  assessment?: Prisma.AssessmentUncheckedUpdateOneWithoutCaseNestedInput
 }
 
 export type CaseCreateManySubmitterInput = {
@@ -1034,6 +1155,7 @@ export type CaseUpdateWithoutSubmitterInput = {
   reviewer?: Prisma.UserUpdateOneWithoutAssignedCasesNestedInput
   files?: Prisma.CaseFileUpdateManyWithoutCaseNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutCaseNestedInput
+  assessment?: Prisma.AssessmentUpdateOneWithoutCaseNestedInput
   token?: Prisma.TokenUpdateOneWithoutUsedCaseNestedInput
 }
 
@@ -1050,6 +1172,7 @@ export type CaseUncheckedUpdateWithoutSubmitterInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   files?: Prisma.CaseFileUncheckedUpdateManyWithoutCaseNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutCaseNestedInput
+  assessment?: Prisma.AssessmentUncheckedUpdateOneWithoutCaseNestedInput
   token?: Prisma.TokenUncheckedUpdateOneWithoutUsedCaseNestedInput
 }
 
@@ -1079,6 +1202,7 @@ export type CaseUpdateWithoutReviewerInput = {
   submitter?: Prisma.UserUpdateOneRequiredWithoutSubmittedCasesNestedInput
   files?: Prisma.CaseFileUpdateManyWithoutCaseNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutCaseNestedInput
+  assessment?: Prisma.AssessmentUpdateOneWithoutCaseNestedInput
   token?: Prisma.TokenUpdateOneWithoutUsedCaseNestedInput
 }
 
@@ -1095,6 +1219,7 @@ export type CaseUncheckedUpdateWithoutReviewerInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   files?: Prisma.CaseFileUncheckedUpdateManyWithoutCaseNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutCaseNestedInput
+  assessment?: Prisma.AssessmentUncheckedUpdateOneWithoutCaseNestedInput
   token?: Prisma.TokenUncheckedUpdateOneWithoutUsedCaseNestedInput
 }
 
@@ -1167,6 +1292,7 @@ export type CaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   reviewer?: boolean | Prisma.Case$reviewerArgs<ExtArgs>
   files?: boolean | Prisma.Case$filesArgs<ExtArgs>
   reviews?: boolean | Prisma.Case$reviewsArgs<ExtArgs>
+  assessment?: boolean | Prisma.Case$assessmentArgs<ExtArgs>
   token?: boolean | Prisma.Case$tokenArgs<ExtArgs>
   _count?: boolean | Prisma.CaseCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["case"]>
@@ -1223,6 +1349,7 @@ export type CaseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   reviewer?: boolean | Prisma.Case$reviewerArgs<ExtArgs>
   files?: boolean | Prisma.Case$filesArgs<ExtArgs>
   reviews?: boolean | Prisma.Case$reviewsArgs<ExtArgs>
+  assessment?: boolean | Prisma.Case$assessmentArgs<ExtArgs>
   token?: boolean | Prisma.Case$tokenArgs<ExtArgs>
   _count?: boolean | Prisma.CaseCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1242,6 +1369,7 @@ export type $CasePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     reviewer: Prisma.$UserPayload<ExtArgs> | null
     files: Prisma.$CaseFilePayload<ExtArgs>[]
     reviews: Prisma.$ReviewPayload<ExtArgs>[]
+    assessment: Prisma.$AssessmentPayload<ExtArgs> | null
     token: Prisma.$TokenPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1654,6 +1782,7 @@ export interface Prisma__CaseClient<T, Null = never, ExtArgs extends runtime.Typ
   reviewer<T extends Prisma.Case$reviewerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Case$reviewerArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   files<T extends Prisma.Case$filesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Case$filesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CaseFilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reviews<T extends Prisma.Case$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Case$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  assessment<T extends Prisma.Case$assessmentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Case$assessmentArgs<ExtArgs>>): Prisma.Prisma__AssessmentClient<runtime.Types.Result.GetResult<Prisma.$AssessmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   token<T extends Prisma.Case$tokenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Case$tokenArgs<ExtArgs>>): Prisma.Prisma__TokenClient<runtime.Types.Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2160,6 +2289,25 @@ export type Case$reviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   distinct?: Prisma.ReviewScalarFieldEnum | Prisma.ReviewScalarFieldEnum[]
+}
+
+/**
+ * Case.assessment
+ */
+export type Case$assessmentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Assessment
+   */
+  select?: Prisma.AssessmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Assessment
+   */
+  omit?: Prisma.AssessmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AssessmentInclude<ExtArgs> | null
+  where?: Prisma.AssessmentWhereInput
 }
 
 /**

@@ -16,7 +16,6 @@ const tiers = [
       "Implant position analysis",
       "Angulation assessment",
       "Revision review included",
-      "48-hour turnaround",
     ],
     icon: (
       <svg viewBox="0 0 64 64" fill="none" className="w-12 h-12">
@@ -41,7 +40,6 @@ const tiers = [
       "Prosthetic considerations",
       "Detailed plan feedback",
       "Anatomical assessment",
-      "36-hour priority turnaround",
     ],
     icon: (
       <svg viewBox="0 0 64 64" fill="none" className="w-12 h-12">
@@ -65,7 +63,6 @@ const tiers = [
       "Full treatment plan evaluation",
       "1-on-1 Zoom consultation",
       "All planning software views",
-      "24-hour expedited turnaround",
     ],
     icon: (
       <svg viewBox="0 0 64 64" fill="none" className="w-12 h-12">
@@ -93,7 +90,6 @@ const tiers = [
       "Collaborative planning session",
       "Downloadable STL for print",
       "Full DICOM integration",
-      "5-7 day comprehensive turnaround",
     ],
     icon: (
       <svg viewBox="0 0 64 64" fill="none" className="w-12 h-12">

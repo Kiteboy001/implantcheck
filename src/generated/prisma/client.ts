@@ -67,6 +67,11 @@ export type VerificationToken = Prisma.VerificationTokenModel
  */
 export type Case = Prisma.CaseModel
 /**
+ * Model Assessment
+ * 
+ */
+export type Assessment = Prisma.AssessmentModel
+/**
  * Model CaseFile
  * 
  */

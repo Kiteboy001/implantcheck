@@ -56,6 +56,7 @@ export const ModelName = {
   Session: 'Session',
   VerificationToken: 'VerificationToken',
   Case: 'Case',
+  Assessment: 'Assessment',
   CaseFile: 'CaseFile',
   Review: 'Review',
   ReportTemplate: 'ReportTemplate',
@@ -148,6 +149,67 @@ export const CaseScalarFieldEnum = {
 } as const
 
 export type CaseScalarFieldEnum = (typeof CaseScalarFieldEnum)[keyof typeof CaseScalarFieldEnum]
+
+
+export const AssessmentScalarFieldEnum = {
+  id: 'id',
+  caseId: 'caseId',
+  complaint: 'complaint',
+  dentalHistory: 'dentalHistory',
+  medicallyFit: 'medicallyFit',
+  complicatingFactors: 'complicatingFactors',
+  smoker: 'smoker',
+  cigarettesPerDay: 'cigarettesPerDay',
+  alcoholUnitsPerWeek: 'alcoholUnitsPerWeek',
+  asaGrade: 'asaGrade',
+  relevantHistory: 'relevantHistory',
+  extraOralTmj: 'extraOralTmj',
+  extraOralLymph: 'extraOralLymph',
+  extraOralSoft: 'extraOralSoft',
+  extraOralSkin: 'extraOralSkin',
+  intraOralFom: 'intraOralFom',
+  intraOralPalate: 'intraOralPalate',
+  intraOralTongue: 'intraOralTongue',
+  intraOralSulcus: 'intraOralSulcus',
+  bpeSextant1: 'bpeSextant1',
+  bpeSextant2: 'bpeSextant2',
+  bpeSextant3: 'bpeSextant3',
+  bpeSextant4: 'bpeSextant4',
+  bpeSextant5: 'bpeSextant5',
+  bpeSextant6: 'bpeSextant6',
+  oralHygiene: 'oralHygiene',
+  occlusionDetails: 'occlusionDetails',
+  interArchSpace: 'interArchSpace',
+  specialTestsXrays: 'specialTestsXrays',
+  diagnosis1: 'diagnosis1',
+  diagnosis2: 'diagnosis2',
+  diagnosis3: 'diagnosis3',
+  discussedAlt: 'discussedAlt',
+  reportGiven: 'reportGiven',
+  preOpInstructions: 'preOpInstructions',
+  interarchDistance: 'interarchDistance',
+  interdentalSpace: 'interdentalSpace',
+  biotype: 'biotype',
+  papillae: 'papillae',
+  complicatingAnatomy: 'complicatingAnatomy',
+  anglesClass: 'anglesClass',
+  overbite: 'overbite',
+  overjet: 'overjet',
+  guidanceRight: 'guidanceRight',
+  guidanceLeft: 'guidanceLeft',
+  ovdFreewaySpace: 'ovdFreewaySpace',
+  cbctFindings: 'cbctFindings',
+  phase1Stabilisation: 'phase1Stabilisation',
+  phase2MediumTerm: 'phase2MediumTerm',
+  phase3LongTerm: 'phase3LongTerm',
+  implantPlanning: 'implantPlanning',
+  graftMaterial: 'graftMaterial',
+  ridgeDeficiencyType: 'ridgeDeficiencyType',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AssessmentScalarFieldEnum = (typeof AssessmentScalarFieldEnum)[keyof typeof AssessmentScalarFieldEnum]
 
 
 export const CaseFileScalarFieldEnum = {

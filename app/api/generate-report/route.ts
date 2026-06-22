@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { auth } from "@/auth"
 
 const CLAUDE_SKILL = `You are an expert dental implant report writer working within the BCDIS (British College of Dental Implant Surgery) framework. Transform raw dictation into a polished, professional Dental Implant Assessment Report.
 
@@ -38,6 +39,12 @@ Then: Patient: [Name] | Age: [N] | ASA: [Classification]
 Then the narrative body with plain-text section titles.`
 
 export async function POST(request: Request) {
+  // Only reviewers and admins can generate AI reports
+  const session = await auth()
+  if (!session?.user || !["REVIEWER", "ADMIN"].includes((session.user as any).role)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  }
+
   const apiKey = process.env.ANTHROPIC_API_KEY
 
   if (!apiKey) {

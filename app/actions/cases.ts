@@ -88,5 +88,49 @@ export async function submitCase(
   revalidatePath("/admin/cases")
   revalidatePath("/admin")
 
+  // Save BCDIS assessment data if provided
+  const assessmentFields = ["complaint","dentalHistory","medicallyFit","complicatingFactors","smoker","cigarettesPerDay","alcoholUnitsPerWeek","asaGrade","relevantHistory","extraOralTmj","extraOralLymph","extraOralSoft","extraOralSkin","intraOralFom","intraOralPalate","intraOralTongue","intraOralSulcus","bpeSextant1","bpeSextant2","bpeSextant3","bpeSextant4","bpeSextant5","bpeSextant6","oralHygiene","occlusionDetails","interArchSpace","specialTestsXrays","diagnosis1","diagnosis2","diagnosis3","discussedAlt","reportGiven","preOpInstructions","interarchDistance","interdentalSpace","biotype","papillae","complicatingAnatomy","anglesClass","overbite","overjet","guidanceRight","guidanceLeft","ovdFreewaySpace","cbctFindings","phase1Stabilisation","phase2MediumTerm","phase3LongTerm","implantPlanning","graftMaterial","ridgeDeficiencyType"]
+  const hasAssessment = assessmentFields.some((f) => {
+    const v = formData.get(f)
+    return v && String(v).trim() !== "" && String(v) !== "undefined"
+  })
+  if (hasAssessment) {
+    const pStr = (k: string) => { const v = formData.get(k) as string; return v?.trim() || undefined }
+    const pInt = (k: string) => { const v = formData.get(k) as string; if (!v) return undefined; const n = parseInt(v, 10); return isNaN(n) ? undefined : n }
+    const pFloat = (k: string) => { const v = formData.get(k) as string; if (!v) return undefined; const n = parseFloat(v); return isNaN(n) ? undefined : n }
+    const pBool = (k: string) => { const v = formData.get(k) as string; if (v === "true") return true; if (v === "false") return false; return undefined }
+    await prisma.assessment.create({
+      data: {
+        caseId: caseRecord.id,
+        complaint: pStr("complaint"), dentalHistory: pStr("dentalHistory"),
+        medicallyFit: pBool("medicallyFit"), complicatingFactors: pBool("complicatingFactors"),
+        smoker: pBool("smoker"), cigarettesPerDay: pInt("cigarettesPerDay"),
+        alcoholUnitsPerWeek: pInt("alcoholUnitsPerWeek"), asaGrade: pInt("asaGrade"),
+        relevantHistory: pStr("relevantHistory"),
+        extraOralTmj: pBool("extraOralTmj"), extraOralLymph: pBool("extraOralLymph"),
+        extraOralSoft: pBool("extraOralSoft"), extraOralSkin: pBool("extraOralSkin"),
+        intraOralFom: pBool("intraOralFom"), intraOralPalate: pBool("intraOralPalate"),
+        intraOralTongue: pBool("intraOralTongue"), intraOralSulcus: pBool("intraOralSulcus"),
+        bpeSextant1: pInt("bpeSextant1"), bpeSextant2: pInt("bpeSextant2"),
+        bpeSextant3: pInt("bpeSextant3"), bpeSextant4: pInt("bpeSextant4"),
+        bpeSextant5: pInt("bpeSextant5"), bpeSextant6: pInt("bpeSextant6"),
+        oralHygiene: pStr("oralHygiene"), occlusionDetails: pStr("occlusionDetails"),
+        interArchSpace: pStr("interArchSpace"), specialTestsXrays: pStr("specialTestsXrays"),
+        diagnosis1: pStr("diagnosis1"), diagnosis2: pStr("diagnosis2"), diagnosis3: pStr("diagnosis3"),
+        discussedAlt: pStr("discussedAlt"), reportGiven: pBool("reportGiven"),
+        preOpInstructions: pBool("preOpInstructions"),
+        interarchDistance: pFloat("interarchDistance"), interdentalSpace: pFloat("interdentalSpace"),
+        biotype: pStr("biotype"), papillae: pStr("papillae"),
+        complicatingAnatomy: pStr("complicatingAnatomy"), anglesClass: pStr("anglesClass"),
+        overbite: pFloat("overbite"), overjet: pFloat("overjet"),
+        guidanceRight: pStr("guidanceRight"), guidanceLeft: pStr("guidanceLeft"),
+        ovdFreewaySpace: pStr("ovdFreewaySpace"), cbctFindings: pStr("cbctFindings"),
+        phase1Stabilisation: pStr("phase1Stabilisation"), phase2MediumTerm: pStr("phase2MediumTerm"),
+        phase3LongTerm: pStr("phase3LongTerm"), implantPlanning: pStr("implantPlanning"),
+        graftMaterial: pStr("graftMaterial"), ridgeDeficiencyType: pStr("ridgeDeficiencyType"),
+      },
+    })
+  }
+
   return { success: caseRecord.id }
 }
