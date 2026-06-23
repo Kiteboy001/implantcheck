@@ -428,16 +428,10 @@ export default function NewCaseForm({
                           handleFiles(e.dataTransfer.files, key)
                         }
                       }}
-                      className={`block p-4 rounded-lg border-2 transition-all cursor-pointer ${
-                        isMet
-                          ? "border-green-200 bg-green-50/30 hover:border-green-300"
-                          : isRequired && count === 0
-                          ? "border-amber-200 bg-amber-50/30 hover:border-amber-300"
-                          : "border-gray-100 hover:border-gray-300"
-                      }`}
+                      className={`block p-4 rounded-lg border-2 transition-all cursor-pointer border-gray-100 hover:border-gray-300`}
                     >
                       <div className="flex items-start gap-3">
-                        <div className={`shrink-0 ${isMet ? "text-green-600" : isRequired ? "text-amber-500" : "text-navy/30"}`}>
+                        <div className="shrink-0 text-navy/40">
                           {fileTypeIcons[key] || <CbctIcon />}
                         </div>
                         <div className="min-w-0 flex-1">
@@ -448,7 +442,7 @@ export default function NewCaseForm({
                           </div>
                           <p className="text-xs text-muted mt-0.5">{ft.desc}</p>
                           <div className="flex items-center gap-2 mt-2">
-                            <span className={`text-xs font-medium ${isMet ? "text-green-600" : "text-amber-600"}`}>
+                            <span className="text-xs font-medium text-navy">
                               {count} uploaded
                             </span>
                             {isRequired && (
