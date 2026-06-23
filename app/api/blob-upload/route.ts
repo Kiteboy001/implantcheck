@@ -20,7 +20,17 @@ export async function POST(request: Request) {
         onBeforeGenerateToken: async () => {
           return {
             // Binary files (STL, DICOM, etc.) arrive as application/octet-stream
-            allowedContentTypes: ["application/octet-stream", "*/*"],
+            allowedContentTypes: [
+              "application/octet-stream",
+              "model/stl",
+              "model/obj",
+              "model/ply",
+              "application/dicom",
+              "image/png",
+              "image/jpeg",
+              "image/webp",
+              "*/*",
+            ],
             maximumSizeInBytes: 512 * 1024 * 1024, // 512MB
             tokenPayload: JSON.stringify({ userId: (session.user as any).id }),
           }
