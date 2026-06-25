@@ -525,7 +525,7 @@ export default function LandingPage() {
               </p>
               <div className="flex flex-wrap gap-3">
                 <a
-                  href="https://www.blueskybio.com/download"
+                  href="https://www.blueskybio.digital/download"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-4 py-2 bg-navy text-white rounded-lg text-sm font-semibold hover:bg-navy-light transition-colors"
@@ -533,7 +533,7 @@ export default function LandingPage() {
                   Download BlueSky Bio
                 </a>
                 <a
-                  href="https://theimplantdiploma.co.uk"
+                  href="https://www.blueskybio.university/surgicalguide"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-4 py-2 border border-navy/20 text-navy rounded-lg text-sm font-medium hover:bg-navy hover:text-white transition-colors"
@@ -560,12 +560,14 @@ export default function LandingPage() {
                 follow a structured BCDIS format covering implant positioning,
                 angulation, anatomical considerations, and treatment recommendations.
               </p>
-              <button
-                disabled
-                className="px-4 py-2 border border-gray-200 text-muted rounded-lg text-sm font-medium cursor-not-allowed"
+              <a
+                href="/sample-implantcheck-report.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex px-4 py-2 bg-navy text-white rounded-lg text-sm font-semibold hover:bg-navy-light transition-colors"
               >
-                Example report coming soon
-              </button>
+                View example report
+              </a>
             </div>
           </div>
         </div>
