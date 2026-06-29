@@ -68,6 +68,15 @@ export default async function CaseDetailPage({
     PILOT_GUIDE: "£399",
   }
 
+  const reviewFiles = caseData.files.map((file) => ({
+    id: file.id,
+    fileUrl: file.fileUrl,
+    fileName: file.fileName,
+    fileType: file.fileType,
+    fileSize: file.fileSize,
+    uploadedAt: file.uploadedAt.toISOString(),
+  }))
+
   return (
     <div>
       {/* Breadcrumb */}
@@ -337,7 +346,7 @@ export default async function CaseDetailPage({
 
           {/* Review form */}
           {caseData.status !== "APPROVED" && caseData.status !== "REJECTED" && (
-            <ReviewForm caseId={caseData.id} />
+            <ReviewForm caseId={caseData.id} files={reviewFiles} />
           )}
         </div>
 
