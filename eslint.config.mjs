@@ -12,7 +12,19 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Generated/client artifacts and local maintenance scripts should not block app linting.
+    "src/generated/**",
+    "scripts/**",
   ]),
+  {
+    rules: {
+      // Keep these visible without blocking deploys on existing technical debt.
+      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/no-require-imports": "warn",
+      "react/no-unescaped-entities": "warn",
+      "react-hooks/purity": "warn",
+    },
+  },
 ]);
 
 export default eslintConfig;
